@@ -12,28 +12,27 @@
         color: red;
         position: absolute;
         top: 47%;
-        left: 47%
+        left: 47%;
+        text-transform:uppercase;
       }
-      h3 {
-        color: white
-      }
-      h4 {
+      h2 {
         position: absolute;
         top: 75%;
-        left: 41%
+        left: 0%;
+        text-align:center;
+        width:100%;
       }
-      A:link {text-decoration: none; color: red}
-      A:visited {text-decoration: none; color: red}
-      A:active {text-decoration: none; color: red}
-      A:hover {text-decoration: underline; color: red;}     
     </style>
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
     <meta http-equiv="Content-Language" content="en-us" />
   </head>
   <body>
     <div>
-      <h1>NO</h1>
+      <h1><%= is_lost_on_yet?[:answer] %></h1>
+      <h2>
+        <%= is_lost_on_yet?[:reason] %>
+        <script src="http://errcount.com/ctr/750.js"></script>
+      </h2>
     </div>
-    <script src="http://errcount.com/ctr/750.js"></script>
   </body>
 </html>
