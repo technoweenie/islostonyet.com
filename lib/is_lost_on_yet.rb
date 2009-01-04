@@ -26,10 +26,12 @@ module IsLOSTOnYet
     end
 
     def init
-      %w(user post schema).each { |l| require "is_lost_on_yet/#{l}" }
+      %w(user post).each { |l| require "is_lost_on_yet/#{l}" }
     end
   end
 end
+
+require 'is_lost_on_yet/schema'
 
 config_path = File.join(File.dirname(__FILE__), '..', 'config', 'lost.rb')
 if File.exist?(config_path)
