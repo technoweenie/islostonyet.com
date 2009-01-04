@@ -3,6 +3,9 @@ gem 'sinatra', '~> 0.3'
 require 'sinatra'
 require 'json'
 
+$LOAD_PATH << File.join(File.dirname(__FILE__), 'lib')
+require 'is_lost_on_yet'
+
 get '/' do
   erb :index
 end
