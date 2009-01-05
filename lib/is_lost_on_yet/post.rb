@@ -4,6 +4,7 @@ module IsLOSTOnYet
     def self.process_updates
       args  = [:user]
       process_tweets(IsLOSTOnYet.twitter.timeline(*args))
+      IsLOSTOnYet.twitter_user.reload
     end
 
     def self.process_replies
@@ -22,14 +23,17 @@ module IsLOSTOnYet
         posts << {:body => s.text, :user_id => s.user.id, :created_at => Time.parse(s.created_at).utc, :external_id => s.id}
       end
 
-      process_users(users)
-      process_posts(posts, users)
+      existing_users = User.where(:external_id => users.keys).to_a
+      Sequel::Model.db.transaction do
+        process_users(users, existing_users)
+        process_posts(posts, users)
+      end
     end
 
     # replace user hash values with saved user records
-    def self.process_users(users)
+    def self.process_users(users, existing_users)
       user_ids = users.keys
-      User.where(:external_id => user_ids).each do |existing|
+      existing_users.each do |existing|
         user_ids.delete existing.external_id
         process_user users, existing
       end
@@ -43,7 +47,7 @@ module IsLOSTOnYet
       users[user.external_id].each do |key, value|
         user.send("#{key}=", value)
       end
-      user.save
+      user.save!
       users[user.external_id] = user
     end
 

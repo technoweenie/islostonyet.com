@@ -4,9 +4,10 @@ class PostTest < Test::Unit::TestCase
   describe "Post#process_updates" do
     before :all do
       @twitter   = Object.new
-      @twit_user = Faux::User.new(1, 'lostie', 'http://avatar')
+      @twit_user = Faux::User.new(1, IsLOSTOnYet.twitter_login, 'http://avatar')
       @twit_post = Faux::Post.new(1, 'hi', @twit_user, 'Sun Jan 04 23:04:16 UTC 2009')
       stub(IsLOSTOnYet).twitter { @twitter }
+      IsLOSTOnYet.twitter_user = nil
     end
 
     describe "without existing user" do

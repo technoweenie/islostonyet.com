@@ -15,11 +15,7 @@ require 'rr'
 require 'context'
 require 'matchy'
 
-begin
-  require 'ruby-debug'
-  Debugger.start
-rescue LoadError
-end
+IsLOSTOnYet.twitter_login = 'lostie'
 
 class Faux
   class User < Struct.new(:id, :name, :profile_image_url)
@@ -43,4 +39,10 @@ class Test::Unit::TestCase
   def cleanup(*models)
     transaction { models.each { |m| m.delete_all } }
   end
+end
+
+begin
+  require 'ruby-debug'
+  Debugger.start
+rescue LoadError
 end

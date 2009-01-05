@@ -18,11 +18,16 @@ require 'active_support/duration'
 
 module IsLOSTOnYet
   class << self
+    attr_writer   :twitter_user
     attr_accessor :twitter_login
     attr_accessor :twitter_password
 
     def twitter
       @twitter ||= Twitter::Base.new(twitter_login, twitter_password)
+    end
+
+    def twitter_user
+      @twitter_user ||= User.find(:login => twitter_login)
     end
 
     def init
