@@ -10,7 +10,7 @@ end
 get '/' do
   Time.zone   = IsLOSTOnYet.time_zone
   @is_lost_on = IsLOSTOnYet.answer
-  erb :index
+  haml :index
 end
 
 get '/json' do
@@ -20,4 +20,9 @@ get '/json' do
   else
     json
   end
+end
+
+get '/main.css' do
+  content_type 'text/css', :charset => 'utf-8'
+  sass :main
 end
