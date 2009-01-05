@@ -8,22 +8,22 @@ class EpisodeTest < Test::Unit::TestCase
   describe "IsLOSTOnYet#answer" do
     it "returns next scheduled episode when date is before all episodes" do
       stub(Time).now { Time.utc(2008, 1, 21) }
-      IsLOSTOnYet.answer.should == {:answer => :no}
+      IsLOSTOnYet.answer.should == {:answer => :no, :reason => "Season 4 starts on Jan 23, 02 AM"}
     end
 
     it "returns next scheduled episode when date is a month after one episode and before the next" do
       stub(Time).now { Time.utc(2009, 1, 21) }
-      IsLOSTOnYet.answer.should == {:answer => :no}
+      IsLOSTOnYet.answer.should == {:answer => :no, :reason => "Season 5 starts on Jan 22, 02 AM"}
     end
 
     it "returns current and next scheduled episode when date is between episodes" do
       stub(Time).now { Time.utc(2009, 1, 23) }
-      IsLOSTOnYet.answer.should == {:answer => :yes}
+      IsLOSTOnYet.answer.should == {:answer => :yes, :reason => "Season 5, episode 2 starts on Jan 29, 02 AM"}
     end
 
     it "returns current episode when date < 1.month after last episode" do
       stub(Time).now { Time.utc(2009, 2, 1) }
-      IsLOSTOnYet.answer.should == {:answer => :yes}
+      IsLOSTOnYet.answer.should == {:answer => :yes, :reason => "Season 5, episode 2 started on Jan 29, 02 AM"}
     end
   end
 

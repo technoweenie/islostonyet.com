@@ -20,9 +20,14 @@ module IsLOSTOnYet
     now             = Time.now.utc
     next_episode    = nil
     current_episode = episodes.detect do |episode|
-      episode.current?(now)
+      if episode.current?(now)
+        true
+      else
+        next_episode = episode
+        false
+      end
     end
-    {:answer => (current_episode.nil? ? :no : :yes)}
+    {:answer => build_answer(current_episode, now), :reason => build_reason(current_episode, next_episode)}
   end
 
   class Episode < Struct.new(:code, :title, :air_date)
@@ -32,7 +37,11 @@ module IsLOSTOnYet
     self.episodes_path = File.join(File.dirname(__FILE__), '..', '..', 'episodes')
 
     def current?(now)
-      now > air_date && now < (air_date + 1.month)
+      now > air_date
+    end
+
+    def old?(now)
+      now > (air_date + 1.month)
     end
 
     def self.load(filename)
@@ -40,5 +49,16 @@ module IsLOSTOnYet
         Episode.new(code, data['title'], data['air_date'])
       end.sort! { |x, y| y.air_date <=> x.air_date }
     end
+  end
+
+private
+  def self.build_answer(current_episode, now)
+    (current_episode.nil? || current_episode.old?(now)) ? :no : :yes
+  end
+
+  def self.build_reason(current_episode, next_episode)
+    episode = next_episode || current_episode
+    season, ep = episode.code.scan(/^s(\d+)e(\d+)$/).first
+    "Season #{season}#{", episode #{ep}" if current_episode && ep != '1'} start#{next_episode ? :s : :ed} on #{episode.air_date.strftime("%b %d, %I %p")}"
   end
 end
