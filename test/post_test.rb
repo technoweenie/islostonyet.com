@@ -1,5 +1,39 @@
 require File.join(File.dirname(__FILE__), 'test_helper')
 class PostTest < Test::Unit::TestCase
+  describe "Selecting Posts" do
+    before :all do
+      cleanup IsLOSTOnYet::Post, IsLOSTOnYet::User
+      transaction do
+        @user1 = IsLOSTOnYet::User.new(:external_id => 1, :login => 'abc', :avatar_url => 'http://abc')
+        @user2 = IsLOSTOnYet::User.new(:external_id => 2, :login => 'def', :avatar_url => 'http://def')
+        [@user1, @user2].each { |u| u.save }
+        @post1 = IsLOSTOnYet::Post.new(:user_id => @user1.id, :external_id => 1, :body => 'a', :created_at => Time.utc(2000, 1, 1))
+        @post2 = IsLOSTOnYet::Post.new(:user_id => @user1.id, :external_id => 2, :body => 'b', :created_at => Time.utc(2000, 1, 2))
+        @post3 = IsLOSTOnYet::Post.new(:user_id => @user2.id, :episode => 's1e1', :external_id => 3, :body => 'c', :created_at => Time.utc(2000, 1, 3))
+        @post4 = IsLOSTOnYet::Post.new(:user_id => @user2.id, :episode => 's2e2', :external_id => 4, :body => 'd', :created_at => Time.utc(2000, 1, 4))
+        @post5 = IsLOSTOnYet::Post.new(:user_id => @user2.id, :episode => 's2e1', :external_id => 5, :body => 'e', :created_at => Time.utc(2000, 1, 5))
+        [@post1, @post2, @post3, @post4, @post5].each { |p| p.save }
+      end
+      IsLOSTOnYet.twitter_user = @user1
+    end
+
+    it "finds posts by season" do
+      IsLOSTOnYet::Post.for_season(:s2).to_a.should == [@post5, @post4]
+    end
+
+    it "finds posts by episode" do
+      IsLOSTOnYet::Post.for_episode(:s2e2).to_a.should == [@post4]
+    end
+
+    it "finds updates" do
+      IsLOSTOnYet::Post.find_updates.to_a.should == [@post2, @post1]
+    end
+
+    it "finds replies" do
+      IsLOSTOnYet::Post.find_replies.to_a.should == [@post5, @post4, @post3]
+    end
+  end
+
   describe "Post 'since_id' values" do
     before :all do
       cleanup IsLOSTOnYet::Post, IsLOSTOnYet::User

@@ -1,6 +1,22 @@
 module IsLOSTOnYet
   class Post < Sequel.Model(:posts)
-    
+    def self.for_season(code)
+      q = "s#{code.to_s.sub(/^s/, '')}e%"
+      filter_and_order(['episode LIKE ?', q]).limit(30)
+    end
+
+    def self.for_episode(code)
+      filter_and_order(:episode => code.to_s).limit(30)
+    end
+
+    def self.find_updates
+      filtered_for_updates.limit(30)
+    end
+
+    def self.find_replies
+      filtered_for_replies.limit(30)
+    end
+
     def self.process_updates
       args  = [:user]
       if post = latest_update

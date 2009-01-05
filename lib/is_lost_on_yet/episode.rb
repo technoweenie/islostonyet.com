@@ -60,6 +60,14 @@ module IsLOSTOnYet
         Episode.new(code, data['title'], data['air_date'])
       end.sort! { |x, y| y.air_date <=> x.air_date }
     end
+
+    def to_s
+      code
+    end
+
+    def inspect
+      %(#<IsLOSTOnYet::Episode(#{code}) #{title.inspect}, air#{Time.now < air_date ? :ing : :ed} on #{air_date.in_time_zone.inspect}>)
+    end
   end
 
 private
