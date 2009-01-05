@@ -5,25 +5,61 @@ class EpisodeTest < Test::Unit::TestCase
     IsLOSTOnYet.load_episodes :sample
   end
 
-  describe "IsLOSTOnYet#answer" do
-    it "returns next scheduled episode when date is before all episodes" do
-      stub(Time).now { Time.utc(2008, 1, 21) }
-      IsLOSTOnYet.answer.should == {:answer => :no, :reason => "Season 4 starts on Jan 22, 09 PM EST"}
+  describe "IsLOSTOnYet" do
+    describe "when date is before all episodes" do
+      before :all do
+        @date = Time.utc(2008, 1, 21)
+      end
+
+      it "#current_and_next_episodes returns no current episode" do
+        IsLOSTOnYet.current_and_next_episodes(@date).map! { |e| e.nil? ? e : e.to_s }.should == [nil, 's4e1']
+      end
+
+      it "#answer returns 'no' answer" do
+        IsLOSTOnYet.answer(@date).should == {:answer => :no, :reason => "Season 4 starts on Jan 22, 09 PM EST"}
+      end
     end
 
-    it "returns next scheduled episode when date is a month after one episode and before the next" do
-      stub(Time).now { Time.utc(2009, 1, 21) }
-      IsLOSTOnYet.answer.should == {:answer => :no, :reason => "Season 5 starts on Jan 21, 09 PM EST"}
+    describe "when date is a month after one episode and before the next" do
+      before :all do
+        @date = Time.utc(2009, 1, 21)
+      end
+
+      it "#current_and_next_episodes returns old current episode" do
+        IsLOSTOnYet.current_and_next_episodes(@date).map! { |e| e.nil? ? e : e.to_s }.should == ['s4e1', 's5e1']
+      end
+
+      it "#answer returns 'no' answer" do
+        IsLOSTOnYet.answer(@date).should == {:answer => :no, :reason => "Season 5 starts on Jan 21, 09 PM EST"}
+      end
     end
 
-    it "returns current and next scheduled episode when date is between episodes" do
-      stub(Time).now { Time.utc(2009, 1, 23) }
-      IsLOSTOnYet.answer.should == {:answer => :yes, :reason => "Season 5, episode 2 starts on Jan 28, 09 PM EST"}
+    describe "when date is between episodes" do
+      before :all do
+        @date = Time.utc(2009, 1, 23)
+      end
+
+      it "#current_and_next_episodes returns next and current episode" do
+        IsLOSTOnYet.current_and_next_episodes(@date).map! { |e| e.nil? ? e : e.to_s }.should == ['s5e1', 's5e2']
+      end
+
+      it "#answer returns 'yes' answer" do
+        IsLOSTOnYet.answer(@date).should == {:answer => :yes, :reason => "Season 5, episode 2 starts on Jan 28, 09 PM EST"}
+      end
     end
 
-    it "returns current episode when date < 1.month after last episode" do
-      stub(Time).now { Time.utc(2009, 2, 1) }
-      IsLOSTOnYet.answer.should == {:answer => :yes, :reason => "Season 5, episode 2 started on Jan 28, 09 PM EST"}
+    describe "when date less than 1 month after last episode" do
+      before :all do
+        @date = Time.utc(2009, 2, 1)
+      end
+
+      it "#current_and_next_episodes returns no next episode" do
+        IsLOSTOnYet.current_and_next_episodes(@date).map! { |e| e.nil? ? e : e.to_s }.should == ['s5e2', nil]
+      end
+
+      it "#answer returns 'yes' answer" do
+        IsLOSTOnYet.answer(@date).should == {:answer => :yes, :reason => "Season 5, episode 2 started on Jan 28, 09 PM EST"}
+      end
     end
   end
 

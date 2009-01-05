@@ -27,8 +27,8 @@ module IsLOSTOnYet
     episodes_by_season[season]
   end
 
-  def self.answer
-    now             = Time.now.utc
+  def self.current_and_next_episodes(now = nil)
+    now           ||= Time.now.utc
     next_episode    = nil
     current_episode = episodes.detect do |episode|
       if episode.current?(now)
@@ -38,6 +38,11 @@ module IsLOSTOnYet
         false
       end
     end
+    [current_episode, next_episode]
+  end
+
+  def self.answer(now = nil)
+    current_episode, next_episode = current_and_next_episodes(now)
     {:answer => build_answer(current_episode, now), :reason => build_reason(current_episode, next_episode)}
   end
 
