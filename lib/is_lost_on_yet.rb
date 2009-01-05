@@ -15,6 +15,10 @@ require 'active_support/core_ext/date'
 require 'active_support/core_ext/numeric'
 require 'active_support/core_ext/time'
 require 'active_support/duration'
+require 'active_support/core_ext/integer/time'
+class Integer #:nodoc:
+  include ActiveSupport::CoreExtensions::Integer::Time
+end
 
 module IsLOSTOnYet
   class << self
