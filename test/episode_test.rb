@@ -26,4 +26,18 @@ class EpisodeTest < Test::Unit::TestCase
       @episodes[0].air_date.should == Time.utc(2009, 1, 29, 2)
     end
   end
+
+  describe "IsLOSTOnYet#load_episodes" do
+    before :all do
+      IsLOSTOnYet.load_episodes :sample
+    end
+
+    it "loads episodes from YAML" do
+      IsLOSTOnYet.episodes.should == IsLOSTOnYet::Episode.load(:sample)
+    end
+
+    it "indexes episodes by code" do
+      IsLOSTOnYet.episode(:s5e1).should == IsLOSTOnYet.episodes.last
+    end
+  end
 end

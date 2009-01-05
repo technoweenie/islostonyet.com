@@ -5,3 +5,5 @@ IsLOSTOnYet.setup_schema
 
 IsLOSTOnYet.twitter_login    = ''
 IsLOSTOnYet.twitter_password = ''
+
+IsLOSTOnYet.load_episodes :lost
