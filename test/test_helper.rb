@@ -14,7 +14,9 @@ gem 'jeremymcanally-matchy'  # sudo gem install jeremymcanally-matchy  --source=
 require 'rr'
 require 'context'
 require 'matchy'
+require 'logger'
 
+# Sequel::Model.db.logger = Logger.new(STDOUT)
 IsLOSTOnYet.twitter_login = 'lostie'
 
 class Faux

@@ -12,7 +12,27 @@ module IsLOSTOnYet
       process_tweets(IsLOSTOnYet.twitter.replies(*args))
     end
 
+    def self.latest_update
+      filtered_for_updates.select(:external_id).first
+    end
+
+    def self.latest_reply
+      filtered_for_replies.select(:external_id).first
+    end
+
   protected
+    def self.filtered_for_updates
+      filter_and_order(:user_id => IsLOSTOnYet.twitter_user.id)
+    end
+
+    def self.filtered_for_replies
+      filter_and_order(['user_id != ?', IsLOSTOnYet.twitter_user.id])
+    end
+
+    def self.filter_and_order(*args)
+      where(*args).order(:created_at.desc)
+    end
+
     def self.process_tweets(tweets)
       return nil if tweets.empty?
       users = {}
