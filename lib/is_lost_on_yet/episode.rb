@@ -1,19 +1,30 @@
 require 'yaml'
 module IsLOSTOnYet
   class << self
+    attr_accessor :episodes_by_season
     attr_accessor :episodes_by_code
     attr_accessor :episodes
   end
 
   def self.load_episodes(filename)
-    self.episodes_by_code = {}
+    self.episodes_by_code   = {}
+    self.episodes_by_season = {}
     (self.episodes = Episode.load(filename)).each do |ep|
+      season = ep.code.scan(/^s(\d+)/).first.first.to_i
       episodes_by_code[ep.code.to_sym] = ep
+      (episodes_by_season[season] ||= []).unshift(ep)
     end
   end
 
+  # code should =~ /^s\d+e\d+$/
   def self.episode(code)
     episodes_by_code[code]
+  end
+
+  # code should =~ /^s?\d+$/
+  def self.season(code)
+    season = code.to_s.sub(/^s/, '').to_i
+    episodes_by_season[season]
   end
 
   def self.answer

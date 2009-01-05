@@ -57,5 +57,12 @@ class EpisodeTest < Test::Unit::TestCase
     it "indexes episodes by code" do
       IsLOSTOnYet.episode(:s5e1).should == IsLOSTOnYet.episodes[1]
     end
+
+    it "indexes episodes by season" do
+      season_5 = [IsLOSTOnYet.episodes[1], IsLOSTOnYet.episodes[0]]
+      IsLOSTOnYet.season(:s5).should  == season_5
+      IsLOSTOnYet.season('s5').should == season_5
+      IsLOSTOnYet.season(5).should    == season_5
+    end
   end
 end
