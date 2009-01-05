@@ -33,7 +33,11 @@ module IsLOSTOnYet
         args << {:since_id => post.external_id}
       end
       process_tweets(IsLOSTOnYet.twitter.replies(*args)) do |post|
-        post.episode = current_episode.to_s if current_episode
+        if post.body =~ /(^|\s)#(s(\d+)e(\d+))($|\s)/
+          post.episode = $2
+        elsif current_episode
+          post.episode = current_episode.to_s
+        end
       end
     end
 

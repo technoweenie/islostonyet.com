@@ -158,7 +158,7 @@ class PostTest < Test::Unit::TestCase
     before :all do
       @twitter    = Object.new
       @twit_users = [Faux::User.new(1, 'bob', 'http://bob'), Faux::User.new(2, 'fred', 'http://fred')]
-      @twit_posts = [Faux::Post.new(1, 'hi1', @twit_users.first, 'Sun Jan 04 23:04:16 UTC 2009'), Faux::Post.new(2, 'hi2', @twit_users.last, 'Sun Jan 04 23:04:16 UTC 2009')]
+      @twit_posts = [Faux::Post.new(1, 'hi1', @twit_users.first, 'Sun Jan 04 23:04:16 UTC 2009'), Faux::Post.new(2, 'hi2 #s1e2', @twit_users.last, 'Sun Jan 04 23:04:16 UTC 2009')]
       stub(IsLOSTOnYet).twitter { @twitter }
 
       cleanup IsLOSTOnYet::Post, IsLOSTOnYet::User
@@ -193,6 +193,10 @@ class PostTest < Test::Unit::TestCase
       @post1.body.should             == @twit_posts[0].text
       @post1.episode.should          == 's1e1'
       @post1.created_at.should       == Time.utc(2009, 1, 4, 23, 4, 16)
+    end
+
+    it "allows custom episodes set with hashtag" do
+      @post2.episode.should == 's1e2'
     end
 
     it "links post to user" do
