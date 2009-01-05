@@ -16,12 +16,39 @@ class PostTest < Test::Unit::TestCase
       IsLOSTOnYet.twitter_user = @user1
     end
 
+    before do
+      @twitter = Object.new
+      stub(IsLOSTOnYet).twitter { @twitter }
+    end
+
     it "finds latest external_id for updates" do
       IsLOSTOnYet::Post.latest_update.external_id.should == 2
     end
 
     it "finds latest external_id for replies" do
       IsLOSTOnYet::Post.latest_reply.external_id.should == 4
+    end
+
+    it "uses latest update external_id when processing updates" do
+      mock(@twitter).timeline(*[:user, {:since_id => 2}]) { [] }
+      IsLOSTOnYet::Post.process_updates
+    end
+
+    it "uses latest reply external_id when processing replies" do
+      mock(@twitter).replies(*[{:since_id => 4}]) { [] }
+      IsLOSTOnYet::Post.process_replies
+    end
+
+    it "uses no update external_id when processing first updates" do
+      stub(IsLOSTOnYet::Post).latest_update { nil }
+      mock(@twitter).timeline(*[:user]) { [] }
+      IsLOSTOnYet::Post.process_updates
+    end
+
+    it "uses no reply external_id when processing first replies" do
+      stub(IsLOSTOnYet::Post).latest_reply { nil }
+      mock(@twitter).replies(*[]) { [] }
+      IsLOSTOnYet::Post.process_replies
     end
   end
 

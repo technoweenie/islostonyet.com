@@ -3,12 +3,18 @@ module IsLOSTOnYet
     
     def self.process_updates
       args  = [:user]
+      if post = latest_update
+        args << {:since_id => post.external_id}
+      end
       process_tweets(IsLOSTOnYet.twitter.timeline(*args))
       IsLOSTOnYet.twitter_user.reload
     end
 
     def self.process_replies
       args  = []
+      if post = latest_reply
+        args << {:since_id => post.external_id}
+      end
       process_tweets(IsLOSTOnYet.twitter.replies(*args))
     end
 
@@ -22,11 +28,13 @@ module IsLOSTOnYet
 
   protected
     def self.filtered_for_updates
-      filter_and_order(:user_id => IsLOSTOnYet.twitter_user.id)
+      user_id = IsLOSTOnYet.twitter_user ? IsLOSTOnYet.twitter_user.id : 0
+      filter_and_order(:user_id => user_id)
     end
 
     def self.filtered_for_replies
-      filter_and_order(['user_id != ?', IsLOSTOnYet.twitter_user.id])
+      user_id = IsLOSTOnYet.twitter_user ? IsLOSTOnYet.twitter_user.id : 0
+      filter_and_order(['user_id != ?', user_id])
     end
 
     def self.filter_and_order(*args)
