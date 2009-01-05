@@ -162,10 +162,12 @@ class PostTest < Test::Unit::TestCase
       stub(IsLOSTOnYet).twitter { @twitter }
 
       cleanup IsLOSTOnYet::Post, IsLOSTOnYet::User
-      stub(@twitter).replies { @twit_posts.dup }
 
       @user1 = IsLOSTOnYet::User.new(:external_id => @twit_users[0].id, :login => 'abc', :avatar_url => 'http://')
       @user1.save
+
+      stub(@twitter).replies { @twit_posts.dup }
+      stub(IsLOSTOnYet).current_and_next_episodes { ['s1e1', nil] }
 
       IsLOSTOnYet::Post.process_replies
 
@@ -189,6 +191,7 @@ class PostTest < Test::Unit::TestCase
     it "creates posts" do
       IsLOSTOnYet::Post.count.should == 2
       @post1.body.should             == @twit_posts[0].text
+      @post1.episode.should          == 's1e1'
       @post1.created_at.should       == Time.utc(2009, 1, 4, 23, 4, 16)
     end
 

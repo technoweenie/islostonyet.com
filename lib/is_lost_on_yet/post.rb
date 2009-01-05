@@ -27,11 +27,14 @@ module IsLOSTOnYet
     end
 
     def self.process_replies
+      current_episode, next_episode = IsLOSTOnYet.current_and_next_episodes
       args  = []
       if post = latest_reply
         args << {:since_id => post.external_id}
       end
-      process_tweets(IsLOSTOnYet.twitter.replies(*args))
+      process_tweets(IsLOSTOnYet.twitter.replies(*args)) do |post|
+        post.episode = current_episode.to_s if current_episode
+      end
     end
 
     def self.latest_update
@@ -57,7 +60,7 @@ module IsLOSTOnYet
       where(*args).order(:created_at.desc)
     end
 
-    def self.process_tweets(tweets)
+    def self.process_tweets(tweets, &block)
       return nil if tweets.empty?
       users = {}
       posts = []
@@ -70,7 +73,7 @@ module IsLOSTOnYet
       existing_users = User.where(:external_id => users.keys).to_a
       Sequel::Model.db.transaction do
         process_users(users, existing_users)
-        process_posts(posts, users)
+        process_posts(posts, users, &block)
       end
     end
 
@@ -95,12 +98,13 @@ module IsLOSTOnYet
       users[user.external_id] = user
     end
 
-    def self.process_posts(posts, users)
+    def self.process_posts(posts, users, &block)
       posts.each do |attributes|
         post = Post.new(:user_id => users[attributes.delete(:user_id)].id)
         attributes.each do |key, value|
           post.send("#{key}=", value)
         end
+        if block then block.call(post) end
         post.save
       end
     end

@@ -6,6 +6,8 @@ module IsLOSTOnYet
   end
 
   def self.current_and_next_episodes(now = nil)
+    return [nil, nil] if episodes.nil? || episodes.empty?
+
     now           ||= Time.now.utc
     next_episode    = nil
     current_episode = episodes.detect do |episode|
