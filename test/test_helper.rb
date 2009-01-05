@@ -5,6 +5,7 @@ require 'is_lost_on_yet'
 Sequel::Model.db = Sequel.sqlite
 IsLOSTOnYet.setup_schema
 IsLOSTOnYet.init
+IsLOSTOnYet::Episode.episodes_path = File.join(File.dirname(__FILE__), 'episodes')
 
 gem 'rr', '~> 0.6'
 gem 'jeremymcanally-context' # sudo gem install jeremymcanally-context --source=http://gems.github.com

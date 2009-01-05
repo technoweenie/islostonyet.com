@@ -26,7 +26,7 @@ module IsLOSTOnYet
     end
 
     def init
-      %w(user post).each { |l| require "is_lost_on_yet/#{l}" }
+      %w(episode user post).each { |l| require "is_lost_on_yet/#{l}" }
     end
   end
 end

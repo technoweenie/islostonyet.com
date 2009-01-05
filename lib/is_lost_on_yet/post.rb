@@ -1,5 +1,6 @@
 module IsLOSTOnYet
   class Post < Sequel.Model(:posts)
+    
     def self.process_updates
       args  = [:user]
       process_tweets(IsLOSTOnYet.twitter.timeline(*args))
