@@ -5,7 +5,7 @@ module IsLOSTOnYet
       process_tweets(IsLOSTOnYet.twitter.timeline(*args))
     end
 
-    def self.process_responses
+    def self.process_replies
       args  = []
       process_tweets(IsLOSTOnYet.twitter.replies(*args))
     end

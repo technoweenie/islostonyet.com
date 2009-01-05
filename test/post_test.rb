@@ -68,4 +68,48 @@ class PostTest < Test::Unit::TestCase
       end
     end
   end
+
+  describe "Post#process_replies" do
+    before :all do
+      @twitter    = Object.new
+      @twit_users = [Faux::User.new(1, 'bob', 'http://bob'), Faux::User.new(2, 'fred', 'http://fred')]
+      @twit_posts = [Faux::Post.new(1, 'hi1', @twit_users.first, 'Sun Jan 04 23:04:16 UTC 2009'), Faux::Post.new(2, 'hi2', @twit_users.last, 'Sun Jan 04 23:04:16 UTC 2009')]
+      stub(IsLOSTOnYet).twitter { @twitter }
+
+      cleanup IsLOSTOnYet::Post, IsLOSTOnYet::User
+      stub(@twitter).replies { @twit_posts.dup }
+
+      @user1 = IsLOSTOnYet::User.new(:external_id => @twit_users[0].id, :login => 'abc', :avatar_url => 'http://')
+      @user1.save
+
+      IsLOSTOnYet::Post.process_replies
+
+      @user1.reload
+      @user2 = IsLOSTOnYet::User.find(:external_id => @twit_users[1].id)
+      @post1 = IsLOSTOnYet::Post.find(:external_id => @twit_posts[0].id)
+      @post2 = IsLOSTOnYet::Post.find(:external_id => @twit_posts[1].id)
+    end
+
+    it "users existing user" do
+      IsLOSTOnYet::User.count.should == 2
+      @user1.login.should            == @twit_users[0].name
+      @user1.avatar_url.should       == @twit_users[0].profile_image_url
+    end
+
+    it "creates user" do
+      @user2.login.should      == @twit_users[1].name
+      @user2.avatar_url.should == @twit_users[1].profile_image_url
+    end
+
+    it "creates posts" do
+      IsLOSTOnYet::Post.count.should == 2
+      @post1.body.should             == @twit_posts[0].text
+      @post1.created_at.should       == Time.utc(2009, 1, 4, 23, 4, 16)
+    end
+
+    it "links post to user" do
+      @post1.user_id.should == @user1.id
+      @post2.user_id.should == @user2.id
+    end
+  end
 end
