@@ -33,8 +33,11 @@ end
 
 require 'is_lost_on_yet/schema'
 
-config_path = File.join(File.dirname(__FILE__), '..', 'config', 'lost.rb')
-if File.exist?(config_path)
-  require config_path
-  IsLOSTOnYet.init
+# this is horrible, i need a better way to lay this out
+unless $testing
+  config_path = File.join(File.dirname(__FILE__), '..', 'config', 'lost.rb')
+  if File.exist?(config_path)
+    require config_path
+    IsLOSTOnYet.init
+  end
 end
