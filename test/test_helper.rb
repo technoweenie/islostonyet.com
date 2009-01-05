@@ -18,6 +18,7 @@ require 'logger'
 
 # Sequel::Model.db.logger = Logger.new(STDOUT)
 IsLOSTOnYet.twitter_login = 'lostie'
+Time.zone = "Eastern Time (US & Canada)"
 
 class Faux
   class User < Struct.new(:id, :name, :profile_image_url)
