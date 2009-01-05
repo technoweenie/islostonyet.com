@@ -15,6 +15,11 @@ namespace :lost do
     require 'is_lost_on_yet'
   end
 
+  desc "Reset DB schema"
+  task :schema => :init do
+    IsLOSTOnYet.setup_schema
+  end
+
   desc "Process all updates from the existing Twitter user"
   task :process_updates => :init do
     IsLOSTOnYet::Post.process_updates
