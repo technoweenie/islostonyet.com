@@ -37,7 +37,7 @@ module IsLOSTOnYet
 
     def init
       yield if block_given?
-      %w(episode user post).each { |l| require "is_lost_on_yet/#{l}" }
+      %w(episode answer user post).each { |l| require "is_lost_on_yet/#{l}" }
     end
   end
 
