@@ -1,8 +1,6 @@
 require 'rubygems'
 require 'rake/testtask'
 
-$LOAD_PATH << File.join(File.dirname(__FILE__), 'lib')
-
 Rake::TestTask.new do |t|
   t.test_files = FileList['test/**/*_test.rb']
 end
@@ -12,7 +10,7 @@ task :default => :test
 
 namespace :lost do
   task :init do
-    require 'is_lost_on_yet'
+    require File.join(File.dirname(__FILE__), 'config', 'lost.rb')
   end
 
   desc "Reset DB schema"

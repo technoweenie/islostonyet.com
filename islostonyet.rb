@@ -3,24 +3,21 @@ gem 'sinatra', '~> 0.3'
 require 'sinatra'
 require 'json'
 
-$LOAD_PATH << File.join(File.dirname(__FILE__), 'lib')
-require 'is_lost_on_yet'
+configure do
+  require File.join(File.dirname(__FILE__), 'config', 'lost.rb')
+end
 
 get '/' do
+  Time.zone   = IsLOSTOnYet.time_zone
+  @is_lost_on = IsLOSTOnYet.answer
   erb :index
 end
 
 get '/json' do
-  json = is_lost_on_yet?.to_json
+  json = IsLOSTOnYet.answer.to_json
   if params[:callback]
     "#{params[:callback]}(#{json})"
   else
     json
-  end
-end
-
-helpers do
-  def is_lost_on_yet?
-    @is_lost_on_yet ||= {:answer => "no", :reason => "returns on Jan 21st, 9PM ET"}
   end
 end

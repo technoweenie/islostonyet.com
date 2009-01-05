@@ -25,6 +25,7 @@ module IsLOSTOnYet
     attr_writer   :twitter_user
     attr_accessor :twitter_login
     attr_accessor :twitter_password
+    attr_accessor :time_zone
 
     def twitter
       @twitter ||= Twitter::Base.new(twitter_login, twitter_password)
@@ -35,18 +36,12 @@ module IsLOSTOnYet
     end
 
     def init
+      yield if block_given?
       %w(episode user post).each { |l| require "is_lost_on_yet/#{l}" }
     end
   end
+
+  self.time_zone = "UTC"
 end
 
 require 'is_lost_on_yet/schema'
-
-# this is horrible, i need a better way to lay this out
-unless $testing
-  config_path = File.join(File.dirname(__FILE__), '..', 'config', 'lost.rb')
-  if File.exist?(config_path)
-    require config_path
-    IsLOSTOnYet.init
-  end
-end
