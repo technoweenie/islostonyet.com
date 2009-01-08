@@ -45,7 +45,10 @@
     %meta{'http-equiv'=>"Content-Language", :content=>"en-us"}/
     %link{:href=>"/main.css", :media=>"all", :rel=>"stylesheet", :type=>"text/css"}/
   %body
-    %h1= "S#{@episode.season}E#{@episode.number} #{@episode.title}"
+    - if @episode
+      %h1= "S#{@episode.season}E#{@episode.number} #{@episode.title}"
+    - else
+      %h1= "Season #{params[:season]} Hype"
 
     %ul
     - @posts.each do |p|

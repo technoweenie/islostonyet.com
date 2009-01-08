@@ -61,7 +61,7 @@
           = u.login
           = ":"
         = p.body
-        = "(<a href=\"/s#{params[:season]}/e#{p.episode.sub /.*e/, ''}\">#{p.episode}</a>)"
+        = "(<a href=\"/s#{params[:season]}/e#{p.episode.sub /^s\d+e/, ''}\">#{p.episode}</a>)"
 
     %p by <a href="http://github.com/technoweenie">rick</a> and <a href="http://github.com/seaofclouds">seaofclouds</a>.  <a href="http://www.timelooptheory.com/">time loops, man</a>
     #cnt

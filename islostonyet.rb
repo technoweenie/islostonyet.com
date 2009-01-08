@@ -16,15 +16,22 @@ end
 get '/s:season' do
   Time.zone = IsLOSTOnYet.time_zone
   @episodes = IsLOSTOnYet.season params[:season]
-  @posts    = IsLOSTOnYet::Post.find_replies(params[:page] || 1).where(['posts.episode LIKE ?', "s#{params[:season]}e%"])
+  @posts    = IsLOSTOnYet::Post.for_season(params[:season], params[:page] || 1)
   @users    = users_for @posts
   haml :season
+end
+
+get '/s:season/ehype' do
+  Time.zone = IsLOSTOnYet.time_zone
+  @posts    = IsLOSTOnYet::Post.for_episode("s#{params[:season]}ehype", params[:page] || 1)
+  @users    = users_for @posts
+  haml :episode
 end
 
 get '/s:season/e:episode' do
   Time.zone = IsLOSTOnYet.time_zone
   @episode  = IsLOSTOnYet.episode :"s#{params[:season]}e#{params[:episode]}"
-  @posts    = IsLOSTOnYet::Post.find_replies(params[:page] || 1).where(:episode => @episode.code)
+  @posts    = IsLOSTOnYet::Post.for_episode(@episode.code, params[:page] || 1)
   @users    = users_for @posts
   haml :episode
 end

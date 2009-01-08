@@ -12,7 +12,7 @@ module IsLOSTOnYet
     end
 
     def self.find_updates(page = 1)
-      filtered_for_updates.limit(30)
+      filtered_for_updates.paginate(page, 30)
     end
 
     def self.find_replies(page = 1)
@@ -29,17 +29,14 @@ module IsLOSTOnYet
     end
 
     def self.process_replies
-      current_episode, next_episode = IsLOSTOnYet.current_and_next_episodes
-      args  = []
+      now  = Time.now.utc
+      args = []
+      current_episode, next_episode = IsLOSTOnYet.current_and_next_episodes(now)
       if post = latest_reply
         args << {:since_id => post.external_id}
       end
       process_tweets(IsLOSTOnYet.twitter.replies(*args)) do |post|
-        if post.body =~ /(^|\s)#(s(\d+)e(\d+))($|\s)/
-          post.episode = $2
-        elsif current_episode
-          post.episode = current_episode.to_s
-        end
+        post.set_or_guess_episode(current_episode, now)
       end
     end
 
@@ -49,6 +46,18 @@ module IsLOSTOnYet
 
     def self.latest_reply
       filtered_for_replies.select(:external_id).first
+    end
+
+    def set_or_guess_episode(current_episode, now = nil)
+      now        ||= Time.now.utc
+      self.episode = 
+        if body =~ /(^|\s)#(s(\d+)e(\d+))($|\s)/
+          $2
+        elsif current_episode && current_episode.old?(now)
+          "s#{current_episode.season + 1}ehype"
+        else
+          current_episode.to_s
+        end
     end
 
   protected
