@@ -32,7 +32,11 @@ module IsLOSTOnYet
     end
 
     def twitter_user
-      @twitter_user ||= User.find(:login => twitter_login)
+      @twitter_user ||= User.find(:login => twitter_login) || begin
+        twit = twitter.user(twitter_login)
+        User.create(:login => twitter_login, :external_id => twit.id, :avatar_url => twit.profile_image_url)
+        twitter_user
+      end
     end
 
     def init
