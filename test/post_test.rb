@@ -98,6 +98,7 @@ class PostTest < Test::Unit::TestCase
 
     describe "without existing user" do
       before :all do
+        stub(@twitter).user { @twit_user }
         stub(@twitter).timeline(:user) { [@twit_post] }
 
         IsLOSTOnYet::Post.process_updates
@@ -128,6 +129,7 @@ class PostTest < Test::Unit::TestCase
         @user = IsLOSTOnYet::User.new(:external_id => @twit_user.id, :login => 'abc', :avatar_url => 'http://')
         @user.save
 
+        IsLOSTOnYet.twitter_user = @user
         IsLOSTOnYet::Post.process_updates
 
         @user.reload
@@ -166,9 +168,10 @@ class PostTest < Test::Unit::TestCase
       @user1 = IsLOSTOnYet::User.new(:external_id => @twit_users[0].id, :login => 'abc', :avatar_url => 'http://')
       @user1.save
 
-      stub(@twitter).replies { @twit_posts.dup }
+      stub(@twitter).replies { @twit_posts.dup   }
       stub(IsLOSTOnYet).current_and_next_episodes { ['s1e1', nil] }
 
+      IsLOSTOnYet.twitter_user = @user1
       IsLOSTOnYet::Post.process_replies
 
       @user1.reload
