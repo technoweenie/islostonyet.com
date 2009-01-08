@@ -32,17 +32,17 @@ module IsLOSTOnYet
     end
 
     def twitter_user
-      @twitter_user ||= User.find(:login => twitter_login) || begin
-        twit = twitter.user(twitter_login)
-        User.create(:login => twitter_login, :external_id => twit.id, :avatar_url => twit.profile_image_url)
-        twitter_user
-      end
+      @twitter_user ||= User.find(:login => twitter_login)
     end
 
     def init
       yield if block_given?
       %w(episode answer user post).each { |l| require "is_lost_on_yet/#{l}" }
       Time.zone = time_zone
+      if twitter_user.nil?
+        twit = twitter.user(twitter_login)
+        User.create(:login => twitter_login, :external_id => twit.id, :avatar_url => twit.profile_image_url)
+      end
     end
   end
 
