@@ -47,6 +47,15 @@
   %body
     %h1= "S#{@episode.season}E#{@episode.number} #{@episode.title}"
 
+    %ul
+    - @posts.each do |p|
+      %li
+        %img{:src => @users[p.user_id].avatar_url}
+        %strong
+          = @users[p.user_id].login
+          = ":"
+        = p.body
+
     %p by <a href="http://github.com/technoweenie">rick</a> and <a href="http://github.com/seaofclouds">seaofclouds</a>.  <a href="http://www.timelooptheory.com/">time loops, man</a>
     #cnt
       == <script src="http://errcount.com/ctr/750.js"></script>

@@ -52,6 +52,16 @@
       %li
         %a{:href => e.path}= "Episode #{e.number}: #{e.title}"
 
+    %ul
+    - @posts.each do |p|
+      %li
+        %img{:src => @users[p.user_id].avatar_url}
+        %strong
+          = @users[p.user_id].login
+          = ":"
+        = p.body
+        = "(<a href=\"/s#{params[:season]}/e#{p.episode.sub /.*e/, ''}\">#{p.episode}</a>)"
+
     %p by <a href="http://github.com/technoweenie">rick</a> and <a href="http://github.com/seaofclouds">seaofclouds</a>.  <a href="http://www.timelooptheory.com/">time loops, man</a>
     #cnt
       == <script src="http://errcount.com/ctr/750.js"></script>

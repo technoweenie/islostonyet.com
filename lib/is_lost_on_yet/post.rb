@@ -1,5 +1,7 @@
 module IsLOSTOnYet
   class Post < Sequel.Model(:posts)
+    many_to_one :user, :class => "IsLOSTOnYet::User"
+
     def self.for_season(code, page = 1)
       q = "s#{code.to_s.sub(/^s/, '')}e%"
       filter_and_order(['episode LIKE ?', q]).paginate(page, 30)
