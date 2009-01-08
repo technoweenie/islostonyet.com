@@ -40,13 +40,13 @@
 !!! Strict
 %html{ :xmlns => "http://www.w3.org/1999/xhtml", :lang => "en", 'xml:lang' => "en" }
   %head
-    %title Is Lost (Season 5) on yet?
+    %title= page_title @is_lost_on
     %meta{'http-equiv'=>"Content-Type", :content=>"text/html; charset=iso-8859-1"}/
     %meta{'http-equiv'=>"Content-Language", :content=>"en-us"}/
     %link{:href=>"/main.css", :media=>"all", :rel=>"stylesheet", :type=>"text/css"}/
   %body
     %h1= @is_lost_on.answer
     %h2= @is_lost_on.reason
-    %p by <a href="http://github.com/technoweenie">rick</a>.  <a href="http://www.timelooptheory.com/">time loops, man</a>
+    %p by <a href="http://github.com/technoweenie">rick</a> and <a href="http://github.com/seaofclouds">seaofclouds</a>.  <a href="http://www.timelooptheory.com/">time loops, man</a>
     #cnt
       == <script src="http://errcount.com/ctr/750.js"></script>

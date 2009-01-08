@@ -26,3 +26,9 @@ get '/main.css' do
   content_type 'text/css', :charset => 'utf-8'
   sass :main
 end
+
+helpers do
+  def page_title(answer)
+    "Is Lost#{" (Season #{answer.next_episode.season})" if answer.next_episode} on yet?"
+  end
+end
