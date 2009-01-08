@@ -161,7 +161,9 @@ class PostTest < Test::Unit::TestCase
       @twitter    = Object.new
       @twit_users = [Faux::User.new(1, 'bob', 'http://bob'), Faux::User.new(2, 'fred', 'http://fred')]
       @twit_posts = [Faux::Post.new(1, 'hi1', @twit_users.first, 'Sun Jan 04 23:04:16 UTC 2009'), 
-        Faux::Post.new(2, 'hi2 #s1e2', @twit_users.last, 'Sun Jan 04 23:04:16 UTC 2009')]
+        Faux::Post.new(2, "@#{IsLOSTOnYet.twitter_login} ? #s1e2", @twit_users.last, 'Sun Jan 04 23:04:16 UTC 2009'),
+        Faux::Post.new(3, "@#{IsLOSTOnYet.twitter_login}?", @twit_users.last, 'Sun Jan 04 23:04:16 UTC 2009'),
+        Faux::Post.new(4, "@#{IsLOSTOnYet.twitter_login} ? ", @twit_users.last, 'Sun Jan 04 23:04:16 UTC 2009')]
       stub(IsLOSTOnYet).twitter { @twitter }
 
       cleanup IsLOSTOnYet::Post, IsLOSTOnYet::User
@@ -169,8 +171,9 @@ class PostTest < Test::Unit::TestCase
       @user1 = IsLOSTOnYet::User.new(:external_id => @twit_users[0].id, :login => 'abc', :avatar_url => 'http://')
       @user1.save
 
-      stub(@twitter).replies { @twit_posts.dup   }
-      stub(IsLOSTOnYet).current_and_next_episodes { [IsLOSTOnYet::Episode.new('s1e1', nil, 3.days.ago), nil] }
+      stub(@twitter).replies { @twit_posts.dup }
+      stub(@twitter).update("@fred abc")
+      stub(IsLOSTOnYet).answer { IsLOSTOnYet::Answer.new(Time.now.utc, IsLOSTOnYet::Episode.new('s1e1', nil, 3.days.ago), nil, :yes, 'abc') }
 
       IsLOSTOnYet.twitter_user = @user1
       IsLOSTOnYet::Post.process_replies

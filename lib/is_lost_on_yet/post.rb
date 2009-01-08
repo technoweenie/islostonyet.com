@@ -29,14 +29,19 @@ module IsLOSTOnYet
     end
 
     def self.process_replies
-      now  = Time.now.utc
-      args = []
-      current_episode, next_episode = IsLOSTOnYet.current_and_next_episodes(now)
+      now    = Time.now.utc
+      args   = []
+      answer = IsLOSTOnYet.answer(now)
       if post = latest_reply
         args << {:since_id => post.external_id}
       end
-      process_tweets(IsLOSTOnYet.twitter.replies(*args)) do |post|
-        post.set_or_guess_episode(current_episode, now)
+      process_tweets(IsLOSTOnYet.twitter.replies(*args)) do |user, post|
+        if post.inquiry?
+          IsLOSTOnYet.twitter.update("@#{user.login} #{answer.reason}")
+          false
+        else
+          post.set_or_guess_episode(answer.current_episode, now)
+        end
       end
     end
 
@@ -46,6 +51,10 @@ module IsLOSTOnYet
 
     def self.latest_reply
       filtered_for_replies.select(:external_id).first
+    end
+
+    def inquiry?
+      body.strip =~ /^@#{IsLOSTOnYet.twitter_login}\s*\?$/i
     end
 
     def set_or_guess_episode(current_episode, now = nil)
@@ -115,12 +124,12 @@ module IsLOSTOnYet
 
     def self.process_posts(posts, users, &block)
       posts.each do |attributes|
-        post = Post.new(:user_id => users[attributes.delete(:user_id).to_i].id)
+        user = users[attributes.delete(:user_id).to_i]
+        post = Post.new(:user_id => user.id)
         attributes.each do |key, value|
           post.send("#{key}=", value)
         end
-        if block then block.call(post) end
-        post.save
+        (!block || block.call(user, post)) && post.save
       end
     end
   end
