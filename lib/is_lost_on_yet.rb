@@ -39,13 +39,6 @@ module IsLOSTOnYet
       yield if block_given?
       %w(episode answer user post).each { |l| require "is_lost_on_yet/#{l}" }
       Time.zone = time_zone
-      begin
-        if twitter_user.nil?
-          twit = twitter.user(twitter_login)
-          User.create(:login => twitter_login, :external_id => twit.id, :avatar_url => twit.profile_image_url)
-        end
-      rescue Twitter::CantConnect
-      end
     end
   end
 

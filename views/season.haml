@@ -48,9 +48,11 @@
     %h1= "Season #{params[:season]}"
 
     %ul
-    - @episodes.each do |e|
       %li
-        %a{:href => e.path}= "Episode #{e.number}: #{e.title}"
+        %a{:href => "/s#{params[:season]}/ehype"} Pre-Season Hype
+      - @episodes.each do |e|
+        %li
+          %a{:href => e.path}= "Episode #{e.number}: #{e.title}"
 
     %ul
     - @posts.each do |p|
