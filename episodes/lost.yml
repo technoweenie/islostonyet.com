@@ -1,6 +1,724 @@
+s1e1:
+  series_number: 1
+  title: "Pilot: Part 1"
+  director: J.J. Abrams
+  writer: Story by Jeffrey Lieber and J.J. Abrams & Damon Lindelof -Teleplay by J.J. Abrams & Damon Lindelof 
+  main_character: Jack
+  viewers: 18.65 
+  air_date: 2004-09-23  02:00:00 Z
+s1e2:
+  series_number: 2
+  title: "Pilot: Part 2"
+  director: J.J. Abrams
+  writer: Story by Jeffrey Lieber and J.J. Abrams & Damon Lindelof -Teleplay by J.J. Abrams & Damon Lindelof 
+  main_character: Charlie & Kate
+  viewers: 17.00 
+  air_date: 2004-09-30  02:00:00 Z
+s1e3:
+  series_number: 3
+  title: Tabula Rasa
+  director: Jack Bender
+  writer: Damon Lindelof 
+  main_character: Kate
+  viewers: 16.54 
+  air_date: 2004-10-07  02:00:00 Z
+s1e4:
+  series_number: 4
+  title: Walkabout
+  director: Jack Bender
+  writer: David Fury 
+  main_character: Locke
+  viewers: 18.16 
+  air_date: 2004-10-14  02:00:00 Z
+s1e5:
+  series_number: 5
+  title: White Rabbit
+  director: Kevin Hooks
+  writer: Christian Taylor 
+  main_character: Jack
+  viewers: 16.82 
+  air_date: 2004-10-21  02:00:00 Z
+s1e6:
+  series_number: 6
+  title: House of the Rising Sun
+  director: Michael Zinberg
+  writer: Javier Grillo-Marxuach 
+  main_character: Sun
+  viewers: 16.83 
+  air_date: 2004-10-28  02:00:00 Z
+s1e7:
+  series_number: 7
+  title: The Moth
+  director: Jack Bender
+  writer: Jennifer Johnson & Paul Dini 
+  main_character: Charlie
+  viewers: 18.73 
+  air_date: 2004-11-04  02:00:00 Z
+s1e8:
+  series_number: 8
+  title: Confidence Man
+  director: Tucker Gates
+  writer: Damon Lindelof 
+  main_character: Sawyer
+  viewers: 18.44 
+  air_date: 2004-11-11 02:00:00 Z
+s1e9:
+  series_number: 9
+  title: Solitary
+  director: Greg Yaitanes
+  writer: David Fury 
+  main_character: Sayid
+  viewers: 17.64 
+  air_date: 2004-11-18 02:00:00 Z
+s1e10:
+  series_number: 10
+  title: Raised by Another
+  director: Marita Grabiak
+  writer: Lynne E. Litt 
+  main_character: Claire
+  viewers: 17.15 
+  air_date: 2004-12-02 02:00:00 Z
+s1e11:
+  series_number: 11
+  title: All the Best Cowboys Have Daddy Issues
+  director: Stephen Williams
+  writer: Javier Grillo-Marxuach 
+  main_character: Jack
+  viewers: 18.88 
+  air_date: 2004-12-09 02:00:00 Z
+s1e12:
+  series_number: 12
+  title: Whatever the Case May Be
+  director: Jack Bender
+  writer: Damon Lindelof & Jennifer Johnson 
+  main_character: Kate
+  viewers: 21.59 
+  air_date: 2005-01-06 02:00:00 Z
+s1e13:
+  series_number: 13
+  title: Hearts and Minds
+  director: Rod Holcomb
+  writer: Carlton Cuse & Javier Grillo-Marxuach 
+  main_character: Boone
+  viewers: 20.81 
+  air_date: 2005-01-13 02:00:00 Z
+s1e14:
+  series_number: 14
+  title: Special
+  director: Greg Yataines
+  writer: David Fury 
+  main_character: Michael & Walt
+  viewers: 19.69 
+  air_date: 2005-01-20 02:00:00 Z
+s1e15:
+  series_number: 15
+  title: Homecoming
+  director: Kevin Hooks
+  writer: Damon Lindelof 
+  main_character: Charlie
+  viewers: 19.48 
+  air_date: 2005-02-10 02:00:00 Z
+s1e16:
+  series_number: 16
+  title: Outlaws
+  director: Jack Bender
+  writer: Drew Goddard 
+  main_character: Sawyer
+  viewers: 17.87 
+  air_date: 2005-02-17 02:00:00 Z
+s1e17:
+  series_number: 17
+  title: In Translation
+  director: Tucker Gates
+  writer: Javier Grillo-Marxuach & Leonard Dick 
+  main_character: Jin
+  viewers: 19.49 
+  air_date: 2005-02-24 02:00:00 Z
+s1e18:
+  series_number: 18
+  title: Numbers
+  director: Dan Attias
+  writer: Brent Fletcher & David Fury 
+  main_character: Hurley
+  viewers: 18.85 
+  air_date: 2005-03-03 02:00:00 Z
+s1e19:
+  series_number: 19
+  title: Deus Ex Machina
+  director: Robert Mandel
+  writer: Carlton Cuse & Damon Lindelof 
+  main_character: Locke
+  viewers: 17.75 
+  air_date: 2005-03-31 02:00:00 Z
+s1e20:
+  series_number: 20
+  title: Do No Harm
+  director: Stephen Williams
+  writer: Janet Tamaro 
+  main_character: Jack
+  viewers: 17.12 
+  air_date: 2005-04-07 02:00:00 Z
+s1e21:
+  series_number: 21
+  title: The Greater Good
+  director: David Grossman
+  writer: Leonard Dick 
+  main_character: Sayid
+  viewers: 17.20 
+  air_date: 2005-05-05 02:00:00 Z
+s1e22:
+  series_number: 22
+  title: Born to Run
+  director: Tucker Gates
+  writer: Story by Javier Grillo-Marxuach -Teleplay by Edward Kitsis & Adam Horowitz 
+  main_character: Kate
+  viewers: 17.10 
+  air_date: 2005-05-12 02:00:00 Z
+s1e23:
+  series_number: 23
+  title: "Exodus: Part 1"
+  director: Jack Bender
+  writer: Damon Lindelof & Carlton Cuse 
+  main_character: Various
+  viewers: 18.62 
+  air_date: 2005-05-19 02:00:00 Z
+s1e24:
+  series_number: 24
+  title: "Exodus: Part 2"
+  director: Jack Bender
+  writer: Damon Lindelof & Carlton Cuse 
+  main_character: Various
+  viewers: 20.71 
+  air_date: 2005-05-26 02:00:00 Z
+  
+s2e1:
+  series_number: 25
+  title: Man of Science, Man of Faith
+  director: Jack Bender
+  writer: Damon Lindelof 
+  main_character: Jack
+  viewers: 23.47 
+  air_date: 2005-09-22 02:00:00 Z
+s2e2:
+  series_number: 26
+  title: Adrift
+  director: Stephen Williams
+  writer: Steven Maeda & Leonard Dick 
+  main_character: Michael
+  viewers: 23.17 
+  air_date: 2005-09-29 02:00:00 Z
+s2e3:
+  series_number: 27
+  title: Orientation
+  director: Jack Bender
+  writer: Javier Grillo-Marxuach & Craig Wright 
+  main_character: Locke
+  viewers: 22.38 
+  air_date: 2005-10-06 02:00:00 Z
+s2e4:
+  series_number: 28
+  title: Everybody Hates Hugo
+  director: Alan Taylor
+  writer: Edward Kitsis & Adam Horowitz 
+  main_character: Hurley
+  viewers: 21.66 
+  air_date: 2005-10-13 02:00:00 Z
+s2e5:
+  series_number: 29
+  title: ...And Found
+  director: Stephen Williams
+  writer: Carlton Cuse & Damon Lindelof 
+  main_character: Sun & Jin
+  viewers: 21.38 
+  air_date: 2005-10-20 02:00:00 Z
+s2e6:
+  series_number: 30
+  title: Abandoned
+  director: Adam Davidson
+  writer: Elizabeth Sarnoff 
+  main_character: Shannon
+  viewers: 20.01 
+  air_date: 2005-11-10 02:00:00 Z
+s2e7:
+  series_number: 31
+  title: The Other 48 Days
+  director: Eric Laneuville
+  writer: Damon Lindelof & Carlton Cuse 
+  main_character: Ana Lucia, Mr. Eko & Elizabeth "Libby"
+  viewers: 21.87 
+  air_date: 2005-11-17 02:00:00 Z
+s2e8:
+  series_number: 32
+  title: Collision
+  director: Stephen Williams
+  writer: Javier Grillo-Marxuach & Leonard Dick 
+  main_character: Ana Lucia
+  viewers: 19.29 
+  air_date: 2005-11-24 02:00:00 Z
+s2e9:
+  series_number: 33
+  title: What Kate Did
+  director: Paul Edwards
+  writer: Steven Maeda & Craig Wright 
+  main_character: Kate
+  viewers: 21.54 
+  air_date: 2005-11-31 02:00:00 Z
+s2e10:
+  series_number: 34
+  title: The 23rd Psalm
+  director: Matt Earl Beesley
+  writer: Carlton Cuse & Damon Lindelof 
+  main_character: Mr. Eko
+  viewers: 20.56 
+  air_date: 2006-01-12 02:00:00 Z
+s2e11:
+  series_number: 35
+  title: The Hunting Party
+  director: Stephen Williams
+  writer: Elizabeth Sarnoff & Christina M. Kim 
+  main_character: Jack
+  viewers: 19.13 
+  air_date: 2006-01-19 02:00:00 Z
+s2e12:
+  series_number: 36
+  title: Fire + Water
+  director: Jack Bender
+  writer: Edward Kitsis & Adam Horowitz 
+  main_character: Charlie
+  viewers: 19.05 
+  air_date: 2006-01-26 02:00:00 Z
+s2e13:
+  series_number: 37
+  title: The Long Con
+  director: Roxann Dawson
+  writer: Steven Maeda & Leonard Dick 
+  main_character: Sawyer
+  viewers: 18.74 
+  air_date: 2006-02-09 02:00:00 Z
+s2e14:
+  series_number: 38
+  title: One of Them
+  director: Stephen Williams
+  writer: Damon Lindelof & Carlton Cuse 
+  main_character: Sayid
+  viewers: 18.20 
+  air_date: 2006-02-16 02:00:00 Z
+s2e15:
+  series_number: 39
+  title: Maternity Leave
+  director: Jack Bender
+  writer: Dawn Lambertsen Kelly & Matt Ragghianti 
+  main_character: Claire
+  viewers: 16.43 
+  air_date: 2006-03-02 02:00:00 Z
+s2e16:
+  series_number: 40
+  title: The Whole Truth
+  director: Karen Gaviola
+  writer: Elizabeth Sarnoff & Christina M. Kim 
+  main_character: Sun
+  viewers: 15.30 
+  air_date: 2006-03-23 02:00:00 Z
+s2e17:
+  series_number: 41
+  title: Lockdown
+  director: Stephen Williams
+  writer: Carlton Cuse & Damon Lindelof 
+  main_character: Locke
+  viewers: 16.21 
+  air_date: 2006-03-30 02:00:00 Z
+s2e18:
+  series_number: 42
+  title: Dave
+  director: Jack Bender
+  writer: Edward Kitsis & Adam Horowitz 
+  main_character: Hurley
+  viewers: 16.38 
+  air_date: 2006-04-06 02:00:00 Z
+s2e19:
+  series_number: 43
+  title: S.O.S.
+  director: Eric Laneuville
+  writer: Steven Maeda & Leonard Dick 
+  main_character: Rose & Bernard
+  viewers: 15.68 
+  air_date: 2006-04-13 02:00:00 Z
+s2e20:
+  series_number: 44
+  title: Two for the Road
+  director: Paul Edwards
+  writer: Elizabeth Sarnoff & Christina M. Kim 
+  main_character: Ana Lucia
+  viewers: 15.56 
+  air_date: 2006-05-04 02:00:00 Z
+s2e21:
+  series_number: 45
+  title: "?"
+  director: Deran Sarafian
+  writer: Damon Lindelof & Carlton Cuse 
+  main_character: Mr. Eko
+  viewers: 16.35 
+  air_date: 2006-05-11 02:00:00 Z
+s2e22:
+  series_number: 46
+  title: Three Minutes
+  director: Stephen Williams
+  writer: Edward Kitsis & Adam Horowitz 
+  main_character: Michael
+  viewers: 14.67 
+  air_date: 2006-05-18 02:00:00 Z
+s2e23:
+  series_number: 47
+  title: Live Together, Die Alone
+  director: Jack Bender
+  writer: Carlton Cuse & Damon Lindelof 
+  main_character: Desmond
+  viewers: 17.84 
+  air_date: 2006-05-25 02:00:00 Z
+  
+s3e1:
+  series_number: 48
+  title: A Tale of Two Cities
+  director: Jack Bender
+  writer: Story by Damon Lindelof -Teleplay by J.J. Abrams & Damon Lindelof 
+  main_character: Jack
+  viewers: 18.82 
+  air_date: 2006-10-05 02:00:00 Z
+s3e3:
+  series_number: 49
+  title: The Glass Ballerina
+  director: Paul Edwards
+  writer: Jeff Pinkner & Drew Goddard 
+  main_character: Sun & Jin
+  viewers: 16.89 
+  air_date: 2006-10-12 02:00:00 Z
+s3e2:
+  series_number: 50
+  title: Further Instructions
+  director: Stephen Williams
+  writer: Carlton Cuse & Elizabeth Sarnoff 
+  main_character: Locke
+  viewers: 16.31 
+  air_date: 2006-10-19 02:00:00 Z
+s3e4:
+  series_number: 51
+  title: Every Man for Himself
+  director: Stephen Williams
+  writer: Edward Kitsis & Adam Horowitz 
+  main_character: Sawyer
+  viewers: 17.09 
+  air_date: 2006-10-26 02:00:00 Z
+s3e5:
+  series_number: 52
+  title: The Cost of Living
+  director: Jack Bender
+  writer: Alison Schapker & Monica Owusu-Breen 
+  main_character: Mr. Eko
+  viewers: 16.07 
+  air_date: 2006-11-02 02:00:00 Z
+s3e6:
+  series_number: 53
+  title: I Do
+  director: Tucker Gates
+  writer: Damon Lindelof & Carlton Cuse 
+  main_character: Kate
+  viewers: 17.15 
+  air_date: 2006-11-09 02:00:00 Z
+s3e7:
+  series_number: 54
+  title: Not in Portland
+  director: Stephen Williams
+  writer: Carlton Cuse & Jeff Pinkner 
+  main_character: Juliet
+  viewers: 14.49 
+  air_date: 2007-02-08 02:00:00 Z
+s3e8:
+  series_number: 55
+  title: Flashes Before Your Eyes
+  director: Jack Bender
+  writer: Damon Lindelof & Drew Goddard 
+  main_character: Desmond
+  viewers: 12.84 
+  air_date: 2007-02-15 02:00:00 Z
+s3e9:
+  series_number: 56
+  title: Stranger in a Strange Land
+  director: Paris Barclay
+  writer: Elizabeth Sarnoff & Christina M. Kim 
+  main_character: Jack
+  viewers: 12.95 
+  air_date: 2007-02-22 02:00:00 Z
+s3e10:
+  series_number: 57
+  title: Tricia Tanaka Is Dead
+  director: Eric Laneuville
+  writer: Edward Kitsis & Adam Horowitz 
+  main_character: Hurley
+  viewers: 12.78 
+  air_date: 2007-03-01 02:00:00 Z
+s3e11:
+  series_number: 58
+  title: Enter 77
+  director: Stephen Williams
+  writer: Carlton Cuse & Damon Lindelof 
+  main_character: Sayid
+  viewers: 12.45 
+  air_date: 2007-03-08 02:00:00 Z
+s3e12:
+  series_number: 59
+  title: Par Avion
+  director: Paul Edwards
+  writer: Christina M. Kim & Jordan Rosenberg 
+  main_character: Claire
+  viewers: 12.48 
+  air_date: 2007-03-15 02:00:00 Z
+s3e13:
+  series_number: 60
+  title: The Man from Tallahassee
+  director: Jack Bender
+  writer: Drew Goddard & Jeff Pinkner 
+  main_character: Locke
+  viewers: 12.22 
+  air_date: 2007-03-22 02:00:00 Z
+s3e14:
+  series_number: 61
+  title: Exposé
+  director: Stephen Williams
+  writer: Edward Kitsis & Adam Horowitz 
+  main_character: Nikki and Paulo
+  viewers: 11.52 
+  air_date: 2007-03-29 02:00:00 Z
+s3e15:
+  series_number: 62
+  title: Left Behind
+  director: Karen Gaviola
+  writer: Damon Lindelof & Elizabeth Sarnoff 
+  main_character: Kate
+  viewers: 11.66 
+  air_date: 2007-04-05 02:00:00 Z
+s3e16:
+  series_number: 63
+  title: One of Us
+  director: Jack Bender
+  writer: Carlton Cuse & Drew Goddard 
+  main_character: Juliet
+  viewers: 12.09 
+  air_date: 2007-04-12 02:00:00 Z
+s3e17:
+  series_number: 64
+  title: Catch-22
+  director: Stephen Williams
+  writer: Jeff Pinkner & Brian K. Vaughan 
+  main_character: Desmond
+  viewers: 12.08 
+  air_date: 2007-04-19 02:00:00 Z
+s3e18:
+  series_number: 65
+  title: D.O.C.
+  director: Fred Toye
+  writer: Edward Kitsis & Adam Horowitz 
+  main_character: Sun
+  viewers: 11.86 
+  air_date: 2007-04-26 02:00:00 Z
+s3e19:
+  series_number: 66
+  title: The Brig
+  director: Eric Laneuville
+  writer: Damon Lindelof & Carlton Cuse 
+  main_character: Locke
+  viewers: 12.33 
+  air_date: 2007-05-03 02:00:00 Z
+s3e20:
+  series_number: 67
+  title: The Man Behind the Curtain
+  director: Bobby Roth
+  writer: Elizabeth Sarnoff & Drew Goddard 
+  main_character: Ben
+  viewers: 12.11 
+  air_date: 2007-05-10 02:00:00 Z
+s3e21:
+  series_number: 68
+  title: Greatest Hits
+  director: Stephen Williams
+  writer: Edward Kitsis & Adam Horowitz 
+  main_character: Charlie
+  viewers: 12.32 
+  air_date: 2007-05-17 02:00:00 Z
+s3e22:
+  series_number: 69
+  title: Through the Looking Glass
+  director: Jack Bender
+  writer: Carlton Cuse & Damon Lindelof 
+  main_character: Jack
+  viewers: 13.86 
+  air_date: 2007-05-24 02:00:00 Z
+  
+s4e1:
+  series_number: 70
+  title: The Beginning of the End
+  director: Jack Bender
+  writer: Damon Lindelof & Carlton Cuse 
+  main_character: Hurley
+  viewers: 17.766 
+  air_date: 2008-02-01 02:00:00 Z
+s4e2:
+  series_number: 71
+  title: Confirmed Dead
+  director: Stephen Williams
+  writer: Drew Goddard & Brian K. Vaughan 
+  main_character: Daniel, Charlotte, Miles, Frank & Naomi
+  viewers: 16.963 
+  air_date: 2008-02-08 02:00:00 Z
+s4e3:
+  series_number: 72
+  title: The Economist
+  director: Jack Bender
+  writer: Edward Kitsis & Adam Horowitz 
+  main_character: Sayid
+  viewers: 15.647 
+  air_date: 2008-02-15 02:00:00 Z
+s4e4:
+  series_number: 73
+  title: Eggtown
+  director: Stephen Williams
+  writer: Elizabeth Sarnoff & Greggory Nations 
+  main_character: Kate
+  viewers: 15.438 
+  air_date: 2008-02-22 02:00:00 Z
+s4e5:
+  series_number: 74
+  title: The Constant
+  director: Jack Bender
+  writer: Carlton Cuse & Damon Lindelof 
+  main_character: Desmond
+  viewers: 14.998 
+  air_date: 2008-02-29 02:00:00 Z
+s4e6:
+  series_number: 75
+  title: The Other Woman
+  director: Eric Laneuville
+  writer: Drew Goddard & Christina M. Kim 
+  main_character: Juliet
+  viewers: 14.933 
+  air_date: 2008-03-07 02:00:00 Z
+s4e7:
+  series_number: 76
+  title: Ji Yeon
+  director: Stephen Semel
+  writer: Edward Kitsis & Adam Horowitz 
+  main_character: Sun & Jin
+  viewers: 13.844 
+  air_date: 2008-03-14 02:00:00 Z
+s4e8:
+  series_number: 77
+  title: Meet Kevin Johnson
+  director: Stephen Williams
+  writer: Elizabeth Sarnoff & Brian K. Vaughan 
+  main_character: Michael
+  viewers: 13.386 
+  air_date: 2008-03-21 02:00:00 Z
+s4e9:
+  series_number: 78
+  title: The Shape of Things to Come
+  director: Jack Bender
+  writer: Brian K. Vaughan & Drew Goddard 
+  main_character: Ben
+  viewers: 14.067 
+  air_date: 2008-04-25 02:00:00 Z
+s4e10:
+  series_number: 79
+  title: Something Nice Back Home
+  director: Stephen Williams
+  writer: Edward Kitsis & Adam Horowitz 
+  main_character: Jack
+  viewers: 12.946 
+  air_date: 2008-05-02 02:00:00 Z
+s4e11:
+  series_number: 80
+  title: Cabin Fever
+  director: Paul Edwards
+  writer: Elizabeth Sarnoff & Kyle Pennington 
+  main_character: Locke
+  viewers: 13.003 
+  air_date: 2008-05-09 02:00:00 Z
+s4e12:
+  series_number: 81
+  title: "There's No Place Like Home: Part 1"
+  director: Stephen Williams
+  writer: Damon Lindelof & Carlton Cuse 
+  main_character: Jack, Hurley, Sayid, Sun & Kate
+  viewers: 13.102 
+  air_date: 2008-05-16 02:00:00 Z
+s4e13:
+  series_number: 82
+  title: "There's No Place Like Home: Part 2"
+  director: Jack Bender
+  writer: Carlton Cuse & Damon Lindelof 
+  main_character: Jack, Hurley, Sayid, Sun & Kate
+  viewers: 13.991 
+  air_date: 2008-05-30 02:00:00 Z
+s4e14:
+  series_number: 83
+  title: "There's No Place Like Home: Part 2"
+  director: Jack Bender
+  writer: Carlton Cuse & Damon Lindelof 
+  main_character: Jack, Hurley, Sayid, Sun & Kate
+  viewers: 13.991 
+  air_date: 2008-05-30 02:00:00 Z
+  
 s5e1:
+  series_number: 84 
   title: Because You Left
+  director: Stephen Williams 
+  writer: Damon Lindelof & Carlton Cuse  
   air_date: 2009-01-22 02:00:00 Z
+  #main_character: 
+  #viewers: 
 s5e2:
+  series_number: 85 
   title: The Lie
+  director: Jack Bender 
+  writer: Edward Kitsis & Adam Horowitz  
   air_date: 2009-01-22 02:00:00 Z
+  #main_character: 
+  #viewers: 
+s5e3:
+  series_number: 86 
+  title: Jughead
+  #director:  
+  #writer:   
+  #main_character: 
+  #viewers: 
+  #air_date: 
+s5e4:
+  series_number: 87 
+  title: The Little Prince
+  #director:  
+  #writer:   
+  #main_character: 
+  #viewers: 
+  #air_date: 
+s5e5:
+  series_number: 88 
+  title: The Place Is Death
+  #director:  
+  #writer:   
+  #main_character: 
+  #viewers: 
+  #air_date: 
+s5e6:
+  series_number: 89 
+  title: The Life and Death of Jeremy Bentham
+  #director:  
+  #writer:   
+  #main_character: 
+  #viewers: 
+  #air_date: 
+s5e7:
+  series_number: 90 
+  title: 316
+  #director:  
+  #writer:   
+  #main_character: 
+  #viewers: 
+  #air_date:

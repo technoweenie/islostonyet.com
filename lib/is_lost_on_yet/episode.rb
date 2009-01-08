@@ -42,9 +42,11 @@ module IsLOSTOnYet
     end
 
     def self.load(filename)
-      YAML.load_file(File.join(episodes_path, "#{filename}.yml")).map do |(code, data)|
-        Episode.new(code, data['title'], data['air_date'])
-      end.sort! { |x, y| y.air_date <=> x.air_date }
+      episodes = YAML.load_file(File.join(episodes_path, "#{filename}.yml")).map do |(code, data)|
+        data['air_date'] ? Episode.new(code, data['title'], data['air_date']) : nil
+      end
+      episodes.compact!
+      episodes.sort! { |x, y| y.air_date <=> x.air_date }
     end
 
     def to_s
