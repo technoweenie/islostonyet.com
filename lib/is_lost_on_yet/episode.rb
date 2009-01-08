@@ -41,6 +41,10 @@ module IsLOSTOnYet
       @number ||= code.scan(/e(\d+)$/).first.first.to_i
     end
 
+    def path
+      "/s#{season}/e#{number}"
+    end
+
     def current?(now)
       now > air_date
     end

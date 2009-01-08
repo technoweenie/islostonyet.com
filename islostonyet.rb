@@ -13,6 +13,18 @@ get '/' do
   haml :index
 end
 
+get '/s:season' do
+  Time.zone = IsLOSTOnYet.time_zone
+  @episodes = IsLOSTOnYet.season params[:season]
+  haml :season
+end
+
+get '/s:season/e:episode' do
+  Time.zone = IsLOSTOnYet.time_zone
+  @episode = IsLOSTOnYet.episode :"s#{params[:season]}e#{params[:episode]}"
+  haml :episode
+end
+
 get '/json' do
   json = IsLOSTOnYet.answer.to_json
   if params[:callback]
@@ -28,7 +40,15 @@ get '/main.css' do
 end
 
 helpers do
-  def page_title(answer)
-    "Is Lost#{" (Season #{answer.next_episode.season})" if answer.next_episode} on yet?"
+  def page_title(answer = nil)
+    if answer
+      "Is LOST#{" (Season #{answer.next_episode.season})" if answer.next_episode} on yet?"
+    elsif params[:episode]
+      "Is LOST (Season #{params[:season]}, Episode #{params[:episode]}) on yet?"
+    elsif params[:season]
+      "Is LOST (Season #{params[:season]}) on yet?"
+    else
+      "Is LOST on yet?"
+    end
   end
 end

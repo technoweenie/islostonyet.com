@@ -13,6 +13,10 @@ class EpisodeTest < Test::Unit::TestCase
     IsLOSTOnYet::Episode.new("s50e40").number.should == 40
   end
 
+  it "parses episode path from code" do
+    IsLOSTOnYet::Episode.new("s50e40").path.should == '/s50/e40'
+  end
+
   describe "IsLOSTOnYet" do
     describe "when date is before all episodes" do
       before :all do
