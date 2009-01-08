@@ -24,7 +24,7 @@ module IsLOSTOnYet
       if post = latest_update
         args << {:since_id => post.external_id}
       end
-      process_tweets(IsLOSTOnYet.twitter.timeline(*args))
+      process_tweets(IsLOSTOnYet.twitter.timeline(*args)) { |user, post| !post.reply? }
       IsLOSTOnYet.twitter_user.reload
     end
 
@@ -51,6 +51,10 @@ module IsLOSTOnYet
 
     def self.latest_reply
       filtered_for_replies.select(:external_id).first
+    end
+
+    def reply?
+      body.strip =~ /^@/
     end
 
     def inquiry?

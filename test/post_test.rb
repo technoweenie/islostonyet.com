@@ -89,9 +89,10 @@ class PostTest < Test::Unit::TestCase
   describe "Post#process_updates" do
     before :all do
       cleanup IsLOSTOnYet::Post, IsLOSTOnYet::User
-      @twitter   = Object.new
-      @twit_user = Faux::User.new(1, IsLOSTOnYet.twitter_login, 'http://avatar')
-      @twit_post = Faux::Post.new(1, 'hi', @twit_user, 'Sun Jan 04 23:04:16 UTC 2009')
+      @twitter    = Object.new
+      @twit_user  = Faux::User.new(1, IsLOSTOnYet.twitter_login, 'http://avatar')
+      @twit_posts = [Faux::Post.new(1, 'hi', @twit_user, 'Sun Jan 04 23:04:16 UTC 2009'), Faux::Post.new(2, '@bob hi', @twit_user, 'Sun Jan 04 23:04:16 UTC 2009')]
+      @twit_post  = @twit_posts.first
       stub(IsLOSTOnYet).twitter { @twitter }
       IsLOSTOnYet.twitter_user = nil
     end
@@ -99,7 +100,7 @@ class PostTest < Test::Unit::TestCase
     describe "without existing user" do
       before :all do
         stub(@twitter).user { @twit_user }
-        stub(@twitter).timeline(:user) { [@twit_post] }
+        stub(@twitter).timeline(:user) { @twit_posts }
 
         IsLOSTOnYet::Post.process_updates
 
@@ -108,11 +109,13 @@ class PostTest < Test::Unit::TestCase
       end
 
       it "creates user" do
+        IsLOSTOnYet::User.count.should == 1
         @user.login.should      == @twit_user.screen_name
         @user.avatar_url.should == @twit_user.profile_image_url
       end
 
       it "creates post" do
+        IsLOSTOnYet::Post.count.should == 1
         @post.body.should       == @twit_post.text
         @post.created_at.should == Time.utc(2009, 1, 4, 23, 4, 16)
       end
