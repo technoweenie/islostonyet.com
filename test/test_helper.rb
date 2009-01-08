@@ -21,7 +21,7 @@ IsLOSTOnYet.twitter_login = 'lostie'
 Time.zone = "Eastern Time (US & Canada)"
 
 class Faux
-  class User < Struct.new(:id, :name, :profile_image_url)
+  class User < Struct.new(:id, :screen_name, :profile_image_url)
   end
 
   class Post < Struct.new(:id, :text, :user, :created_at)

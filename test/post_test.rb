@@ -108,7 +108,7 @@ class PostTest < Test::Unit::TestCase
       end
 
       it "creates user" do
-        @user.login.should      == @twit_user.name
+        @user.login.should      == @twit_user.screen_name
         @user.avatar_url.should == @twit_user.profile_image_url
       end
 
@@ -141,7 +141,7 @@ class PostTest < Test::Unit::TestCase
       end
 
       it "updates user attributes" do
-        @user.login.should      == @twit_user.name
+        @user.login.should      == @twit_user.screen_name
         @user.avatar_url.should == @twit_user.profile_image_url
       end
 
@@ -186,12 +186,12 @@ class PostTest < Test::Unit::TestCase
 
     it "users existing user" do
       IsLOSTOnYet::User.count.should == 2
-      @user1.login.should            == @twit_users[0].name
+      @user1.login.should            == @twit_users[0].screen_name
       @user1.avatar_url.should       == @twit_users[0].profile_image_url
     end
 
     it "creates user" do
-      @user2.login.should      == @twit_users[1].name
+      @user2.login.should      == @twit_users[1].screen_name
       @user2.avatar_url.should == @twit_users[1].profile_image_url
     end
 

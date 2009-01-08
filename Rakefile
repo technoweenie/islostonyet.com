@@ -17,7 +17,7 @@ namespace :lost do
   task :schema => :init do
     IsLOSTOnYet.setup_schema
     twit = IsLOSTOnYet.twitter.user(IsLOSTOnYet.twitter_login)
-    IsLOSTOnYet::User.create(:login => IsLOSTOnYet.twitter_login, :external_id => twit.id, :avatar_url => twit.profile_image_url)
+    IsLOSTOnYet::User.create(:login => twit.screen_name, :external_id => twit.id, :avatar_url => twit.profile_image_url)
   end
 
   desc "Process all updates from the existing Twitter user"

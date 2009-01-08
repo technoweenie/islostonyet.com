@@ -90,7 +90,7 @@ module IsLOSTOnYet
       posts = []
       tweets.reverse!
       tweets.each do |s|
-        users[s.user.id.to_i] = {:login => s.user.name, :avatar_url => s.user.profile_image_url}
+        users[s.user.id.to_i] = {:login => s.user.screen_name, :avatar_url => s.user.profile_image_url}
         posts << {:body => s.text, :user_id => s.user.id, :created_at => Time.parse(s.created_at).utc, :external_id => s.id}
       end
 
