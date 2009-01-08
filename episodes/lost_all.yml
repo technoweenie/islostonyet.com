@@ -649,8 +649,16 @@ s4e12:
   main_character: Jack, Hurley, Sayid, Sun & Kate
   viewers: 13.102 
   air_date: May 15, 2008
-s4e13/14:
-  series_number: 82/83
+s4e13:
+  series_number: 82
+  title: There's No Place Like Home: Part 2
+  director: Jack Bender
+  writer: Carlton Cuse & Damon Lindelof 
+  main_character: Jack, Hurley, Sayid, Sun & Kate
+  viewers: 13.991 
+  air_date: May 29, 2008
+s4e14:
+  series_number: 83
   title: There's No Place Like Home: Part 2
   director: Jack Bender
   writer: Carlton Cuse & Damon Lindelof 
