@@ -33,6 +33,14 @@ module IsLOSTOnYet
     end
     self.episodes_path = File.join(File.dirname(__FILE__), '..', '..', 'episodes')
 
+    def season
+      @season ||= code.scan(/^s(\d+)e/).first.first.to_i
+    end
+
+    def number
+      @number ||= code.scan(/e(\d+)$/).first.first.to_i
+    end
+
     def current?(now)
       now > air_date
     end

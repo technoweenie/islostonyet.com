@@ -5,6 +5,14 @@ class EpisodeTest < Test::Unit::TestCase
     IsLOSTOnYet.load_episodes :sample
   end
 
+  it "parses season from code" do
+    IsLOSTOnYet::Episode.new("s50e40").season.should == 50
+  end
+
+  it "parses episode number from code" do
+    IsLOSTOnYet::Episode.new("s50e40").number.should == 40
+  end
+
   describe "IsLOSTOnYet" do
     describe "when date is before all episodes" do
       before :all do
