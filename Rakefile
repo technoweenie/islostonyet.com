@@ -24,7 +24,7 @@ namespace :lost do
   end
 
   desc "Process all replies to the existing Twitter user"
-  task :process_replies do
+  task :process_replies => :init do
     IsLOSTOnYet::Post.process_replies
   end
 end
