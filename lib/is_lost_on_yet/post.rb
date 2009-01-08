@@ -70,7 +70,7 @@ module IsLOSTOnYet
       posts = []
       tweets.reverse!
       tweets.each do |s|
-        users[s.user.id] = {:login => s.user.name, :avatar_url => s.user.profile_image_url}
+        users[s.user.id.to_i] = {:login => s.user.name, :avatar_url => s.user.profile_image_url}
         posts << {:body => s.text, :user_id => s.user.id, :created_at => Time.parse(s.created_at).utc, :external_id => s.id}
       end
 
@@ -104,7 +104,7 @@ module IsLOSTOnYet
 
     def self.process_posts(posts, users, &block)
       posts.each do |attributes|
-        post = Post.new(:user_id => users[attributes.delete(:user_id)].id)
+        post = Post.new(:user_id => users[attributes.delete(:user_id).to_i].id)
         attributes.each do |key, value|
           post.send("#{key}=", value)
         end
