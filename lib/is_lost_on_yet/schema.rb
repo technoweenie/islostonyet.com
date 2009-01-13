@@ -12,9 +12,19 @@ module IsLOSTOnYet
         primary_key :id
         int         :external_id
         int         :user_id
-        varchar     :episode
         varchar     :body # 140 chars, baby
         datetime    :created_at
+      end
+
+      create_table! :tags do
+        primary_key :id
+        varchar     :name
+      end
+
+      create_table! :taggings do
+        primary_key :id
+        int         :tag_id
+        int         :post_id
       end
     end
   end
