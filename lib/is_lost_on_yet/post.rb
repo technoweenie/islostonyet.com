@@ -3,18 +3,18 @@ module IsLOSTOnYet
     many_to_one :user, :class => "IsLOSTOnYet::User"
 
     def self.find_updates(page = 1)
-      filtered_for_updates.where(:visible => true).paginate(page, 30)
+      filtered_for_updates.where(:visible => true).paginate(page, 30).to_a
     end
 
     def self.find_replies(page = 1)
-      filtered_for_replies.where(:visible => true).paginate(page, 30)
+      filtered_for_replies.where(:visible => true).paginate(page, 30).to_a
     end
 
     def self.find_by_tags(tags, page = 1)
       return [] if tags.empty?
       filtered_for_replies.
         where([Array.new(tags.size, "tag LIKE ?") * " AND ", *tags.map { |t| "%[#{t}]%" }]).
-        where(:visible => true).paginate(page, 30)
+        where(:visible => true).paginate(page, 30).to_a
     end
 
     def self.process_updates

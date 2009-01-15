@@ -18,9 +18,10 @@ get '/main.css' do
 end
 
 get '/' do
-  @tags  = IsLOSTOnYet::Tag.list
-  @posts = IsLOSTOnYet::Post.all
-  @users = users_for @posts
+  @tags    = IsLOSTOnYet::Tag.list
+  @posts   = IsLOSTOnYet::Post.find_replies
+  @updates = IsLOSTOnYet::Post.find_updates
+  @users   = users_for @posts + @updates
   haml :index
 end
 

@@ -1,0 +1,15 @@
+// %h1
+//   Updates
+//  
+// .posts
+//   - @updates.each do |p|
+//     - u = @users[p.user_id]
+//     .post
+//       %a{:href=>"http://twitter.com/#{u.login}", :class=>"avatar"}
+//         %img{:src => u.avatar_url, :border=>"0"}
+//       %p.body= p.body.gsub(/^@#{IsLOSTOnYet.twitter_login}[ ,.;\-><:!?]+/im, '').gsub(/(\w+:\/\/[A-Za-z0-9\-_]+\.[A-Za-z0-9\-_:%&\?\/.=]+)/im, '<a href="\1">\1</a>').gsub(/@([a-zA-Z0-9\-_]+)([ ,.;\-><:!?]+)/im, '<a href="http://twitter.com/\1">@\1</a>\2').gsub(/([^&])#([a-zA-Z0-9\-_]+)/im, '\1<a href="/\2">#\2</a>')
+//       %p.meta
+//         == <a href='http://twitter.com/#{u.login}'>#{u.login}</a> /
+//         %span.date
+//           == <a href='http://twitter.com/#{u.login}/status/#{p.external_id}'>#{time_ago_or_time_stamp(p.created_at)}</a>
+//       =# "<a href=\"/s#{params[:season]}/e#{p.episode.sub /^s\d+e/, ''}\">##{p.episode}</a>"
