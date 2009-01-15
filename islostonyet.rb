@@ -49,7 +49,7 @@ end
 get '/*' do
   @tags  = [['jack', 54], ['kate', 45], ['s5e4', 30]]
   @current_tags  = params[:splat].first.split("/")
-  @posts = IsLOSTOnYet::Post.find_replies #.find_by_tags(@current_tags)
+  @posts = IsLOSTOnYet::Post.find_by_tags(@current_tags)
   @users = users_for @posts
   haml :posts
 end
