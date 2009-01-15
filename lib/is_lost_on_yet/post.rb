@@ -59,9 +59,22 @@ module IsLOSTOnYet
     end
 
     def hash_tags
-      tags = body.scan(/#([\w\d]+)/i)
-      tags.flatten!
-      tags
+      @hash_tags ||= begin
+        tags = body.scan(/#([\w\d]+)/i)
+        tags.flatten!
+        tags.each { |tag| tag.downcase! }
+      end
+    end
+
+    def save_hash_tags
+      existing = Tag.where(:name => hash_tags).to_a
+      creating = hash_tags - existing.map { |t| t.name }
+      creating.each do |name|
+        existing << Tag.create(:name => name)
+      end
+      existing.each do |tag|
+        Tagging << {:tag_id => tag.id, :post_id => id}
+      end
     end
 
   protected
