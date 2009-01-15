@@ -63,6 +63,10 @@ module IsLOSTOnYet
       body.strip =~ /^@#{IsLOSTOnYet.twitter_login}\s*\?$/i
     end
 
+    def visible?
+      visible == true || visible == 1
+    end
+
   protected
     def self.filtered_for_updates
       user_id = IsLOSTOnYet.twitter_user ? IsLOSTOnYet.twitter_user.id : 0
@@ -123,7 +127,8 @@ module IsLOSTOnYet
         attributes.each do |key, value|
           post.send("#{key}=", value)
         end
-        (!block || block.call(user, post)) && post.save
+        post.visible = !! (!block || block.call(user, post))
+        post.save
       end
     end
   end

@@ -14,7 +14,7 @@ module IsLOSTOnYet
         int         :user_id
         varchar     :body # 140 chars, baby
         datetime    :created_at
-        tinyint     :visible
+        boolean     :visible
       end
 
       create_table! :tags do

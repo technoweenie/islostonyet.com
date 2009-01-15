@@ -83,7 +83,9 @@ class PostTest < Test::Unit::TestCase
       cleanup IsLOSTOnYet::Post, IsLOSTOnYet::User
       @twitter    = Object.new
       @twit_user  = Faux::User.new(1, IsLOSTOnYet.twitter_login, 'http://avatar')
-      @twit_posts = [Faux::Post.new(1, 'hi', @twit_user, 'Sun Jan 04 23:04:16 UTC 2009'), Faux::Post.new(2, '@bob hi', @twit_user, 'Sun Jan 04 23:04:16 UTC 2009')]
+      @twit_posts = [
+        Faux::Post.new(1, 'hi',      @twit_user, 'Sun Jan 04 23:04:16 UTC 2009'), 
+        Faux::Post.new(2, '@bob hi', @twit_user, 'Sun Jan 04 23:04:17 UTC 2009')]
       @twit_post  = @twit_posts.first
       stub(IsLOSTOnYet).twitter { @twitter }
       IsLOSTOnYet.twitter_user = nil
@@ -92,12 +94,13 @@ class PostTest < Test::Unit::TestCase
     describe "without existing user" do
       before :all do
         stub(@twitter).user { @twit_user }
-        stub(@twitter).timeline(:user) { @twit_posts }
+        stub(@twitter).timeline(:user) { @twit_posts.dup }
 
         IsLOSTOnYet::Post.process_updates
 
-        @user = IsLOSTOnYet::User.find(:external_id => @twit_user.id)
-        @post = IsLOSTOnYet::Post.find(:external_id => @twit_post.id)
+        @user  = IsLOSTOnYet::User.find(:external_id => @twit_user.id)
+        @post1 = IsLOSTOnYet::Post.find(:external_id => @twit_post.id)
+        @post2 = IsLOSTOnYet::Post.find(:external_id => @twit_posts[1].id)
       end
 
       it "creates user" do
@@ -106,14 +109,25 @@ class PostTest < Test::Unit::TestCase
         @user.avatar_url.should == @twit_user.profile_image_url
       end
 
-      it "creates post" do
-        IsLOSTOnYet::Post.count.should == 1
-        @post.body.should       == @twit_post.text
-        @post.created_at.should == Time.utc(2009, 1, 4, 23, 4, 16)
+      it "creates posts" do
+        IsLOSTOnYet::Post.count.should == 2
+      end
+
+      it "creates visible post" do
+        @post1.body.should       == @twit_post.text
+        @post1.created_at.should == Time.utc(2009, 1, 4, 23, 4, 16)
+        assert @post1.visible?
+      end
+
+      it "creates hidden post" do
+        @post2.body.should       == @twit_posts[1].text
+        @post2.created_at.should == Time.utc(2009, 1, 4, 23, 4, 17)
+        assert !@post2.visible?
       end
 
       it "links post to user" do
-        @post.user_id.should == @user.id
+        @post1.user_id.should == @user.id
+        @post2.user_id.should == @user.id
       end
     end
 
@@ -155,10 +169,11 @@ class PostTest < Test::Unit::TestCase
     before :all do
       @twitter    = Object.new
       @twit_users = [Faux::User.new(1, 'bob', 'http://bob'), Faux::User.new(2, 'fred', 'http://fred')]
-      @twit_posts = [Faux::Post.new(1, 'hi1', @twit_users.first, 'Sun Jan 04 23:04:16 UTC 2009'), 
-        Faux::Post.new(2, "@#{IsLOSTOnYet.twitter_login} ? #s1e2", @twit_users.last, 'Sun Jan 04 23:04:16 UTC 2009'),
-        Faux::Post.new(3, "@#{IsLOSTOnYet.twitter_login}?", @twit_users.last, 'Sun Jan 04 23:04:16 UTC 2009'),
-        Faux::Post.new(4, "@#{IsLOSTOnYet.twitter_login} ? ", @twit_users.last, 'Sun Jan 04 23:04:16 UTC 2009')]
+      @twit_posts = [
+        Faux::Post.new(1, 'hi1',                                   @twit_users.first, 'Sun Jan 04 23:04:16 UTC 2009'), 
+        Faux::Post.new(2, "@#{IsLOSTOnYet.twitter_login} ? #s1e2", @twit_users.last, 'Sun Jan 04 23:04:17 UTC 2009'),
+        Faux::Post.new(3, "@#{IsLOSTOnYet.twitter_login}?",        @twit_users.last, 'Sun Jan 04 23:04:18 UTC 2009'),
+        Faux::Post.new(4, "@#{IsLOSTOnYet.twitter_login} ? ",      @twit_users.last, 'Sun Jan 04 23:04:19 UTC 2009')]
       stub(IsLOSTOnYet).twitter { @twitter }
 
       cleanup IsLOSTOnYet::Post, IsLOSTOnYet::User
@@ -177,6 +192,8 @@ class PostTest < Test::Unit::TestCase
       @user2 = IsLOSTOnYet::User.find(:external_id => @twit_users[1].id)
       @post1 = IsLOSTOnYet::Post.find(:external_id => @twit_posts[0].id)
       @post2 = IsLOSTOnYet::Post.find(:external_id => @twit_posts[1].id)
+      @post3 = IsLOSTOnYet::Post.find(:external_id => @twit_posts[2].id)
+      @post4 = IsLOSTOnYet::Post.find(:external_id => @twit_posts[3].id)
     end
 
     it "users existing user" do
@@ -191,9 +208,25 @@ class PostTest < Test::Unit::TestCase
     end
 
     it "creates posts" do
-      IsLOSTOnYet::Post.count.should == 2
-      @post1.body.should             == @twit_posts[0].text
-      @post1.created_at.should       == Time.utc(2009, 1, 4, 23, 4, 16)
+      IsLOSTOnYet::Post.count.should == 4
+    end
+
+    it "creates visible posts" do
+      @post1.body.should       == @twit_posts[0].text
+      @post1.created_at.should == Time.utc(2009, 1, 4, 23, 4, 16)
+      assert @post1.visible?
+      @post2.body.should       == @twit_posts[1].text
+      @post2.created_at.should == Time.utc(2009, 1, 4, 23, 4, 17)
+      assert @post2.visible?
+    end
+
+    it "creates hidden posts from inquiries" do
+      @post3.body.should       == @twit_posts[2].text
+      @post3.created_at.should == Time.utc(2009, 1, 4, 23, 4, 18)
+      assert !@post3.visible?
+      @post4.body.should       == @twit_posts[3].text
+      @post4.created_at.should == Time.utc(2009, 1, 4, 23, 4, 19)
+      assert !@post4.visible?
     end
 
     it "links post to user" do
