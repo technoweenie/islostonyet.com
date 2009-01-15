@@ -16,27 +16,27 @@ get '/' do
   haml :index
 end
 
-get '/:tag' do
+get '/tags' do
+  # placeholders until implemented
+  #
+  # tags
+  # @tags = %w(jack sayid kate s5e4)
+  #
+  # weighted tags
+  @tags = [['jack', 54], ['kate', 45], ['s5e4', 30]]
+  @tags.map { |(tag, weight)| tag } * ", " # temp output until theres a template
 end
 
-get '/s:season' do
-  @episodes = IsLOSTOnYet.season params[:season]
-  @posts    = IsLOSTOnYet::Post.for_season(params[:season], params[:page] || 1)
-  @users    = users_for @posts
-  haml :season
+get '/episodeguide' do
+  @episodes = IsLOSTOnYet.episodes
+  @episodes.map { |e| e.to_s } * ", " # temp output until theres a template
 end
 
-get '/s:season/ehype' do
-  @posts    = IsLOSTOnYet::Post.for_episode("s#{params[:season]}ehype", params[:page] || 1)
-  @users    = users_for @posts
-  haml :episode
-end
-
-get '/s:season/e:episode' do
-  @episode  = IsLOSTOnYet.episode :"s#{params[:season]}e#{params[:episode]}"
-  @posts    = IsLOSTOnYet::Post.for_episode(@episode.code, params[:page] || 1)
-  @users    = users_for @posts
-  haml :episode
+get '/*' do
+  @tags = params[:splat].first.split("/")
+  # doesn't exist
+  # @posts = IsLOSTOnYet::Post.by_tags(@tags)
+  @tags * ", " # temp output until theres a template
 end
 
 get '/json' do
