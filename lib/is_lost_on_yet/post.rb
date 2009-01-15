@@ -58,6 +58,12 @@ module IsLOSTOnYet
       visible == true || visible == 1
     end
 
+    def hash_tags
+      tags = body.scan(/#([\w\d]+)/i)
+      tags.flatten!
+      tags
+    end
+
   protected
     def self.filtered_for_updates
       user_id = IsLOSTOnYet.twitter_user ? IsLOSTOnYet.twitter_user.id : 0
