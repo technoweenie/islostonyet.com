@@ -30,6 +30,10 @@ module IsLOSTOnYet
       result.to_json
     end
 
+    def spoiler?(episode)
+      next_episode && (next_episode.air_date + 1.day < episode.air_date)
+    end
+
     def inspect
       %(#<IsLOSTOnYet::Answer (as of #{now}) #{answer.to_s.upcase}; current: #{current_episode || '--'}, next: #{next_episode || '--'}>)
     end

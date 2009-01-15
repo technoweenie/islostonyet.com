@@ -5,8 +5,11 @@
     .post
       %p.body
         == <a href='/#{e.code}'>#{e.code.upcase}</a>
-        == #{e.title}
+        - if @is_lost_on.spoiler?(e)
+          %span.spoiler= e.title
+        - else
+          = e.title
       %p.meta
         == air#{e.current? ? :ed : :ing} on
         %span.date
-          == #{e.air_date.xmlschema}
+          = e.air_date.xmlschema
