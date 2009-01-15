@@ -5,7 +5,7 @@ class TaggingTest < Test::Unit::TestCase
       cleanup IsLOSTOnYet::Post, IsLOSTOnYet::Tag, IsLOSTOnYet::Tagging
       transaction do
         IsLOSTOnYet::Tag.create(:name => 'jack')
-        @post = IsLOSTOnYet::Post.new(:user_id => 1, :external_id => '1', :body => "a b #s1e5 #SAYID! #jack? #Kate.", :created_at => Time.utc(2000, 1, 1))
+        @post = IsLOSTOnYet::Post.new(:user_id => 1, :external_id => '1', :body => "&#187; a b #s1e5 #SAYID! #jack? #Kate.", :created_at => Time.utc(2000, 1, 1))
         @post.save
       end
     end

@@ -67,7 +67,7 @@ module IsLOSTOnYet
 
     def hash_tags
       @hash_tags ||= begin
-        tags = body.scan(/#([\w\d]+)/i)
+        tags = body.scan(/(^|[^&])#([\w\d]+)/i).map { |s| s.last }
         tags.flatten!
         tags.each { |tag| tag.downcase! }
       end
