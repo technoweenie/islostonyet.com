@@ -46,7 +46,7 @@
     %link{:href=>"/main.css", :media=>"all", :rel=>"stylesheet", :type=>"text/css"}/
   %body{:id=>"#{@body_id}"}
     .container
-      =# partial :sidebar
+      = partial :sidebar
       #content
         = yield
       #footer

@@ -78,6 +78,6 @@ private
   def self.build_reason(current_episode, next_episode)
     episode = next_episode || current_episode
     season, ep = episode.code.scan(/^s(\d+)e(\d+)$/).first
-    "Season #{season}#{", episode #{ep}" if current_episode && ep != '1'} start#{next_episode ? :s : :ed} on #{episode.air_date.in_time_zone.strftime("%b %d, %I %p %Z")}"
+    "Season #{season}#{", episode #{ep}" if current_episode && ep != '1'} start#{next_episode ? :s : :ed} on #{episode.air_date.in_time_zone.strftime("%d %B %Y at %I:%M%p %Z")}#{next_episode ? ' in' : ''}"
   end
 end

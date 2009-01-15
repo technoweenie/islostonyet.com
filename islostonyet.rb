@@ -26,8 +26,7 @@ get '/tags' do
   # weighted tags
   @tags  = [['jack', 54], ['kate', 45], ['s5e4', 30]]
   @posts = IsLOSTOnYet::Post.find_replies
-  
-  @tags.map { |(tag, weight)| tag } * ", " # temp output until theres a template
+  haml :tags
 end
 
 get '/episodeguide' do
@@ -40,8 +39,7 @@ end
 get '/*' do
   @tags  = params[:splat].first.split("/")
   @posts = IsLOSTOnYet::Post.find_replies
-
-  "<ul>\n#{%w(jack kate sayid).map { |tag| link_to_tag(tag) + "\n" }}\n</ul>"
+  haml :posts
 end
 
 get '/json' do
