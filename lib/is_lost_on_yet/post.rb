@@ -148,6 +148,7 @@ module IsLOSTOnYet
         end
         post.visible = !! (!block || block.call(user, post))
         post.save
+        post.save_hash_tags
       end
     end
   end
