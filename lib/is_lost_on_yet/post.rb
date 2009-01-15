@@ -2,21 +2,12 @@ module IsLOSTOnYet
   class Post < Sequel.Model(:posts)
     many_to_one :user, :class => "IsLOSTOnYet::User"
 
-    def self.for_season(code, page = 1)
-      q = "s#{code.to_s.sub(/^s/, '')}e%"
-      filter_and_order(['episode LIKE ?', q]).paginate(page, 30)
-    end
-
-    def self.for_episode(code, page = 1)
-      filter_and_order(:episode => code.to_s).paginate(page, 30)
-    end
-
     def self.find_updates(page = 1)
-      filtered_for_updates.paginate(page, 30)
+      filtered_for_updates.where(:visible => true).paginate(page, 30)
     end
 
     def self.find_replies(page = 1)
-      filtered_for_replies.paginate(page, 30)
+      filtered_for_replies.where(:visible => true).paginate(page, 30)
     end
 
     def self.process_updates
@@ -46,11 +37,11 @@ module IsLOSTOnYet
     end
 
     def self.latest_update
-      filtered_for_updates.select(:external_id).first
+      filtered_for_updates.where(:visible => true).select(:external_id).first
     end
 
     def self.latest_reply
-      filtered_for_replies.select(:external_id).first
+      filtered_for_replies.where(:visible => true).select(:external_id).first
     end
 
     # a @reply tweet
