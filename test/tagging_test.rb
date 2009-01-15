@@ -24,7 +24,7 @@ class TaggingTest < Test::Unit::TestCase
     end
   end
 
-  describe "Post#find_by_tags" do
+  describe "existing tags" do
     before :all do
       cleanup IsLOSTOnYet::Post, IsLOSTOnYet::Tag, IsLOSTOnYet::Tagging
       transaction do
@@ -35,12 +35,20 @@ class TaggingTest < Test::Unit::TestCase
       end
     end
 
-    it "finds posts by single tag" do
-      IsLOSTOnYet::Post.find_by_tags(%w(jack)).map { |p| p.external_id }.should == [@post2, @post1].map { |p| p.external_id }
+    describe "Post#find_by_tags" do
+      it "finds posts by single tag" do
+        IsLOSTOnYet::Post.find_by_tags(%w(jack)).map { |p| p.external_id }.should == [@post2, @post1].map { |p| p.external_id }
+      end
+
+      it "finds posts by multiple tags" do
+        IsLOSTOnYet::Post.find_by_tags(%w(jack s1e1)).map { |p| p.external_id }.should == [@post1].map { |p| p.external_id }
+      end
     end
 
-    it "finds posts by multiple tags" do
-      IsLOSTOnYet::Post.find_by_tags(%w(jack s1e1)).map { |p| p.external_id }.should == [@post1].map { |p| p.external_id }
+    describe "Tag#find_weighted" do
+      it "finds tags in alphabetical order with weights" do
+        IsLOSTOnYet::Tag.list.should == [['jack', 2], ['s1e1', 1], ['s1e2', 1]]
+      end
     end
   end
 end
