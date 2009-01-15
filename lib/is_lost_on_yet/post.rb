@@ -31,7 +31,7 @@ module IsLOSTOnYet
           IsLOSTOnYet.twitter.update("@#{user.login} #{answer.reason}")
           false
         else
-          post # .set_tags
+          post
         end
       end
     end

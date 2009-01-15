@@ -9,10 +9,11 @@ end
 
 before do
   Time.zone = IsLOSTOnYet.time_zone
+  @is_lost_on = IsLOSTOnYet.answer
 end
 
 get '/' do
-  @is_lost_on = IsLOSTOnYet.answer
+  @posts      = IsLOSTOnYet::Post.all
   haml :index
 end
 
@@ -23,19 +24,23 @@ get '/tags' do
   # @tags = %w(jack sayid kate s5e4)
   #
   # weighted tags
-  @tags = [['jack', 54], ['kate', 45], ['s5e4', 30]]
+  @tags  = [['jack', 54], ['kate', 45], ['s5e4', 30]]
+  @posts = IsLOSTOnYet::Post.find_replies
+  
   @tags.map { |(tag, weight)| tag } * ", " # temp output until theres a template
 end
 
 get '/episodeguide' do
   @episodes = IsLOSTOnYet.episodes
+  @posts    = IsLOSTOnYet::Post.find_replies
+
   @episodes.map { |e| e.to_s } * ", " # temp output until theres a template
 end
 
 get '/*' do
-  @tags = params[:splat].first.split("/")
-  # doesn't exist
-  # @posts = IsLOSTOnYet::Post.by_tags(@tags)
+  @tags  = params[:splat].first.split("/")
+  @posts = IsLOSTOnYet::Post.find_replies
+
   "<ul>\n#{%w(jack kate sayid).map { |tag| link_to_tag(tag) + "\n" }}\n</ul>"
 end
 
