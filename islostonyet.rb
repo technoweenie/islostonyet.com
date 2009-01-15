@@ -54,6 +54,9 @@ get '/main.css' do
 end
 
 helpers do
+  def partial(page, options={})
+    haml page, options.merge!(:layout => false)
+  end
   def link_to_tag(name)
     in_collection = @tags.include?(name)
     collection    = in_collection ? [] : @tags
