@@ -12,34 +12,29 @@ before do
   @is_lost_on = IsLOSTOnYet.answer
 end
 
+get '/main.css' do
+  content_type 'text/css', :charset => 'utf-8'
+  sass :main
+end
+
 get '/' do
-  @posts      = IsLOSTOnYet::Post.all
+  @tags  = [['jack', 54], ['kate', 45], ['s5e4', 30]]
+  @posts = IsLOSTOnYet::Post.all
+  @users = users_for @posts
   haml :index
 end
 
 get '/tags' do
-  # placeholders until implemented
-  #
-  # tags
-  # @tags = %w(jack sayid kate s5e4)
-  #
-  # weighted tags
   @tags  = [['jack', 54], ['kate', 45], ['s5e4', 30]]
   @posts = IsLOSTOnYet::Post.find_replies
+  @users = users_for @posts
   haml :tags
 end
 
 get '/episodeguide' do
+  @tags  = [['jack', 54], ['kate', 45], ['s5e4', 30]]
   @episodes = IsLOSTOnYet.episodes
-  @posts    = IsLOSTOnYet::Post.find_replies
-
   @episodes.map { |e| e.to_s } * ", " # temp output until theres a template
-end
-
-get '/*' do
-  @tags  = params[:splat].first.split("/")
-  @posts = IsLOSTOnYet::Post.find_replies
-  haml :posts
 end
 
 get '/json' do
@@ -51,9 +46,12 @@ get '/json' do
   end
 end
 
-get '/main.css' do
-  content_type 'text/css', :charset => 'utf-8'
-  sass :main
+get '/*' do
+  @tags  = [['jack', 54], ['kate', 45], ['s5e4', 30]]
+  @current_tags  = params[:splat].first.split("/")
+  @posts = IsLOSTOnYet::Post.find_by_tags(@current_tags)
+  @users = users_for @posts
+  haml :posts
 end
 
 helpers do

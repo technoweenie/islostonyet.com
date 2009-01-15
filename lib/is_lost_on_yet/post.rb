@@ -10,6 +10,13 @@ module IsLOSTOnYet
       filtered_for_replies.where(:visible => true).paginate(page, 30)
     end
 
+    def self.find_by_tags(tags, page = 1)
+      return [] if tags.empty?
+      filtered_for_replies.
+        where([Array.new(tags.size, "tag LIKE ?") * " AND ", *tags.map { |t| "%[#{t}]%" }]).
+        where(:visible => true).paginate(page, 30)
+    end
+
     def self.process_updates
       args  = [:user]
       if post = latest_update
@@ -75,6 +82,8 @@ module IsLOSTOnYet
       existing.each do |tag|
         Tagging << {:tag_id => tag.id, :post_id => id}
       end
+      self.tag = existing.map { |tag| "[#{tag.name}]" }.sort! * " "
+      save
     end
 
   protected

@@ -28,7 +28,7 @@ class EpisodeTest < Test::Unit::TestCase
       end
 
       it "#answer returns 'no' answer" do
-        IsLOSTOnYet.answer(@date).result.should == {:answer => :no, :reason => "Season 4 starts on Jan 22, 09 PM EST"}
+        IsLOSTOnYet.answer(@date).result.should == {:answer => :no, :reason => "Season 4 starts on 22 January 2008 at 09:00PM EST"}
       end
     end
 
@@ -42,7 +42,7 @@ class EpisodeTest < Test::Unit::TestCase
       end
 
       it "#answer returns 'no' answer" do
-        IsLOSTOnYet.answer(@date).result.should == {:answer => :no, :reason => "Season 5 starts on Jan 21, 09 PM EST"}
+        IsLOSTOnYet.answer(@date).result.should == {:answer => :no, :reason => "Season 5 starts on 21 January 2009 at 09:00PM EST"}
       end
     end
 
@@ -56,7 +56,7 @@ class EpisodeTest < Test::Unit::TestCase
       end
 
       it "#answer returns 'yes' answer" do
-        IsLOSTOnYet.answer(@date).result.should == {:answer => :yes, :reason => "Season 5, episode 2 starts on Jan 28, 09 PM EST"}
+        IsLOSTOnYet.answer(@date).result.should == {:answer => :yes, :reason => "Season 5, episode 2 starts on 28 January 2009 at 09:00PM EST"}
       end
     end
 
@@ -70,7 +70,7 @@ class EpisodeTest < Test::Unit::TestCase
       end
 
       it "#answer returns 'yes' answer" do
-        IsLOSTOnYet.answer(@date).result.should == {:answer => :yes, :reason => "Season 5, episode 2 started on Jan 28, 09 PM EST"}
+        IsLOSTOnYet.answer(@date).result.should == {:answer => :yes, :reason => "Season 5, episode 2 started on 28 January 2009 at 09:00PM EST"}
       end
     end
   end
