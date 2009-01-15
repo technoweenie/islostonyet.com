@@ -1,10 +1,45 @@
 #sidebar
   .widget
     %h1.question= "Is LOST on yet?"
-    %h2.answer= @is_lost_on.answer
-    .reason
-      %h3= @is_lost_on.reason
-      %span.countdown 7d 3m 4s
+    %h2#answer= @is_lost_on.answer
+    %h3.reason
+      = @is_lost_on.reason
+      %span#countdown
+      %script{:type=>"text/javascript"}
+        :plain
+          var countdown_d = new Date();
+          var countdown_timenow = countdown_d.getTime();
+          var countdown_targetdate = Date.parse("2009/1/21 21:00")
+          var countdown_timeleft = Math.floor((countdown_targetdate-countdown_timenow)/1000);
+          function countdown(remain,messages) {
+            var
+              status = document.getElementById("answer"),
+              countdown = document.getElementById("countdown"),
+              timer = setInterval( function () {
+                var day = (Math.floor(remain/86400))%86400;
+                var hour = (Math.floor(remain/3600))%24;
+                var minute = (Math.floor(remain/60))%60;
+                var second = (Math.floor(remain/1))%60;
+                countdown.innerHTML = (day > 0 ? "in <span class='countdown_day'><strong>"+day+"</strong>d</span> " : "") + (hour > 0 ? "<span class='countdown_hour'><strong>"+hour+"</strong>h</span> " : "") + (minute > 0 ? "<span class='countdown_minute'><strong>"+minute+"</strong>m</span> " : "") + (second > 0 ? "<span class='countdown_second'><strong>"+second+"</strong>s</span> " : "")
+                if (--remain < 0 ) { 
+                  clearInterval(timer); 
+                  document.body.id = "yes"; 
+                  status.innerHTML = "yes"; 
+                } else {
+                  document.body.id = "no"; 
+                  status.innerHTML = "no"; 
+                }
+              },1000);          
+          }
+          countdown(countdown_timeleft,
+            { 
+              86400: "it will be time for lost tomorrow.",
+              10: "it will be time for lost in ten seconds",
+              0: "it is time for lost"
+            }
+          );
+
+      
   .tags
     - @tags.each do |tag,weight|
       %a{:href=>"#{tag}", :class=>"weight#{weight}"}= tag

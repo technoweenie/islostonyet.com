@@ -49,18 +49,16 @@ body
   .widget
     .question
       :font-size 205%
-      
-    .answer
+    #answer
       :font-size 420%
       :line-height 1em
       :padding-right 5px
       :float left
     .reason
-      h3,h4
-        :font-size 98%
-      +clearfix
-      
-    .countdown
+      :font-size 98%
+      +clearfix 
+    #countdown
+      :text-transform lowercase
   #content
     div.posts
       :width 500px
