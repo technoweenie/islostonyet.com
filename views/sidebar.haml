@@ -5,6 +5,6 @@
     .reason
       %h3= @is_lost_on.reason
       %span.countdown 7d 3m 4s
-  // .tags
-  //   - @tags.each do |tag|
-  //     %a{:href=>"#{tag}"}= tag    
+  .tags
+    - @tags.each do |tag,weight|
+      %a{:href=>"#{tag}", :class=>"weight#{weight}"}= tag
