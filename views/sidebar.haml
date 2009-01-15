@@ -7,15 +7,14 @@
     #countdown
     %script{:type=>"text/javascript"}
       :plain
+        var countdown_d = new Date();
+        var countdown_timenow = countdown_d.getTime();
         Date.parseUTC = function(value) {
           var localDate = new Date(value);
           var utcSeconds = Date.UTC(localDate.getFullYear(), localDate.getMonth(), localDate.getDate(), localDate.getHours(), localDate.getMinutes(), localDate.getSeconds())
           return new Date(utcSeconds);
         }
-        var countdown_d = new Date();
-        var countdown_timenow = countdown_d.getTime();
-        //var countdown_targetdate = Date.parse("2009/1/21 21:00")
-        var countdown_targetdate = Date.parseUTC(#{@is_lost_on.next_episode.air_date.strftime("%d %b, %Y %I:%M %p").inspect})
+        var countdown_targetdate = Date.parseUTC("#{@is_lost_on.next_episode.air_date.strftime('%Y/%m/%d %I:%M %p')}")
         var countdown_timeleft = Math.floor((countdown_targetdate-countdown_timenow)/1000);
         function countdown(remain,messages) {
           var
