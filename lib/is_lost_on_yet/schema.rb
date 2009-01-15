@@ -13,6 +13,7 @@ module IsLOSTOnYet
         int         :external_id
         int         :user_id
         varchar     :body # 140 chars, baby
+        varchar     :tag
         datetime    :created_at
         boolean     :visible
       end
