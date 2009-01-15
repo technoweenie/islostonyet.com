@@ -9,20 +9,12 @@ class PostTest < Test::Unit::TestCase
         [@user1, @user2].each { |u| u.save }
         @post1 = IsLOSTOnYet::Post.new(:user_id => @user1.id, :external_id => '1', :body => 'a', :created_at => Time.utc(2000, 1, 1))
         @post2 = IsLOSTOnYet::Post.new(:user_id => @user1.id, :external_id => '2', :body => 'b', :created_at => Time.utc(2000, 1, 2))
-        @post3 = IsLOSTOnYet::Post.new(:user_id => @user2.id, :episode => 's1e1', :external_id => '3', :body => 'c', :created_at => Time.utc(2000, 1, 3))
-        @post4 = IsLOSTOnYet::Post.new(:user_id => @user2.id, :episode => 's2e2', :external_id => '4', :body => 'd', :created_at => Time.utc(2000, 1, 4))
-        @post5 = IsLOSTOnYet::Post.new(:user_id => @user2.id, :episode => 's2e1', :external_id => '5', :body => 'e', :created_at => Time.utc(2000, 1, 5))
+        @post3 = IsLOSTOnYet::Post.new(:user_id => @user2.id, :external_id => '3', :body => 'c', :created_at => Time.utc(2000, 1, 3))
+        @post4 = IsLOSTOnYet::Post.new(:user_id => @user2.id, :external_id => '4', :body => 'd', :created_at => Time.utc(2000, 1, 4))
+        @post5 = IsLOSTOnYet::Post.new(:user_id => @user2.id, :external_id => '5', :body => 'e', :created_at => Time.utc(2000, 1, 5))
         [@post1, @post2, @post3, @post4, @post5].each { |p| p.save }
       end
       IsLOSTOnYet.twitter_user = @user1
-    end
-
-    it "finds posts by season" do
-      IsLOSTOnYet::Post.for_season(:s2).to_a.should == [@post5, @post4]
-    end
-
-    it "finds posts by episode" do
-      IsLOSTOnYet::Post.for_episode(:s2e2).to_a.should == [@post4]
     end
 
     it "finds updates" do
@@ -201,18 +193,7 @@ class PostTest < Test::Unit::TestCase
     it "creates posts" do
       IsLOSTOnYet::Post.count.should == 2
       @post1.body.should             == @twit_posts[0].text
-      @post1.episode.should          == 's1e1'
       @post1.created_at.should       == Time.utc(2009, 1, 4, 23, 4, 16)
-    end
-
-    it "allows custom episodes set with hashtag" do
-      @post2.episode.should == 's1e2'
-    end
-
-    it "allows hyped episodes posted after old episode" do
-      @post1.set_or_guess_episode(IsLOSTOnYet.episodes.first, 3.months.from_now)
-      @post1.episode.should == 's6ehype'
-      @post1.reload
     end
 
     it "links post to user" do

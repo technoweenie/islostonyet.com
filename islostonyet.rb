@@ -7,14 +7,19 @@ configure do
   require File.join(File.dirname(__FILE__), 'config', 'lost.rb')
 end
 
+before do
+  Time.zone = IsLOSTOnYet.time_zone
+end
+
 get '/' do
-  Time.zone   = IsLOSTOnYet.time_zone
   @is_lost_on = IsLOSTOnYet.answer
   haml :index
 end
 
+get '/:tag' do
+end
+
 get '/s:season' do
-  Time.zone = IsLOSTOnYet.time_zone
   @episodes = IsLOSTOnYet.season params[:season]
   @posts    = IsLOSTOnYet::Post.for_season(params[:season], params[:page] || 1)
   @users    = users_for @posts
@@ -22,14 +27,12 @@ get '/s:season' do
 end
 
 get '/s:season/ehype' do
-  Time.zone = IsLOSTOnYet.time_zone
   @posts    = IsLOSTOnYet::Post.for_episode("s#{params[:season]}ehype", params[:page] || 1)
   @users    = users_for @posts
   haml :episode
 end
 
 get '/s:season/e:episode' do
-  Time.zone = IsLOSTOnYet.time_zone
   @episode  = IsLOSTOnYet.episode :"s#{params[:season]}e#{params[:episode]}"
   @posts    = IsLOSTOnYet::Post.for_episode(@episode.code, params[:page] || 1)
   @users    = users_for @posts

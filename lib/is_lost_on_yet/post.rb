@@ -40,7 +40,7 @@ module IsLOSTOnYet
           IsLOSTOnYet.twitter.update("@#{user.login} #{answer.reason}")
           false
         else
-          post.set_or_guess_episode(answer.current_episode, now)
+          post # .set_tags
         end
       end
     end
@@ -53,24 +53,14 @@ module IsLOSTOnYet
       filtered_for_replies.select(:external_id).first
     end
 
+    # a @reply tweet
     def reply?
       body.strip =~ /^@/
     end
 
+    # A tweet from a user asking the twitter bot if the show is on
     def inquiry?
       body.strip =~ /^@#{IsLOSTOnYet.twitter_login}\s*\?$/i
-    end
-
-    def set_or_guess_episode(current_episode, now = nil)
-      now        ||= Time.now.utc
-      self.episode = 
-        if body =~ /(^|\s)#(s(\d+)e(\d+))($|\s)/
-          $2
-        elsif current_episode && current_episode.old?(now)
-          "s#{current_episode.season + 1}ehype"
-        else
-          current_episode.to_s
-        end
     end
 
   protected
