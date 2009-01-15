@@ -12,6 +12,11 @@ before do
   @is_lost_on = IsLOSTOnYet.answer
 end
 
+get '/main.css' do
+  content_type 'text/css', :charset => 'utf-8'
+  sass :main
+end
+
 get '/' do
   @posts = IsLOSTOnYet::Post.all
   @users = users_for @posts
@@ -30,13 +35,6 @@ get '/episodeguide' do
   @episodes.map { |e| e.to_s } * ", " # temp output until theres a template
 end
 
-get '/*' do
-  @tags  = params[:splat].first.split("/")
-  @posts = IsLOSTOnYet::Post.find_replies #.find_by_tags(@tags)
-  @users = users_for @posts
-  haml :posts
-end
-
 get '/json' do
   json = IsLOSTOnYet.answer.to_json
   if params[:callback]
@@ -46,9 +44,11 @@ get '/json' do
   end
 end
 
-get '/main.css' do
-  content_type 'text/css', :charset => 'utf-8'
-  sass :main
+get '/*' do
+  @tags  = params[:splat].first.split("/")
+  @posts = IsLOSTOnYet::Post.find_replies #.find_by_tags(@tags)
+  @users = users_for @posts
+  haml :posts
 end
 
 helpers do
