@@ -37,11 +37,11 @@ module IsLOSTOnYet
     end
 
     def self.latest_update
-      filtered_for_updates.where(:visible => true).select(:external_id).first
+      filtered_for_updates.select(:external_id).first
     end
 
     def self.latest_reply
-      filtered_for_replies.where(:visible => true).select(:external_id).first
+      filtered_for_replies.select(:external_id).first
     end
 
     # a @reply tweet
