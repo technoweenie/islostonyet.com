@@ -35,15 +35,12 @@ end
 
 get '/episodeguide' do
   @episodes = IsLOSTOnYet.episodes
-  @posts    = IsLOSTOnYet::Post.find_replies
-  @users = users_for @posts
-
   @episodes.map { |e| e.to_s } * ", " # temp output until theres a template
 end
 
 get '/*' do
   @tags  = params[:splat].first.split("/")
-  @posts = IsLOSTOnYet::Post.find_replies
+  @posts = IsLOSTOnYet::Post.find_by_tags(@tags)
   @users = users_for @posts
 
   "<ul>\n#{%w(jack kate sayid).map { |tag| link_to_tag(tag) + "\n" }}\n</ul>"
