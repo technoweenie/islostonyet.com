@@ -35,7 +35,7 @@ end
 get '/episodeguide' do
   @tags  = IsLOSTOnYet::Tag.list
   @episodes = IsLOSTOnYet.episodes
-  @episodes.map { |e| e.to_s } * ", " # temp output until theres a template
+  haml :episodeguide
 end
 
 get '/json' do

@@ -45,11 +45,11 @@ module IsLOSTOnYet
       "/s#{season}/e#{number}"
     end
 
-    def current?(now)
+    def current?(now = Time.now.utc)
       now > air_date
     end
 
-    def old?(now)
+    def old?(now = Time.now.utc)
       now > (air_date + 1.month)
     end
 
