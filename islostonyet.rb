@@ -8,7 +8,7 @@ configure do
 end
 
 before do
-  Time.zone = IsLOSTOnYet.time_zone
+  Time.zone   = IsLOSTOnYet.time_zone
   @is_lost_on = IsLOSTOnYet.answer
 end
 

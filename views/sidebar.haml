@@ -5,6 +5,8 @@
     .reason
       %h3= @is_lost_on.reason
       %span.countdown 7d 3m 4s
+      - if @is_lost_on.next_episode
+        %p.next_episode= @is_lost_on.next_episode.air_date.xmlschema
   .tags
     - @tags.each do |tag,weight|
       %a{:href=>"#{tag}", :class=>"weight#{weight}"}= tag
