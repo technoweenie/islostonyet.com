@@ -47,11 +47,19 @@ get '/json' do
   end
 end
 
+get '/s*e*' do
+  @episode       = IsLOSTOnYet.episode(:"s#{params[:splat][0]}e#{params[:splat][1]}")
+  @tags          = IsLOSTOnYet::Tag.list
+  @posts         = IsLOSTOnYet::Post.find_by_tags([@episode.code])
+  @users         = users_for @posts
+  haml :posts
+end
+
 get '/*' do
-  @tags  = IsLOSTOnYet::Tag.list
+  @tags          = IsLOSTOnYet::Tag.list
   @current_tags  = params[:splat].first.split("/")
-  @posts = IsLOSTOnYet::Post.find_by_tags(@current_tags)
-  @users = users_for @posts
+  @posts         = IsLOSTOnYet::Post.find_by_tags(@current_tags)
+  @users         = users_for @posts
   haml :posts
 end
 
