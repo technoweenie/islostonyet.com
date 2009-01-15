@@ -7,11 +7,11 @@ class PostTest < Test::Unit::TestCase
         @user1 = IsLOSTOnYet::User.new(:external_id => '1', :login => 'abc', :avatar_url => 'http://abc')
         @user2 = IsLOSTOnYet::User.new(:external_id => '2', :login => 'def', :avatar_url => 'http://def')
         [@user1, @user2].each { |u| u.save }
-        @post1 = IsLOSTOnYet::Post.new(:user_id => @user1.id, :external_id => '1', :body => 'a', :created_at => Time.utc(2000, 1, 1))
-        @post2 = IsLOSTOnYet::Post.new(:user_id => @user1.id, :external_id => '2', :body => 'b', :created_at => Time.utc(2000, 1, 2))
-        @post3 = IsLOSTOnYet::Post.new(:user_id => @user2.id, :external_id => '3', :body => 'c', :created_at => Time.utc(2000, 1, 3))
-        @post4 = IsLOSTOnYet::Post.new(:user_id => @user2.id, :external_id => '4', :body => 'd', :created_at => Time.utc(2000, 1, 4))
-        @post5 = IsLOSTOnYet::Post.new(:user_id => @user2.id, :external_id => '5', :body => 'e', :created_at => Time.utc(2000, 1, 5))
+        @post1 = IsLOSTOnYet::Post.new(:user_id => @user1.id, :external_id => '1', :body => 'a', :created_at => Time.utc(2000, 1, 1), :visible => true)
+        @post2 = IsLOSTOnYet::Post.new(:user_id => @user1.id, :external_id => '2', :body => 'b', :created_at => Time.utc(2000, 1, 2), :visible => true)
+        @post3 = IsLOSTOnYet::Post.new(:user_id => @user2.id, :external_id => '3', :body => 'c', :created_at => Time.utc(2000, 1, 3), :visible => true)
+        @post4 = IsLOSTOnYet::Post.new(:user_id => @user2.id, :external_id => '4', :body => 'd', :created_at => Time.utc(2000, 1, 4), :visible => true)
+        @post5 = IsLOSTOnYet::Post.new(:user_id => @user2.id, :external_id => '5', :body => 'e', :created_at => Time.utc(2000, 1, 5), :visible => true)
         [@post1, @post2, @post3, @post4, @post5].each { |p| p.save }
       end
       IsLOSTOnYet.twitter_user = @user1
@@ -33,9 +33,9 @@ class PostTest < Test::Unit::TestCase
         @user1 = IsLOSTOnYet::User.new(:external_id => '1', :login => 'abc', :avatar_url => 'http://abc')
         @user2 = IsLOSTOnYet::User.new(:external_id => '2', :login => 'def', :avatar_url => 'http://def')
         [@user1, @user2].each { |u| u.save }
-        @post1 = IsLOSTOnYet::Post.new(:user_id => @user1.id, :external_id => '1', :body => 'a', :created_at => Time.utc(2000, 1, 1))
+        @post1 = IsLOSTOnYet::Post.new(:user_id => @user1.id, :external_id => '1', :body => 'a', :created_at => Time.utc(2000, 1, 1), :visible => true)
         @post2 = IsLOSTOnYet::Post.new(:user_id => @user1.id, :external_id => '2', :body => 'b', :created_at => Time.utc(2000, 1, 2))
-        @post3 = IsLOSTOnYet::Post.new(:user_id => @user2.id, :external_id => '3', :body => 'c', :created_at => Time.utc(2000, 1, 3))
+        @post3 = IsLOSTOnYet::Post.new(:user_id => @user2.id, :external_id => '3', :body => 'c', :created_at => Time.utc(2000, 1, 3), :visible => true)
         @post4 = IsLOSTOnYet::Post.new(:user_id => @user2.id, :external_id => '4', :body => 'd', :created_at => Time.utc(2000, 1, 4))
         [@post1, @post2, @post3, @post4].each { |p| p.save }
       end

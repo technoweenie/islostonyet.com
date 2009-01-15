@@ -31,17 +31,17 @@ module IsLOSTOnYet
           IsLOSTOnYet.twitter.update("@#{user.login} #{answer.reason}")
           false
         else
-          post # .set_tags
+          post
         end
       end
     end
 
     def self.latest_update
-      filtered_for_updates.where(:visible => true).select(:external_id).first
+      filtered_for_updates.select(:external_id).first
     end
 
     def self.latest_reply
-      filtered_for_replies.where(:visible => true).select(:external_id).first
+      filtered_for_replies.select(:external_id).first
     end
 
     # a @reply tweet
