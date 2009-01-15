@@ -15,22 +15,14 @@ end
 get '/' do
   @posts = IsLOSTOnYet::Post.all
   @users = users_for @posts
-
   haml :index
 end
 
 get '/tags' do
-  # placeholders until implemented
-  #
-  # tags
-  # @tags = %w(jack sayid kate s5e4)
-  #
-  # weighted tags
   @tags  = [['jack', 54], ['kate', 45], ['s5e4', 30]]
   @posts = IsLOSTOnYet::Post.find_replies
   @users = users_for @posts
-  
-  @tags.map { |(tag, weight)| tag } * ", " # temp output until theres a template
+  haml :tags
 end
 
 get '/episodeguide' do
@@ -40,10 +32,9 @@ end
 
 get '/*' do
   @tags  = params[:splat].first.split("/")
-  @posts = IsLOSTOnYet::Post.find_by_tags(@tags)
+  @posts = IsLOSTOnYet::Post.find_replies #.find_by_tags(@tags)
   @users = users_for @posts
-
-  "<ul>\n#{%w(jack kate sayid).map { |tag| link_to_tag(tag) + "\n" }}\n</ul>"
+  haml :posts
 end
 
 get '/json' do

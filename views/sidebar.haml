@@ -1,18 +1,10 @@
 #sidebar
   .widget
     %h1.question= "Is LOST on yet?"
-    %h2.answer NO
+    %h2.answer= @is_lost_on.answer
     .reason
-      %h3 
-        Season 5 begins on
-        21 January 2009 at 9pm in
-        %span.countdown 7d 3m 4s
-  .tags
-    %ul.episodes
-      %li
-        %a{:href => "/s#{params[:season]}/hype"}
-          == <strong>#s#{params[:season]}hype</strong> Pre-Season Hype
-      - @episodes.each do |e|
-        %li
-          %a{:href => e.path}
-            == <strong>#s#{params[:season]}e#{e.number}</strong> #{e.title}
+      %h3= @is_lost_on.reason
+      %span.countdown 7d 3m 4s
+  // .tags
+  //   - @tags.each do |tag|
+  //     %a{:href=>"#{tag}"}= tag    
