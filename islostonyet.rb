@@ -36,7 +36,7 @@ get '/*' do
   @tags = params[:splat].first.split("/")
   # doesn't exist
   # @posts = IsLOSTOnYet::Post.by_tags(@tags)
-  @tags * ", " # temp output until theres a template
+  "<ul>\n#{%w(jack kate sayid).map { |tag| link_to_tag(tag) + "\n" }}\n</ul>"
 end
 
 get '/json' do
@@ -54,6 +54,21 @@ get '/main.css' do
 end
 
 helpers do
+  def link_to_tag(name)
+    in_collection = @tags.include?(name)
+    collection    = in_collection ? [] : @tags
+    %(<li#{%( class="selected") if in_collection}><a href="#{url_for_tag(name, collection)}">#{name}</a></li>)
+  end
+
+  def url_for_tag(name, existing = @tags)
+    "/" + 
+      if existing.empty?
+        name
+      else
+        (existing.dup << name) * "/"
+      end
+  end
+
   def users_for(posts)
     user_ids = posts.map { |p| p.user_id.to_i }
     user_ids.uniq!
