@@ -22,6 +22,11 @@ get '/ie.css' do
   sass :ie
 end
 
+get '/mobile_safari.css' do
+  content_type 'text/css', :charset => 'utf-8'
+  sass :mobile_safari
+end
+
 get '/' do
   @tags    = IsLOSTOnYet::Tag.list
   @posts   = IsLOSTOnYet::Post.find_replies
@@ -74,6 +79,11 @@ get '/*' do
 end
 
 helpers do
+  
+  def mobile_safari?
+    request.env["HTTP_USER_AGENT"] && request.env["HTTP_USER_AGENT"][/(Mobile\/.+Safari)/]
+  end
+  
   def partial(page, options={})
     haml page, options.merge!(:layout => false)
   end

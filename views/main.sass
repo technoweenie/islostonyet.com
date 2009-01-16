@@ -94,10 +94,20 @@ body
       :padding-bottom 10px
       a
         :color = !main
+      h2
+        :font-size 85%
+        :font-weight normal
+        :text-transform uppercase
+        :padding 10px 10px 0 10px
+        :color = !main_lightest
       .post, .episode
         :text-align left
         :position relative
         :padding 10px 10px 0 10px
+        a.spoiler
+          :background-color = !main
+          &:hover
+            :background-color transparent
         p.body
           :font-size 110%
           :padding-bottom .3em
