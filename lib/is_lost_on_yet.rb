@@ -29,6 +29,7 @@ module IsLOSTOnYet
     attr_accessor :show_title
     attr_accessor :show_abbrev
     attr_accessor :show_url
+    attr_accessor :counter_url
 
     def twitter
       @twitter ||= Twitter::Base.new(twitter_login, twitter_password)
@@ -45,6 +46,7 @@ module IsLOSTOnYet
     end
   end
 
+  self.counter_url = "http://errcount.com/ctr/750.js"
   self.show_title  = "LOST"
   self.show_abbrev = "LOST"
   self.show_url    = "http://abc.go.com/primetime/lost/"
