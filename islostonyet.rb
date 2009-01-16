@@ -22,6 +22,7 @@ get '/' do
   @posts   = IsLOSTOnYet::Post.find_replies
   @updates = IsLOSTOnYet::Post.find_updates
   @users   = users_for @posts + @updates
+  @body_class = "latest"
   haml :index
 end
 
@@ -29,13 +30,15 @@ get '/tags' do
   @tags  = IsLOSTOnYet::Tag.list
   @posts = IsLOSTOnYet::Post.find_replies
   @users = users_for @posts
+  @body_class = "tags"
   haml :tags
 end
 
-get '/episodeguide' do
+get '/episodes' do
   @tags  = IsLOSTOnYet::Tag.list
   @episodes = IsLOSTOnYet.episodes
-  haml :episodeguide
+  @body_class = "episodes"
+  haml :episodes
 end
 
 get '/json' do
@@ -52,6 +55,8 @@ get '/s*e*' do
   @tags          = IsLOSTOnYet::Tag.list
   @posts         = IsLOSTOnYet::Post.find_by_tags([@episode.code])
   @users         = users_for @posts
+  @body_id       = "posts"
+  
   haml :posts
 end
 
@@ -60,6 +65,7 @@ get '/*' do
   @current_tags  = params[:splat].first.split("/")
   @posts         = IsLOSTOnYet::Post.find_by_tags(@current_tags)
   @users         = users_for @posts
+  @body_class       = "posts"
   haml :posts
 end
 

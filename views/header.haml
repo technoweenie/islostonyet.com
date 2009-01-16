@@ -1,6 +1,7 @@
-#sidebar
+#header
   .widget
-    %h1.question= "Is LOST on yet?"
+    %h1.question
+      %a{:href=>"/"}Is LOST on yet?
     %h2#answer= @is_lost_on.answer
     %h3.reason
       = @is_lost_on.reason
@@ -42,8 +43,4 @@
             10: "it will be time for lost in ten seconds",
             0: "it is time for lost"
           }
-        );
-
-  .tags
-    - @tags.each do |tag,weight|
-      %a{:href=>"#{tag}", :class=>"weight#{weight}"}= tag
+        );  

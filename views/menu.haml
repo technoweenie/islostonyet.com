@@ -1,0 +1,12 @@
+.menu
+  %h3{:class => @body_class == "latest" ? "active" : ''}
+    %a{:href=>"/"}Latest
+  %h3{:class => @body_class == "episodes" ? "active" : ''}
+    %a{:href=>"/episodes"}Episodes
+  - if @tags.count > 0
+    .tags
+      %h3{:class => @body_class == "tags" ? "active" : ''}
+        %a{:href=>"/tags"}Tags
+      %p
+        - @tags.each do |tag,weight|
+          %a{:href=>"#{tag}", :class=>"tag weight#{weight}"}= tag

@@ -1,10 +1,10 @@
-%h1
-  - if @episode
-    == #{@episode.code.upcase} #{@episode.title}
-  - else
-    posts for
-    = @current_tags.map { |t| t.inspect } * ", "
- 
+// %h1
+//   - if @episode
+//     == #{@episode.code.upcase} #{@episode.title}
+//   - else
+//     posts for
+//     = @current_tags.map { |t| t.inspect } * ", "
+//  
 .posts
   - @posts.each do |p|
     - u = @users[p.user_id]

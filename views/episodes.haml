@@ -1,0 +1,10 @@
+.episodes
+  - @episodes.each do |e|
+    .episode
+      %h3== <a href='/#{e.code}'>##{e.code.upcase}</a>
+      %p.body
+        == <a href='/#{e.code}'>#{e.title}</a>
+      %p.meta
+        == air#{e.current? ? :ed : :s} on
+        %span.date
+          == #{time_ago_or_time_stamp(e.air_date)}
