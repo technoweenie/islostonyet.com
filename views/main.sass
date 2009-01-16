@@ -15,6 +15,8 @@
 !main = #1e3c42
 !main_dark = #102226
 
+.clear
+  +clearfix
 ul,ol
   :list-style-type none
 body
@@ -119,7 +121,14 @@ body
             :text-decoration none
             :color = !main_lightest
     .tags
-      :padding 10px
+      :padding 10px      
+      a.tag
+        :text-decoration none
+        :display block
+        :float left
+        :padding-right 10px
+        small
+          :color = !main_light
   #footer
     :padding-top 10px
     :clear both

@@ -1,3 +1,4 @@
 .tags
   - @tags.each do |tag,weight|
-    %a{:href=>"#{tag}", :style=>"font-size:#{weight}em"}= tag
+    %a.tag{:href=>"#{tag}"}== #{tag}<small> (#{weight})</small>
+  .clear
