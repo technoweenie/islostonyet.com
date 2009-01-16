@@ -66,7 +66,7 @@ module IsLOSTOnYet
     end
 
     def inspect
-      %(#<IsLOSTOnYet::Episode(#{code}) #{title.inspect}, air#{Time.now < air_date ? :ing : :ed} on #{air_date.in_time_zone.inspect}>)
+      %(#<IsLOSTOnYet::Episode(#{code}) #{title.inspect}, air#{Time.now < air_date ? :s : :ed} on #{air_date.in_time_zone.inspect}>)
     end
   end
 
@@ -78,6 +78,6 @@ private
   def self.build_reason(current_episode, next_episode)
     episode = next_episode || current_episode
     season, ep = episode.code.scan(/^s(\d+)e(\d+)$/).first
-    "Season #{season}#{", episode #{ep}" if current_episode && ep != '1'} start#{next_episode ? :s : :ed} on #{episode.air_date.in_time_zone.strftime("%d %B %Y at %I:%M%p %Z")}"
+    "Season #{season}#{", episode #{ep}" if current_episode && ep != '1'} beg#{next_episode ? :ins : :an} on #{episode.air_date.in_time_zone.strftime("%d %B %Y at %I:%M%p %Z")}"
   end
 end
