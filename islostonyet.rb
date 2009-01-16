@@ -12,14 +12,6 @@ before do
   @is_lost_on = IsLOSTOnYet.answer
 end
 
-get '/help' do
-  @tags  = IsLOSTOnYet::Tag.list
-  @posts = IsLOSTOnYet::Post.find_replies
-  @users = users_for @posts
-  @body_class = "tags"
-  haml :help
-end
-
 get '/main.css' do
   content_type 'text/css', :charset => 'utf-8'
   sass :main
