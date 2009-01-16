@@ -1,2 +1,3 @@
-- @tags.each do |tag,weight|
-  %a{:href=>"#{tag}", :class=>"weight+#{weight}"}= tag
+.tags
+  - @tags.each do |tag,weight|
+    %a{:href=>"#{tag}", :style=>"font-size:#{weight}em"}= tag

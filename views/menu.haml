@@ -4,9 +4,8 @@
   %h3{:class => @body_class == "episodes" ? "active" : ''}
     %a{:href=>"/episodes"}Episodes
   - if @tags.size > 0
-    .tags
-      %h3{:class => @body_class == "tags" ? "active" : ''}
-        %a{:href=>"/tags"}Tags
-      %p
-        - @tags.each do |tag,weight|
-          %a{:href=>"#{tag}", :class=>"tag weight#{weight}"}= tag
+    %h3{:class => @body_class == "tags" ? "active" : ''}
+      %a{:href=>"/tags"}Tags
+    // %p
+    //   - @tags.each do |tag,weight|
+    //     %a{:href=>"#{tag}", :class=>"tag weight#{weight}"}= tag
