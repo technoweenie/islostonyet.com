@@ -16,7 +16,7 @@
 !main_dark = #102226
 
 .clear
-  +clearfix
+  :clear both
 ul,ol
   :list-style-type none
 body
@@ -48,11 +48,12 @@ body
       a
         :color #fff
       h3,h1
-        :opacity .5
+        :color = !main_lightest
       .question
         :font-size 205%
         a
-          :text-decoration none            
+          :text-decoration none
+          :color = !main_lightest
       #answer
         :font-size 420%
         :line-height 1em
@@ -75,18 +76,17 @@ body
       :margin-top -2em
       h3
         :float left
-        :background-color #fff
+        :background-color = !main_lightest
         :text-transform uppercase
         :font-size 85%
         :margin-right 5px
-        :opacity .5
         a
           :text-decoration none
           :color = !main
           :display block
           :padding 10px 10px 5px 10px
         &.active
-          :opacity 1
+          :background-color #fff
     .posts, .episodes, .tags
       :clear both
       :background-color #fff

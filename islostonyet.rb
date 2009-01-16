@@ -17,6 +17,11 @@ get '/main.css' do
   sass :main
 end
 
+get '/ie.css' do
+  content_type 'text/css', :charset => 'utf-8'
+  sass :ie
+end
+
 get '/' do
   @tags    = IsLOSTOnYet::Tag.list
   @posts   = IsLOSTOnYet::Post.find_replies
