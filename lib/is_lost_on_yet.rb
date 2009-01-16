@@ -26,6 +26,8 @@ module IsLOSTOnYet
     attr_accessor :twitter_login
     attr_accessor :twitter_password
     attr_accessor :time_zone
+    attr_accessor :show_title
+    attr_accessor :show_url
 
     def twitter
       @twitter ||= Twitter::Base.new(twitter_login, twitter_password)
@@ -42,7 +44,9 @@ module IsLOSTOnYet
     end
   end
 
-  self.time_zone = "UTC"
+  self.show_title = "LOST"
+  self.show_url   = "http://abc.go.com/primetime/lost/"
+  self.time_zone  = "UTC"
 end
 
 require 'is_lost_on_yet/schema'

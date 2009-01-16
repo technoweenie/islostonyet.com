@@ -1,15 +1,17 @@
 .help
   %p 
-    %a{:href=>"/"}islostonyet 
+    %a{:href=>"/"}= IsLOSTOnYet.twitter_login 
     is a 
     %a{:href=>"http://twitter.com"}Twitter
-    enabled fan site for the abc television series 
-    %a{:href=>"http://abc.go.com/primetime/lost/"}LOST
+    enabled fan site for the television series 
+    %a{:href=>IsLOSTOnYet.show_url}= IsLOSTOnYet.show_title
   %p
     Tweet
-    %a{:href=>"http://twitter.com/home?status=%40islostonyet%3F"}@islostonyet?
-    for an auto-reply countdown to the next new episode of LOST, or
+    %a{:href=>"http://twitter.com/home?status=%40#{IsLOSTOnYet.twitter_login}%3F"}= "@#{IsLOSTOnYet.twitter_login}?"
+    for an auto-reply countdown to the next new episode of 
+    = IsLOSTOnYet.show_title
+    , or
   %p
     Tweet
-    %a{:href=>"http://twitter.com/home?status=%40islostonyet+%23s5+is+gonna+be+sweet"}@islostonyet
+    %a{:href=>"http://twitter.com/home?status=%40#{IsLOSTOnYet.twitter_login}+%23s5+is+gonna+be+sweet"}= "@#{IsLOSTOnYet.twitter_login}"
     with your status, and join the conversation
