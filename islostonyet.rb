@@ -56,7 +56,6 @@ get '/s*e*' do
   @posts         = IsLOSTOnYet::Post.find_by_tags([@episode.code])
   @users         = users_for @posts
   @body_id       = "posts"
-  
   haml :posts
 end
 
