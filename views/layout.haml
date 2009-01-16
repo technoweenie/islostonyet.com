@@ -43,12 +43,12 @@
     %title= page_title @is_lost_on
     %meta{'http-equiv'=>"Content-Type", :content=>"text/html; charset=iso-8859-1"}/
     %meta{'http-equiv'=>"Content-Language", :content=>"en-us"}/
-    %link{:href=>"/main.css", :media=>"all", :rel=>"stylesheet", :type=>"text/css"}/
+    %link{:href=>"/stylesheets/#{IsLOSTOnYet.show_abbrev.downcase}.css", :media=>"all", :rel=>"stylesheet", :type=>"text/css"}/
     - if mobile_safari?
-      %link{:href=>"/mobile_safari.css", :media=>"all", :rel=>"stylesheet", :type=>"text/css"}/
+      %link{:href=>"/stylesheets/mobile_safari.css", :media=>"all", :rel=>"stylesheet", :type=>"text/css"}/
       %meta{:name => "viewport", :content => "width = device-width, initial-scale = 1.0"}/
     /[if IE]
-      %link{:href=>"/ie.css", :media=>"all", :rel=>"stylesheet", :type=>"text/css"}/
+      %link{:href=>"/stylesheets/ie.css", :media=>"all", :rel=>"stylesheet", :type=>"text/css"}/
   %body{:id=>"#{@body_id}", :class=>"#{@body_class}"}
     .container
       = partial :header

@@ -3,6 +3,15 @@ gem 'sinatra', '~> 0.3'
 require 'sinatra'
 require 'json'
 
+module Sinatra
+  module Sass
+  private
+    def render_sass(content, options = {})
+      ::Sass::Engine.new(content, options).render
+    end
+  end
+end
+
 configure do
   require File.join(File.dirname(__FILE__), 'config', 'lost.rb')
 end
@@ -12,24 +21,9 @@ before do
   @is_lost_on = IsLOSTOnYet.answer
 end
 
-get '/main.css' do
+get '/stylesheets/:name.css' do
   content_type 'text/css', :charset => 'utf-8'
-  sass :'stylesheets/main'
-end
-
-get '/show.css' do
-  content_type 'text/css', :charset => 'utf-8'
-  sass :"stylesheets/#{IsLOSTOnYet.show_abbrev.downcase}"
-end
-
-get '/ie.css' do
-  content_type 'text/css', :charset => 'utf-8'
-  sass :'stylesheets/ie'
-end
-
-get '/mobile_safari.css' do
-  content_type 'text/css', :charset => 'utf-8'
-  sass :'stylesheets/mobile_safari'
+  sass :"stylesheets/#{params[:name]}", :style => :compact, :load_paths => [File.join(Sinatra.application.options.views, 'stylesheets')]
 end
 
 get '/' do
