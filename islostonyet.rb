@@ -3,6 +3,15 @@ gem 'sinatra', '~> 0.3'
 require 'sinatra'
 require 'json'
 
+module Sinatra
+  module Sass
+  private
+    def render_sass(content, options = {})
+      ::Sass::Engine.new(content, options).render
+    end
+  end
+end
+
 configure do
   require File.join(File.dirname(__FILE__), 'config', 'lost.rb')
 end
@@ -14,7 +23,7 @@ end
 
 get '/stylesheets/:name.css' do
   content_type 'text/css', :charset => 'utf-8'
-  sass "stylesheets/#{params["name"]}".to_sym, :style => :compact, :load_paths => ["/views/stylesheets/"]
+  sass :"stylesheets/#{params[:name]}", :style => :compact, :load_paths => [File.join(Sinatra.application.options.views, 'stylesheets')]
 end
 
 get '/' do
