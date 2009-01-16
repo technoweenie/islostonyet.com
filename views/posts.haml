@@ -1,6 +1,10 @@
 // %h1
 //   - if @episode
-//     == #{@episode.code.upcase} #{@episode.title}
+//     = @episode.code.upcase
+//     - if @is_lost_on.spoiler?(@episode)
+//       %span.spoiler= @episode.title
+//     - else
+//       = @episode.title
 //   - else
 //     posts for
 //     = @current_tags.map { |t| t.inspect } * ", "
