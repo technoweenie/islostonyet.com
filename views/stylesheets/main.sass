@@ -30,10 +30,8 @@ body
     :width 520px
     +clearfix
   #header    
-    :background-image url(/lost-polarbear.png)
-    :background-repeat no-repeat
-    :background-position right top
-    :height 250px
+    +headerbgi
+    +headerheight
     .widget
       :height 8em
       :padding-top 2em
@@ -42,13 +40,11 @@ body
       :font-size 110%
       a
         :color #fff
-      h3,h1
-        :color = !main_lightest
       .question
         :font-size 205%
         a
           :text-decoration none
-          :color = !main_lightest
+          :color = !complement
       #answer
         :font-size 420%
         :line-height 1em
@@ -59,6 +55,7 @@ body
         :font-size 98%
         :width 12em
         :float left
+        :color = !main_lightest
       #countdown
         :font-weight normal
         :clear both
