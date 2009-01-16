@@ -57,11 +57,11 @@ module IsLOSTOnYet
       Time.zone.local(air_date.year, air_date.month, air_date.day, air_date.hour, air_date.min)
     end
 
-    def current?(now = Time.now.utc)
+    def current?(now = Time.zone.now)
       now > local_air_date
     end
 
-    def old?(now = Time.now.utc)
+    def old?(now = Time.zone.now)
       now > (local_air_date + 1.month)
     end
 
