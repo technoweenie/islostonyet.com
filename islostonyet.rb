@@ -12,19 +12,9 @@ before do
   @is_lost_on = IsLOSTOnYet.answer
 end
 
-get '/main.css' do
+get '/stylesheets/:name.css' do
   content_type 'text/css', :charset => 'utf-8'
-  sass :main
-end
-
-get '/ie.css' do
-  content_type 'text/css', :charset => 'utf-8'
-  sass :ie
-end
-
-get '/mobile_safari.css' do
-  content_type 'text/css', :charset => 'utf-8'
-  sass :mobile_safari
+  sass "stylesheets/#{params["name"]}".to_sym, :style => :compact, :load_paths => ["/views/stylesheets/"]
 end
 
 get '/' do

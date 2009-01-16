@@ -1,3 +1,18 @@
+// lost.sass
+
+!main_lightest = #8D9B9E
+!main_light = #2F5B64
+!main = #1e3c42
+!main_dark = #102226
+
+=bodybgi
+  :background-image url(/lost-gradient.gif)
+  :background-repeat repeat-x
+  :background-position bottom
+  
+  
+// main.sass
+
 *
   :margin 0
   :padding 0
@@ -9,11 +24,6 @@
     :visibility hidden
     :line-height 0
     :height 0
-    
-!main_lightest = #8D9B9E
-!main_light = #2F5B64
-!main = #1e3c42
-!main_dark = #102226
 
 .clear
   :clear both
@@ -21,14 +31,12 @@ ul,ol
   :list-style-type none
 body
   :font-family Helvetica, Arial, sans-serif
-  :background-color #1e3c42
+  :background-color = !main
   :text-align center
   :font-size 11pt
   :padding 4em
   :height 100%
-  :background-image url(/lost-gradient.gif)
-  :background-repeat repeat-x
-  :background-position bottom
+  +bodybgi
   .container
     :margin 0 auto
     :text-align left
