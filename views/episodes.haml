@@ -3,7 +3,10 @@
     .episode
       %h3== <a href='/#{e.code}'>##{e.code.upcase}</a>
       %p.body
-        == <a href='/#{e.code}'>#{e.title}</a>
+        - if @is_lost_on.spoiler?(e)
+          %a.spoiler{:href=>"/#{e.code}"}= e.title
+        - else
+          %a{:href=>"/#{e.code}"}= e.title
       %p.meta
         == air#{e.current? ? :ed : :s} on
         %span.date
