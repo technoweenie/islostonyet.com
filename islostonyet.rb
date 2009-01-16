@@ -14,17 +14,22 @@ end
 
 get '/main.css' do
   content_type 'text/css', :charset => 'utf-8'
-  sass :main
+  sass :'stylesheets/main'
+end
+
+get '/show.css' do
+  content_type 'text/css', :charset => 'utf-8'
+  sass :"stylesheets/#{IsLOSTOnYet.show_abbrev.downcase}"
 end
 
 get '/ie.css' do
   content_type 'text/css', :charset => 'utf-8'
-  sass :ie
+  sass :'stylesheets/ie'
 end
 
 get '/mobile_safari.css' do
   content_type 'text/css', :charset => 'utf-8'
-  sass :mobile_safari
+  sass :'stylesheets/mobile_safari'
 end
 
 get '/' do
