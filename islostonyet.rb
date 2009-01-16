@@ -69,7 +69,6 @@ get '/*' do
 end
 
 helpers do
-  
   def mobile_safari?
     request.env["HTTP_USER_AGENT"] && request.env["HTTP_USER_AGENT"][/(Mobile\/.+Safari)/]
   end
@@ -78,7 +77,7 @@ helpers do
     haml page, options.merge!(:layout => false)
   end
   
-  def time_ago_or_time_stamp(from_time, to_time = Time.now, include_seconds = true, detail = false)
+  def time_ago_or_time_stamp(from_time, to_time = Time.zone.now, include_seconds = true, detail = false)
     from_time = from_time.to_time if from_time.respond_to?(:to_time)
     to_time = to_time.to_time if to_time.respond_to?(:to_time)
     distance_in_minutes = (((to_time - from_time).abs)/60).round
@@ -121,13 +120,13 @@ helpers do
 
   def page_title(answer = nil)
     if answer
-      "Is LOST#{" (Season #{answer.next_episode.season})" if answer.next_episode} on yet?"
+      "Is #{IsLOSTOnYet.show_abbrev}#{" (Season #{answer.next_episode.season})" if answer.next_episode} on yet?"
     elsif params[:episode]
-      "Is LOST (Season #{params[:season]}, Episode #{params[:episode]}) on yet?"
+      "Is #{IsLOSTOnYet.show_abbrev} (Season #{params[:season]}, Episode #{params[:episode]}) on yet?"
     elsif params[:season]
-      "Is LOST (Season #{params[:season]}) on yet?"
+      "Is #{IsLOSTOnYet.show_abbrev} (Season #{params[:season]}) on yet?"
     else
-      "Is LOST on yet?"
+      "Is #{IsLOSTOnYet.show_abbrev} on yet?"
     end
   end
 end

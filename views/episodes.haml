@@ -10,4 +10,7 @@
       %p.meta
         == air#{e.current? ? :ed : :s} on
         %span.date
-          == #{time_ago_or_time_stamp(e.air_date)}
+          - if e.old?
+            = time_ago_or_time_stamp(e.local_air_date)
+          - else
+            = e.local_air_date.strftime("%d %B %Y at %I %p")
