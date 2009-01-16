@@ -33,6 +33,14 @@ module IsLOSTOnYet
     end
     self.episodes_path = File.join(File.dirname(__FILE__), '..', '..', 'episodes')
 
+    def self.load(filename)
+      episodes = YAML.load_file(File.join(episodes_path, "#{filename}.yml")).map do |(code, data)|
+        data['air_date'] ? Episode.new(code, data['title'], data['air_date']) : nil
+      end
+      episodes.compact!
+      episodes.sort! { |x, y| y.air_date <=> x.air_date }
+    end
+
     def season
       @season ||= code.scan(/^s(\d+)e/).first.first.to_i
     end
@@ -45,20 +53,16 @@ module IsLOSTOnYet
       "/s#{season}/e#{number}"
     end
 
+    def local_air_date
+      Time.zone.local(air_date.year, air_date.month, air_date.day, air_date.hour, air_date.min)
+    end
+
     def current?(now = Time.now.utc)
-      now > air_date
+      now > local_air_date
     end
 
     def old?(now = Time.now.utc)
-      now > (air_date + 1.month)
-    end
-
-    def self.load(filename)
-      episodes = YAML.load_file(File.join(episodes_path, "#{filename}.yml")).map do |(code, data)|
-        data['air_date'] ? Episode.new(code, data['title'], data['air_date']) : nil
-      end
-      episodes.compact!
-      episodes.sort! { |x, y| y.air_date <=> x.air_date }
+      now > (local_air_date + 1.month)
     end
 
     def to_s
@@ -66,7 +70,7 @@ module IsLOSTOnYet
     end
 
     def inspect
-      %(#<IsLOSTOnYet::Episode(#{code}) #{title.inspect}, air#{Time.now < air_date ? :s : :ed} on #{air_date.in_time_zone.inspect}>)
+      %(#<IsLOSTOnYet::Episode(#{code}) #{title.inspect}, air#{Time.now < air_date ? :s : :ed} on #{local_air_date.inspect}>)
     end
   end
 
@@ -78,6 +82,6 @@ private
   def self.build_reason(current_episode, next_episode)
     episode = next_episode || current_episode
     season, ep = episode.code.scan(/^s(\d+)e(\d+)$/).first
-    "Season #{season}#{", episode #{ep}" if current_episode && ep != '1'} air#{next_episode ? :s : :ed} on #{episode.air_date.in_time_zone.strftime("%d %B %Y at %I:%M%p %Z")}"
+    "Season #{season}#{", episode #{ep}" if current_episode && ep != '1'} air#{next_episode ? :s : :ed} on #{episode.air_date.strftime("%d %B %Y at %I %p")}"
   end
 end

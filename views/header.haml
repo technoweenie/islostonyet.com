@@ -10,12 +10,7 @@
       :plain
         var countdown_d = new Date();
         var countdown_timenow = countdown_d.getTime();
-        Date.parseUTC = function(value) {
-          var localDate = new Date(value);
-          var utcSeconds = Date.UTC(localDate.getFullYear(), localDate.getMonth(), localDate.getDate(), localDate.getHours(), localDate.getMinutes(), localDate.getSeconds())
-          return new Date(utcSeconds);
-        }
-        var countdown_targetdate = Date.parseUTC("#{@is_lost_on.next_episode.air_date.strftime('%Y/%m/%d %I:%M %p')}")
+        var countdown_targetdate = Date.parse("#{@is_lost_on.next_episode.local_air_date.strftime('%Y/%m/%d %H:%M')}")
         var countdown_timeleft = Math.floor((countdown_targetdate-countdown_timenow)/1000);
         function countdown(remain,messages) {
           var
