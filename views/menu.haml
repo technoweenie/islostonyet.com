@@ -3,7 +3,7 @@
     %a{:href=>"/"}Latest
   %h3{:class => @body_class == "episodes" ? "active" : ''}
     %a{:href=>"/episodes"}Episodes
-  - if @tags.count > 0
+  - if @tags.size > 0
     .tags
       %h3{:class => @body_class == "tags" ? "active" : ''}
         %a{:href=>"/tags"}Tags
