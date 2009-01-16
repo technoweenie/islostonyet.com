@@ -130,13 +130,13 @@ helpers do
 
   def page_title(answer = nil)
     if answer
-      "Is LOST#{" (Season #{answer.next_episode.season})" if answer.next_episode} on yet?"
+      "Is #{IsLOSTOnYet.show_abbrev}#{" (Season #{answer.next_episode.season})" if answer.next_episode} on yet?"
     elsif params[:episode]
-      "Is LOST (Season #{params[:season]}, Episode #{params[:episode]}) on yet?"
+      "Is #{IsLOSTOnYet.show_abbrev} (Season #{params[:season]}, Episode #{params[:episode]}) on yet?"
     elsif params[:season]
-      "Is LOST (Season #{params[:season]}) on yet?"
+      "Is #{IsLOSTOnYet.show_abbrev} (Season #{params[:season]}) on yet?"
     else
-      "Is LOST on yet?"
+      "Is #{IsLOSTOnYet.show_abbrev} on yet?"
     end
   end
 end

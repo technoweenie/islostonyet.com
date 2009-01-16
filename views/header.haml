@@ -1,7 +1,10 @@
 #header
   .widget
     %h1.question
-      %a{:href=>"/"}Is LOST on yet?
+      %a{:href=>"/"}
+        Is 
+        = IsLOSTOnYet.show_abbrev
+        on yet?
     %h2#answer= @is_lost_on.answer
     %h3.reason
       = @is_lost_on.reason
