@@ -14,8 +14,6 @@
 
 .clear
   :clear both
-ul,ol
-  :list-style-type none
 body
   :font-family Helvetica, Arial, sans-serif
   :background-color = !main
@@ -79,6 +77,25 @@ body
           :padding 10px 10px 5px 10px
         &.active
           :background-color #fff
+    .help
+      :padding 10px
+      :font-size 85%
+      :border-bottom 1px solid #999
+      :color = !main_lightest
+      h3
+        :text-decoration none
+        :text-transform uppercase
+        :padding-bottom 10px
+        :font-size 95%
+        a
+          :color = !main_lightest
+      ol
+        :margin 0
+        :padding 0
+        li
+          :margin-left 1.5em
+          a
+            :color = !main_lightest
     .posts, .episodes, .tags
       :clear both
       :background-color #fff
