@@ -26,12 +26,7 @@
               var second = (Math.floor(remain/1))%60;
               countdown.innerHTML = (day > 0 ? "<span class='countdown_day'><strong>"+day+"</strong>d</span> " : "") + (hour > 0 ? "<span class='countdown_hour'><strong>"+hour+"</strong>h</span> " : "") + (minute > 0 ? "<span class='countdown_minute'><strong>"+minute+"</strong>m</span> " : "") + (second > 0 ? "<span class='countdown_second'><strong>"+second+"</strong>s</span> " : "")
               if (--remain < 0 ) { 
-                clearInterval(timer); 
-                document.body.id = "yes"; 
-                status.innerHTML = "yes"; 
-              } else {
-                document.body.id = "no"; 
-                status.innerHTML = "no"; 
+                clearInterval(timer);  
               }
             },1000);          
         }
