@@ -58,4 +58,11 @@
       #footer
         #cnt
           == <script src="#{IsLOSTOnYet.counter_url}"></script>
+        %p#also
+          You might also like:
+          - if IsLOSTOnYet.show_abbrev.downcase == 'bsg'
+            %a{:href=>"http://islostonyet.com/"}@islostonyet
+          - if IsLOSTOnYet.show_abbrev.downcase == 'lost'
+            %a{:href=>"http://isbsgonyet.com/"}@isbsgonyet
+            
         %p by <a href="http://github.com/technoweenie">rick</a> and <a href="http://github.com/seaofclouds">seaofclouds</a>.

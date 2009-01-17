@@ -5,14 +5,18 @@
     %a{:href=>"http://twitter.com"}Twitter
     enabled fan site for the television series 
     %a{:href=>IsLOSTOnYet.show_url}= IsLOSTOnYet.show_title
-  %ol
-    %li
-      Tweet
-      %a{:href=>"http://twitter.com/home?status=%40#{IsLOSTOnYet.twitter_login}%3F"}= "@#{IsLOSTOnYet.twitter_login}?"
-      for an auto-reply countdown to the next new episode of 
-      = IsLOSTOnYet.show_title
-      , or
-    %li
-      Tweet
-      %a{:href=>"http://twitter.com/home?status=%40#{IsLOSTOnYet.twitter_login}+%23s5+is+gonna+be+sweet"}= "@#{IsLOSTOnYet.twitter_login}"
-      with your status, and join the conversation.
+  %p
+    %strong 1
+    %a{:href=>"http://twitter.com/"}Sign In, or Sign Up at Twitter.
+  %p
+    %strong 2
+    Tweet
+    %a{:href=>"http://twitter.com/home?status=%40#{IsLOSTOnYet.twitter_login}%3F"}= "@#{IsLOSTOnYet.twitter_login}?"
+    == for an auto-reply countdown to the next new episode of #{IsLOSTOnYet.show_title},
+    %span.or
+      or
+  %p
+    %strong 3
+    Tweet
+    %a{:href=>"http://twitter.com/home?status=%40#{IsLOSTOnYet.twitter_login}+%23s5+is+gonna+be+sweet"}= "@#{IsLOSTOnYet.twitter_login}"
+    with your status, and join the conversation.
