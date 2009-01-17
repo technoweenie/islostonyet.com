@@ -19,20 +19,19 @@ body
   :background-color = !main
   :text-align center
   :font-size 11pt
-  :padding 4em
   :height 100%
-  +bodybgi
+  +body
   .container
     :margin 0 auto
     :text-align left
     :width 520px
     +clearfix
   #header    
-    +headerbgi
-    +headerheight
+    +header
+    :margin-bottom -2em
     .widget
+      +widget
       :height 8em
-      :padding-top 2em
       :text-transform uppercase
       :color #fff
       :font-size 110%
@@ -59,11 +58,42 @@ body
         :clear both
         strong
           :font-size 220%
-          :font-weight normal          
+          :font-weight normal
   #content
     :clear both
+    .help
+      :padding 10px
+      :margin-bottom 10px
+      :background-image url(/bottomline.jpg)
+      :background-repeat no-repeat
+      :background-position center bottom
+      :color = !main + #333
+      a
+        :color = !main + #222
+      h3
+        :padding-bottom 10px
+        :font-size 110%
+        :color = !main + #333
+        a
+          :color = !main + #222
+      p
+        +clearfix
+        :padding-bottom 5px
+        :font-size 85%
+        :line-height 1.4em
+        :color = !main + #333
+        a
+          :color = !main + #222
+        strong
+          :float left
+          :font-size 160%
+          :width .7em
+          :text-align right
+          :padding-right 10px
+          :color = !main + #666
+        .or
+          :color = !main + #333
     .menu
-      :margin-top -2em
       h3
         :float left
         :background-color = !main_lightest
@@ -77,25 +107,6 @@ body
           :padding 10px 10px 5px 10px
         &.active
           :background-color #fff
-    .help
-      :padding 10px
-      :font-size 85%
-      :border-bottom 1px solid #999
-      :color = !main_lightest
-      h3
-        :text-decoration none
-        :text-transform uppercase
-        :padding-bottom 10px
-        :font-size 95%
-        a
-          :color = !main_lightest
-      ol
-        :margin 0
-        :padding 0
-        li
-          :margin-left 1.5em
-          a
-            :color = !main_lightest
     .posts, .episodes, .tags
       :clear both
       :background-color #fff
@@ -121,7 +132,7 @@ body
           :font-size 110%
           :padding-bottom .3em
         p.meta
-          :font-size 85%
+          :font-size 80%
           :text-transform uppercase
           :color = !main_light
           a
