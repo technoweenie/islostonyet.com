@@ -1,5 +1,23 @@
 require File.join(File.dirname(__FILE__), 'test_helper')
 class PostTest < Test::Unit::TestCase
+  describe "#formatted_body" do
+    it "clears initial @reply to twitter bot" do
+      IsLOSTOnYet::Post.new(:body => "@#{IsLOSTOnYet.twitter_login} hi").formatted_body.should == "hi"
+    end
+
+    it "autolinks urls" do
+      IsLOSTOnYet::Post.new(:body => "hi http://islostonyet.com").formatted_body.should == "hi <a href=\"http://islostonyet.com\">http://islostonyet.com</a>"
+    end
+
+    it "autolinks twitter users" do
+      IsLOSTOnYet::Post.new(:body => "hi @technoweenie").formatted_body.should == "hi <a href=\"http://twitter.com/technoweenie\">@technoweenie</a>"
+    end
+
+    it "autolinks tags" do
+      IsLOSTOnYet::Post.new(:body => "hi #timeloop").formatted_body.should == "hi <a href=\"/timeloop\">#timeloop</a>"
+    end
+  end
+
   describe "Selecting Posts" do
     before :all do
       cleanup IsLOSTOnYet::Post, IsLOSTOnYet::User

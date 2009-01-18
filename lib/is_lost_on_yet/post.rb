@@ -51,6 +51,15 @@ module IsLOSTOnYet
       filtered_for_replies.select(:external_id).first
     end
 
+    def formatted_body
+      formatted = body.dup
+      formatted.gsub! /^@#{IsLOSTOnYet.twitter_login}[ ,.;\-><:!?]+/im, ''                                # clear @reply
+      formatted.gsub! /(\w+:\/\/[A-Za-z0-9\-_]+\.[A-Za-z0-9\-_:%&\?\/.=]+)/im, '<a href="\1">\1</a>'      # link urls
+      formatted.gsub! /@([a-zA-Z0-9\-_]+)([ ,.;\-><:!?]+|$)/im, '<a href="http://twitter.com/\1">@\1</a>\2' # link twitter users
+      formatted.gsub! /([^&])#([a-zA-Z0-9\-_]+)/im, '\1<a href="/\2">#\2</a>'                             # link tags
+      formatted
+    end
+
     # a @reply tweet
     def reply?
       body.strip =~ /^@/
