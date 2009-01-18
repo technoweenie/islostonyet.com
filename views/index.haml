@@ -1,4 +1,7 @@
 .posts
   = partial :help
-  %h2 Latest Posts
+  %h2 
+    Latest Posts
+    %a{:href => "/updates.atom"}
+      %img{:src => "/images/feed-icon-14x14.png", :alt => "Subscribe to Is#{IsLOSTOnYet.show_abbrev}OnYet? updates"}
   = partial :post

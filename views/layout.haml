@@ -43,6 +43,7 @@
     %title= page_title @is_lost_on
     %meta{'http-equiv'=>"Content-Type", :content=>"text/html; charset=iso-8859-1"}/
     %meta{'http-equiv'=>"Content-Language", :content=>"en-us"}/
+    %link{:href => '/updates.atom', :rel => 'alternate', :type => 'application/atom+xml', :title => 'feed'}
     %link{:href=>"/stylesheets/#{IsLOSTOnYet.show_abbrev.downcase}.css", :media=>"all", :rel=>"stylesheet", :type=>"text/css"}/
     - if mobile_safari?
       %link{:href=>"/stylesheets/mobile_safari.css", :media=>"all", :rel=>"stylesheet", :type=>"text/css"}/
@@ -59,10 +60,12 @@
         #cnt
           == <script src="#{IsLOSTOnYet.counter_url}"></script>
         %p#also
+          %a{:href => "/updates.atom"}
+            %img{:src => "/images/feed-icon-14x14.png", :alt => "Subscribe to Is#{IsLOSTOnYet.show_abbrev}OnYet? updates"}
           You might also like:
-          - if IsLOSTOnYet.show_abbrev.downcase == 'bsg'
+          - if IsLOSTOnYet.show_abbrev == 'BSG'
             %a{:href=>"http://islostonyet.com/"}@islostonyet
-          - if IsLOSTOnYet.show_abbrev.downcase == 'lost'
+          - if IsLOSTOnYet.show_abbrev == 'LOST'
             %a{:href=>"http://isbsgonyet.com/"}@isbsgonyet
-            
+
         %p by <a href="http://github.com/technoweenie">rick</a> and <a href="http://github.com/seaofclouds">seaofclouds</a>.
