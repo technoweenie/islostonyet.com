@@ -1,7 +1,17 @@
+$LOAD_PATH << File.join(File.dirname(__FILE__), 'vendor', 'atom_feed_helper', 'lib')
 require 'rubygems'
+gem 'builder', '~> 2.1'
 gem 'sinatra', '~> 0.3'
 require 'sinatra'
 require 'json'
+require 'atom_feed_helper'
+
+class Rack::Request
+  alias request_uri fullpath
+end
+
+require 'ruby-debug'
+Debugger.start
 
 module Sinatra
   module Sass
@@ -33,6 +43,12 @@ get '/' do
   @users   = users_for @posts + @updates
   @body_class = "latest"
   haml :index
+end
+
+get '/updates.atom' do
+  @posts = IsLOSTOnYet::Post.find_replies
+  @users = users_for @posts
+  builder :updates
 end
 
 get '/tags' do
@@ -78,6 +94,8 @@ get '/*' do
 end
 
 helpers do
+  include AtomFeedHelper
+
   def mobile_safari?
     request.env["HTTP_USER_AGENT"] && request.env["HTTP_USER_AGENT"][/(Mobile\/.+Safari)/]
   end
