@@ -10,9 +10,6 @@ class Rack::Request
   alias request_uri fullpath
 end
 
-require 'ruby-debug'
-Debugger.start
-
 module Sinatra
   module Sass
   private
