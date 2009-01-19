@@ -2,6 +2,6 @@
   = partial :help
   %h2 
     Latest Posts
-    %a{:href => "/updates.atom"}
-      %img{:src => "/images/feed-icon-14x14.png", :alt => "Subscribe to Is#{IsLOSTOnYet.show_abbrev}OnYet? updates"}
+    %a.rss{:href => "/updates.atom"}<
+      %img{:src => "/rss-12x12.gif", :border=>"0", :alt => "Subscribe to Is#{IsLOSTOnYet.show_abbrev}OnYet? updates"}
   = partial :post

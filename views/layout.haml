@@ -60,12 +60,10 @@
         #cnt
           == <script src="#{IsLOSTOnYet.counter_url}"></script>
         %p#also
-          %a{:href => "/updates.atom"}
-            %img{:src => "/images/feed-icon-14x14.png", :alt => "Subscribe to Is#{IsLOSTOnYet.show_abbrev}OnYet? updates"}
           You might also like:
           - if IsLOSTOnYet.show_abbrev == 'BSG'
             %a{:href=>"http://islostonyet.com/"}@islostonyet
           - if IsLOSTOnYet.show_abbrev == 'LOST'
             %a{:href=>"http://isbsgonyet.com/"}@isbsgonyet
 
-        %p by <a href="http://github.com/technoweenie">rick</a> and <a href="http://github.com/seaofclouds">seaofclouds</a>.
+        %p by <a href="http://github.com/technoweenie">rick</a> and <a href="http://github.com/seaofclouds">seaofclouds</a>
