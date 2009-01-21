@@ -176,7 +176,19 @@ body
           :color = !main
           :font-size 135%
           :text-decoration underline
-          
+    .widget
+      :clear both
+      :padding 10px
+      :background-color #fff
+      :color = !main
+      +clearfix
+      .widget_intro
+        :width 240px
+        :float left
+        :padding-right 10px
+      .widget_container
+        :width 250px
+        :float left
   #footer
     :padding-top 10px
     :clear both

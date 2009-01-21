@@ -42,7 +42,11 @@ get '/' do
 end
 
 get '/widget' do
-  haml :widget, :layout => :widget
+  @tags    = IsLOSTOnYet::Tag.list
+  @posts   = IsLOSTOnYet::Post.list
+  @users   = users_for @posts
+  @body_class = "widget"
+  haml :widget
 end
 get '/widget/js' do
   haml :widget_js, :layout => false
