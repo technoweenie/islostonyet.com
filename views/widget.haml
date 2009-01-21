@@ -42,66 +42,8 @@
   %head
     %title= page_title @is_lost_on
     %meta{'http-equiv'=>"Content-Type", :content=>"text/html; charset=iso-8859-1"}/
-    %meta{'http-equiv'=>"Content-Language", :content=>"en-us"}/
-    // %link{:href => '/updates.atom', :rel => 'alternate', :type => 'application/atom+xml', :title => 'feed'}
-    // %link{:href=>"/stylesheets/#{IsLOSTOnYet.show_abbrev.downcase}.css", :media=>"all", :rel=>"stylesheet", :type=>"text/css"}/
-    // - if mobile_safari?
-    //   %link{:href=>"/stylesheets/mobile_safari.css", :media=>"all", :rel=>"stylesheet", :type=>"text/css"}/
-    //   %meta{:name => "viewport", :content => "width = device-width, initial-scale = 1.0"}/
-    // /[if IE]
-    //   %link{:href=>"/stylesheets/ie.css", :media=>"all", :rel=>"stylesheet", :type=>"text/css"}/
-    %style{:type=>"text/css"}
-      :sass
-        body
-          :background-color white
-          .container
-            :width 250px
-        #isit_widget
-          :background-color #333
-          :background-image url(/bsg-cylon.gif)
-          :background-position right top
-          :background-repeat no-repeat
-          :height 8em
-          :padding 10px
-          :font-family arial, sans-serif
-          :color #fff
-          :text-transform uppercase
-          a
-            :color #fff
-            :text-decoration none
-          *
-            :margin 0
-            :padding 0
-          h3,h4,h5,p
-            :font-size 11pt
-            :line-height 1em
-          h3
-            :font-size 100%
-            a
-              :color #C82418
-          h4
-            :font-size 75%
-            :font-weight normal
-            &:after
-              :content "."
-              :display block
-              :clear both
-              :visibility hidden
-              :line-height 0
-              :height 0
-          h5
-            :font-size 180%
-            :float left
-            :padding-right 5px
-          p
-            span
-              :font-size 70%
-              strong
-                :font-size 170%
-                :font-weight normal
-            
+    %meta{'http-equiv'=>"Content-Language", :content=>"en-us"}/          
   %body{:id=>"#{@body_id}", :class=>"#{@body_class}"}
     .container
-      %script{:type=>"text/javascript"}
-        var isit_style=""
-      %script{:type=>"text/javascript", :src=>"widget.js"}
+      %link{:href=>"/widget/css", :media=>"all", :rel=>"stylesheet", :type=>"text/css"}/
+      %script{:type=>"text/javascript", :src=>"/widget/js"}

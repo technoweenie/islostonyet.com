@@ -44,8 +44,12 @@ end
 get '/widget' do
   haml :widget, :layout => :widget
 end
-get '/widget.js' do
+get '/widget/js' do
   haml :widget_js, :layout => false
+end
+get '/widget/css' do
+  content_type 'text/css', :charset => 'utf-8'
+  sass :"stylesheets/#{IsLOSTOnYet.show_abbrev.downcase}_widget", :style => :compact, :load_paths => [File.join(Sinatra.application.options.views, 'stylesheets')]
 end
 
 get '/updates.atom' do

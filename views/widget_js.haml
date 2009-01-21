@@ -1,13 +1,13 @@
 :plain
-  var isit_style_inline="<style type='text/css'> #isit_widget { text-transform: uppercase; color: #fff; font-size: 110%; } #isit_widget a { color: #fff; } #isit_widget #isit_question { font-size: 205%; } #isit_widget #isit_question a { text-decoration: none; color: #a91620; } #isit_widget #isit_answer { font-size: 420%; line-height: 1em; padding-right: 5px; margin-bottom: -8px; float: left; } #isit_widget #isit_reason { font-size: 98%; width: 12em; float: left; color: #777777; } #isit_widget #isit_countdown { font-weight: normal; clear: both; } #isit_widget #isit_countdown strong { font-size: 220%; font-weight: normal; } </style>"
-  
-  if ( typeof( window[ 'isit_style' ] ) != "undefined" ) {
-    document.write(isit_style)
-    } 
-  else {
-    document.write(isit_style_inline)
-    }
-  
+  // var isit_style_inline="<style type='text/css'> #isit_widget { text-transform: uppercase; color: #fff; font-size: 110%; } #isit_widget a { color: #fff; } #isit_widget #isit_question { font-size: 205%; } #isit_widget #isit_question a { text-decoration: none; color: #a91620; } #isit_widget #isit_answer { font-size: 420%; line-height: 1em; padding-right: 5px; margin-bottom: -8px; float: left; } #isit_widget #isit_reason { font-size: 98%; width: 12em; float: left; color: #777777; } #isit_widget #isit_countdown { font-weight: normal; clear: both; } #isit_widget #isit_countdown strong { font-size: 220%; font-weight: normal; } </style>"
+  // 
+  // if ( typeof( window[ 'isit_style' ] ) != "undefined" ) {
+  //   document.write(isit_style)
+  //   } 
+  // else {
+  //   document.write(isit_style_inline)
+  //   }
+  // 
   document.write("<div id='isit_widget' onClick='parent.location=\"http://is#{IsLOSTOnYet.show_abbrev.downcase}onyet.com\"' style='cursor:pointer'><h3 id='isit_question'><a href='http://is#{IsLOSTOnYet.show_abbrev.downcase}onyet.com'>Is #{IsLOSTOnYet.show_abbrev} on yet?</a></h3><h5 id='isit_answer'>#{@is_lost_on.answer}</h5><h4 id='isit_reason'>#{@is_lost_on.reason}</h4><p id='isit_countdown'></p>");
   var countdown_targetdate = Date.parse("#{@is_lost_on.next_episode.local_air_date.strftime('%Y/%m/%d %H:%M')}");
   var countdown_d = new Date();
