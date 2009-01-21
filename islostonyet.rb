@@ -35,30 +35,29 @@ end
 
 get '/' do
   @tags    = IsLOSTOnYet::Tag.list
-  @posts   = IsLOSTOnYet::Post.find_replies
-  @updates = IsLOSTOnYet::Post.find_updates
-  @users   = users_for @posts + @updates
+  @posts   = IsLOSTOnYet::Post.list
+  @users   = users_for @posts
   @body_class = "latest"
   haml :index
 end
 
 get '/updates.atom' do
-  @posts = IsLOSTOnYet::Post.find_replies
+  @posts = IsLOSTOnYet::Post.list
   @users = users_for @posts
   builder :updates
 end
 
 get '/tags' do
   @tags  = IsLOSTOnYet::Tag.list
-  @posts = IsLOSTOnYet::Post.find_replies
+  @posts = IsLOSTOnYet::Post.list
   @users = users_for @posts
   @body_class = "tags"
   haml :tags
 end
 
 get '/episodes' do
-  @tags  = IsLOSTOnYet::Tag.list
-  @episodes = IsLOSTOnYet.episodes
+  @tags       = IsLOSTOnYet::Tag.list
+  @episodes   = IsLOSTOnYet.episodes
   @body_class = "episodes"
   haml :episodes
 end

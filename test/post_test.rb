@@ -36,11 +36,7 @@ class PostTest < Test::Unit::TestCase
     end
 
     it "finds updates" do
-      IsLOSTOnYet::Post.find_updates.to_a.should == [@post2, @post1]
-    end
-
-    it "finds replies" do
-      IsLOSTOnYet::Post.find_replies.to_a.should == [@post5, @post4, @post3]
+      IsLOSTOnYet::Post.list.should == [@post5, @post4, @post3, @post2, @post1]
     end
   end
 
