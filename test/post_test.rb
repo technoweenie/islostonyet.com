@@ -86,7 +86,7 @@ class PostTest < Test::Unit::TestCase
 
     it "uses latest search external_id when processing searches" do
       mock.instance_of(Twitter::Search).since(5)
-      mock.instance_of(Twitter::Search).fetch { [] }
+      mock.instance_of(Twitter::Search).fetch { {'results' => []} }
       IsLOSTOnYet::Post.process_search
     end
 
@@ -105,7 +105,7 @@ class PostTest < Test::Unit::TestCase
     it "uses no search external_id when processing first searches" do
       stub(IsLOSTOnYet::Post).latest_search { nil }
       stub.instance_of(Twitter::Search).since { raise ArgumentError }
-      mock.instance_of(Twitter::Search).fetch { [] }
+      mock.instance_of(Twitter::Search).fetch { {'results' => []} }
       IsLOSTOnYet::Post.process_search
     end
   end
@@ -210,7 +210,9 @@ class PostTest < Test::Unit::TestCase
       @user1 = IsLOSTOnYet::User.new(:external_id => @twit_users[0].id, :login => 'abc', :avatar_url => 'http://')
       @user1.save
 
-      stub.instance_of(Twitter::Search).fetch { @twit_posts.dup }
+      stub.instance_of(Twitter::Search).fetch do
+        {'max_id' => 100000, 'since_id' => 0, 'results' => @twit_posts.map { |p| p.to_search_result }}
+      end
 
       IsLOSTOnYet.twitter_user = @user1
       IsLOSTOnYet::Post.process_search

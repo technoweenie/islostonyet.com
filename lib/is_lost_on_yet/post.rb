@@ -1,3 +1,15 @@
+# used to transform twitter search results into duck typable twitter objects
+class Faux
+  class User < Struct.new(:id, :screen_name, :profile_image_url)
+  end
+
+  class Post < Struct.new(:id, :text, :user, :created_at)
+    def to_search_result
+      {'id' => id, 'text' => text, 'from_user' => user.screen_name, 'from_user_id' => user.id, 'created_at' => created_at, 'profile_image_url' => user.profile_image_url}
+    end
+  end
+end
+
 module IsLOSTOnYet
   class Post < Sequel.Model(:posts)
     many_to_one :user, :class => "IsLOSTOnYet::User"
@@ -22,7 +34,7 @@ module IsLOSTOnYet
         args = [args]; args.flatten!
         search.send(key, *args)
       end
-      process_tweets(search.fetch) do |user, post|
+      process_search_results(search) do |user, post|
         !post.reply_to_bot? && user.external_id != IsLOSTOnYet.twitter_user.external_id
       end
     end
@@ -126,6 +138,15 @@ module IsLOSTOnYet
 
     def self.filter_and_order(*args)
       where(*args).order(:created_at.desc)
+    end
+
+    def self.process_search_results(search, &block)
+      posts = []
+      search.fetch['results'].each do |hash|
+        user   = Faux::User.new(hash['from_user_id'], hash['from_user'], hash['profile_image_url'])
+        posts << Faux::Post.new(hash['id'], hash['text'], user, hash['created_at'])
+      end
+      process_tweets(posts, &block)
     end
 
     def self.process_tweets(tweets, &block)
