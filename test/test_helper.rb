@@ -18,15 +18,11 @@ require 'logger'
 
 # Sequel::Model.db.logger = Logger.new(STDOUT)
 IsLOSTOnYet.twitter_login = 'lostie'
+IsLOSTOnYet.twitter_search_options = {
+  :containing  => "lost OR kate OR sayid OR #lost",
+  :per_page    => 50
+}
 Time.zone = "Eastern Time (US & Canada)"
-
-class Faux
-  class User < Struct.new(:id, :screen_name, :profile_image_url)
-  end
-
-  class Post < Struct.new(:id, :text, :user, :created_at)
-  end
-end
 
 class Test::Unit::TestCase
   include RR::Adapters::TestUnit

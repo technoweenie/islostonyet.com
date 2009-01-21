@@ -1,20 +1,46 @@
+# used to transform twitter search results into duck typable twitter objects
+class Faux
+  class User < Struct.new(:id, :screen_name, :profile_image_url)
+  end
+
+  class Post < Struct.new(:id, :text, :user, :created_at)
+    def to_search_result
+      {'id' => id, 'text' => text, 'from_user' => user.screen_name, 'from_user_id' => user.id, 'created_at' => created_at, 'profile_image_url' => user.profile_image_url}
+    end
+  end
+end
+
 module IsLOSTOnYet
   class Post < Sequel.Model(:posts)
     many_to_one :user, :class => "IsLOSTOnYet::User"
 
-    def self.find_updates(page = 1)
-      filtered_for_updates.where(:visible => true).paginate(page, 30).to_a
-    end
-
-    def self.find_replies(page = 1)
-      filtered_for_replies.where(:visible => true).paginate(page, 30).to_a
+    def self.list(page = 1)
+      filter_and_order(:visible => true).paginate(page, 30).to_a
     end
 
     def self.find_by_tags(tags, page = 1)
       return [] if tags.empty?
-      filtered_for_replies.
+      filter_and_order(:visible => true).
         where([Array.new(tags.size, "tag LIKE ?") * " AND ", *tags.map { |t| "%[#{t}]%" }]).
-        where(:visible => true).paginate(page, 30).to_a
+        paginate(page, 30).to_a
+    end
+
+    def self.process_search
+      search = Twitter::Search.new
+      if post = latest_search
+        search.since(post.external_id)
+      end
+      if keywords = IsLOSTOnYet.twitter_search_options[:main_keywords]
+        search.contains keywords.join(" OR ")
+      end
+      IsLOSTOnYet.twitter_search_options.each do |key, args|
+        next if key == :main_keywords || key == :secondary_keywords
+        args = [args]; args.flatten!
+        search.send(key, *args)
+      end
+      process_search_results(search) do |user, post|
+        !post.reply_to_bot? && user.external_id != IsLOSTOnYet.twitter_user.external_id && post.valid_search_result?
+      end
     end
 
     def self.process_updates
@@ -48,7 +74,11 @@ module IsLOSTOnYet
     end
 
     def self.latest_reply
-      filtered_for_replies.select(:external_id).first
+      filtered_for_replies.where("body LIKE ?", "@#{IsLOSTOnYet.twitter_login}%").select(:external_id).first
+    end
+
+    def self.latest_search
+      filtered_for_replies.where("body NOT LIKE ?", "@#{IsLOSTOnYet.twitter_login}%").select(:external_id).first
     end
 
     def formatted_body
@@ -63,6 +93,10 @@ module IsLOSTOnYet
     # a @reply tweet
     def reply?
       body.strip =~ /^@/
+    end
+
+    def reply_to_bot?
+      body.strip =~ /^@#{IsLOSTOnYet.twitter_login}/i
     end
 
     # A tweet from a user asking the twitter bot if the show is on
@@ -95,6 +129,16 @@ module IsLOSTOnYet
       save
     end
 
+    def valid_search_result?
+      if IsLOSTOnYet.twitter_search_options[:main_keywords].nil? then return true ; end
+      score          = 0
+      downcased_body = body.downcase
+      score += score_from downcased_body, IsLOSTOnYet.twitter_search_options[:main_keywords]
+      if score.zero? then return false ; end
+      score += score_from downcased_body, IsLOSTOnYet.twitter_search_options[:secondary_keywords]
+      score > 1
+    end
+
   protected
     def self.filtered_for_updates
       user_id = IsLOSTOnYet.twitter_user ? IsLOSTOnYet.twitter_user.id : 0
@@ -110,11 +154,19 @@ module IsLOSTOnYet
       where(*args).order(:created_at.desc)
     end
 
+    def self.process_search_results(search, &block)
+      posts = []
+      search.fetch['results'].each do |hash|
+        user   = Faux::User.new(hash['from_user_id'], hash['from_user'], hash['profile_image_url'])
+        posts << Faux::Post.new(hash['id'], hash['text'], user, hash['created_at'])
+      end
+      process_tweets(posts, &block)
+    end
+
     def self.process_tweets(tweets, &block)
       return nil if tweets.empty?
       users = {}
       posts = []
-      tweets.reverse!
       tweets.each do |s|
         users[s.user.id.to_i] = {:login => s.user.screen_name, :avatar_url => s.user.profile_image_url}
         posts << {:body => s.text, :user_id => s.user.id, :created_at => Time.parse(s.created_at).utc, :external_id => s.id}
@@ -149,6 +201,7 @@ module IsLOSTOnYet
     end
 
     def self.process_posts(posts, users, &block)
+      posts.reverse!
       posts.each do |attributes|
         user = users[attributes.delete(:user_id).to_i]
         post = Post.new(:user_id => user.id)
@@ -159,6 +212,17 @@ module IsLOSTOnYet
         post.save
         post.save_hash_tags
       end
+    end
+
+    def score_from(downcased_body, words)
+      return 0 if words.nil?
+      score = 0
+      words = words.dup
+      words.each do |key|
+        this_score = key =~ /^#/ ? 2 : 1 # hash keywords worth 2 points
+        score += this_score if downcased_body =~ %r{(^|\s|\W)#{key}($|\s|\W)}
+      end
+      score
     end
   end
 end

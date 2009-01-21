@@ -25,6 +25,11 @@ namespace :lost do
     IsLOSTOnYet::Post.process_updates
   end
 
+  desc "Process all search results from Twitter"
+  task :process_search => :init do
+    IsLOSTOnYet::Post.process_search
+  end
+
   desc "Process all replies to the existing Twitter user"
   task :process_replies => :init do
     IsLOSTOnYet::Post.process_replies

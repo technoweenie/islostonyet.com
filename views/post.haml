@@ -2,7 +2,7 @@
   - u = @users[p.user_id]
   .post
     %a{:href=>"http://twitter.com/#{u.login}", :class=>"avatar"}
-      %img{:src => u.avatar_url, :border=>"0"}
+      %img{:src => u.avatar_url, :border=>"0", :width => "48", :height => "48"}
     %p.body= p.formatted_body
     %p.meta
       == <a href='http://twitter.com/#{u.login}'>#{u.login}</a> /
