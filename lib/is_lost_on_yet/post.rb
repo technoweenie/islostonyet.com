@@ -132,7 +132,6 @@ module IsLOSTOnYet
       return nil if tweets.empty?
       users = {}
       posts = []
-      tweets.reverse!
       tweets.each do |s|
         users[s.user.id.to_i] = {:login => s.user.screen_name, :avatar_url => s.user.profile_image_url}
         posts << {:body => s.text, :user_id => s.user.id, :created_at => Time.parse(s.created_at).utc, :external_id => s.id}
@@ -167,6 +166,7 @@ module IsLOSTOnYet
     end
 
     def self.process_posts(posts, users, &block)
+      posts.reverse!
       posts.each do |attributes|
         user = users[attributes.delete(:user_id).to_i]
         post = Post.new(:user_id => user.id)
