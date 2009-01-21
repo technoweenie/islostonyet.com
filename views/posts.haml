@@ -11,3 +11,10 @@
       %strong
         = @current_tags.map { |t| t.inspect } * ", "
   = partial :post
+  %p
+    - if page_number > 1
+      %a{:href=>"?page=#{page_number-1}"} &#171; newer
+    - if page_number > 1 && @posts.size == 0
+      |
+    - if @posts.size == 30
+      %a{:href=>"?page=#{page_number+1}"} older &#187;
