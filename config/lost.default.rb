@@ -10,6 +10,20 @@ IsLOSTOnYet.init do
   IsLOSTOnYet.time_zone        = "Eastern Time (US & Canada)"
   IsLOSTOnYet.twitter_login    = ''
   IsLOSTOnYet.twitter_password = ''
+
+  # see http://search.twitter.com/advanced
+  # Probably only want :containing, but go nuts if you like
+  IsLOSTOnYet.twitter_search_options = {
+    :from => 'technoweenie',
+    :to   => 'technoweenie',
+    :referencing => 'technoweenie',
+    :containing  => "lost OR kate OR sayid",
+    :hashed      => "lost",
+    :lang        => "en",
+    :per_page    => 50,
+    :since       => '13423423', # unneeded, this wonderful site will fill this in for you!
+    :geocode     => [long, lat, range]
+  }
 end
 
 IsLOSTOnYet.load_episodes :lost

@@ -18,6 +18,10 @@ require 'logger'
 
 # Sequel::Model.db.logger = Logger.new(STDOUT)
 IsLOSTOnYet.twitter_login = 'lostie'
+IsLOSTOnYet.twitter_search_options = {
+  :containing  => "lost OR kate OR sayid OR #lost",
+  :per_page    => 50
+}
 Time.zone = "Eastern Time (US & Canada)"
 
 class Faux

@@ -13,6 +13,20 @@ module IsLOSTOnYet
         paginate(page, 30).to_a
     end
 
+    def self.process_search
+      search = Twitter::Search.new
+      if post = latest_search
+        search.since(post.external_id)
+      end
+      IsLOSTOnYet.twitter_search_options.each do |key, args|
+        args = [args]; args.flatten!
+        search.send(key, *args)
+      end
+      process_tweets(search.fetch) do |user, post|
+        !post.reply_to_bot? && user.external_id != IsLOSTOnYet.twitter_user.external_id
+      end
+    end
+
     def self.process_updates
       args  = [:user]
       if post = latest_update
@@ -44,7 +58,11 @@ module IsLOSTOnYet
     end
 
     def self.latest_reply
-      filtered_for_replies.select(:external_id).first
+      filtered_for_replies.where("body LIKE ?", "@#{IsLOSTOnYet.twitter_login}%").select(:external_id).first
+    end
+
+    def self.latest_search
+      filtered_for_replies.where("body NOT LIKE ?", "@#{IsLOSTOnYet.twitter_login}%").select(:external_id).first
     end
 
     def formatted_body
@@ -59,6 +77,10 @@ module IsLOSTOnYet
     # a @reply tweet
     def reply?
       body.strip =~ /^@/
+    end
+
+    def reply_to_bot?
+      body.strip =~ /^@#{IsLOSTOnYet.twitter_login}/i
     end
 
     # A tweet from a user asking the twitter bot if the show is on

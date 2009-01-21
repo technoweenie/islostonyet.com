@@ -26,6 +26,7 @@ module IsLOSTOnYet
     attr_writer   :twitter_user
     attr_accessor :twitter_login
     attr_accessor :twitter_password
+    attr_accessor :twitter_search_options
     attr_accessor :time_zone
     attr_accessor :show_title
     attr_accessor :show_abbrev
@@ -47,6 +48,7 @@ module IsLOSTOnYet
     end
   end
 
+  self.twitter_search_options = {}
   self.counter_url = "http://errcount.com/ctr/750.js"
   self.show_title  = "LOST"
   self.show_abbrev = "LOST"

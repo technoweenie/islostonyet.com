@@ -49,9 +49,10 @@ class PostTest < Test::Unit::TestCase
         [@user1, @user2].each { |u| u.save }
         @post1 = IsLOSTOnYet::Post.new(:user_id => @user1.id, :external_id => '1', :body => 'a', :created_at => Time.utc(2000, 1, 1), :visible => true)
         @post2 = IsLOSTOnYet::Post.new(:user_id => @user1.id, :external_id => '2', :body => 'b', :created_at => Time.utc(2000, 1, 2))
-        @post3 = IsLOSTOnYet::Post.new(:user_id => @user2.id, :external_id => '3', :body => 'c', :created_at => Time.utc(2000, 1, 3), :visible => true)
-        @post4 = IsLOSTOnYet::Post.new(:user_id => @user2.id, :external_id => '4', :body => 'd', :created_at => Time.utc(2000, 1, 4))
-        [@post1, @post2, @post3, @post4].each { |p| p.save }
+        @post3 = IsLOSTOnYet::Post.new(:user_id => @user2.id, :external_id => '3', :body => "@#{IsLOSTOnYet.twitter_login} blah", :created_at => Time.utc(2000, 1, 3), :visible => true)
+        @post4 = IsLOSTOnYet::Post.new(:user_id => @user2.id, :external_id => '4', :body => "@#{IsLOSTOnYet.twitter_login} blah", :created_at => Time.utc(2000, 1, 4))
+        @post5 = IsLOSTOnYet::Post.new(:user_id => 234234234, :external_id => '5', :body => 'd', :created_at => Time.utc(2000, 1, 1))
+        [@post1, @post2, @post3, @post4, @post5].each { |p| p.save }
       end
       IsLOSTOnYet.twitter_user = @user1
     end
@@ -59,6 +60,10 @@ class PostTest < Test::Unit::TestCase
     before do
       @twitter = Object.new
       stub(IsLOSTOnYet).twitter { @twitter }
+    end
+
+    it "finds latest external_id for searches" do
+      IsLOSTOnYet::Post.latest_search.external_id.should == 5
     end
 
     it "finds latest external_id for updates" do
@@ -79,6 +84,12 @@ class PostTest < Test::Unit::TestCase
       IsLOSTOnYet::Post.process_replies
     end
 
+    it "uses latest search external_id when processing searches" do
+      mock.instance_of(Twitter::Search).since(5)
+      mock.instance_of(Twitter::Search).fetch { [] }
+      IsLOSTOnYet::Post.process_search
+    end
+
     it "uses no update external_id when processing first updates" do
       stub(IsLOSTOnYet::Post).latest_update { nil }
       mock(@twitter).timeline(*[:user]) { [] }
@@ -89,6 +100,13 @@ class PostTest < Test::Unit::TestCase
       stub(IsLOSTOnYet::Post).latest_reply { nil }
       mock(@twitter).replies(*[]) { [] }
       IsLOSTOnYet::Post.process_replies
+    end
+
+    it "uses no search external_id when processing first searches" do
+      stub(IsLOSTOnYet::Post).latest_search { nil }
+      stub.instance_of(Twitter::Search).since { raise ArgumentError }
+      mock.instance_of(Twitter::Search).fetch { [] }
+      IsLOSTOnYet::Post.process_search
     end
   end
 
@@ -179,6 +197,71 @@ class PostTest < Test::Unit::TestCase
     end
   end
 
+  describe "Post#process_search" do
+    before :all do
+      @twit_users = [Faux::User.new(1, IsLOSTOnYet::twitter_login, 'http://bob'), Faux::User.new(2, 'fred', 'http://fred')]
+      @twit_posts = [
+        Faux::Post.new(1, 'hi1',                                   @twit_users.first, 'Sun Jan 04 23:04:16 UTC 2009'), 
+        Faux::Post.new(2, "@#{IsLOSTOnYet.twitter_login} ? #s1e2", @twit_users.last, 'Sun Jan 04 23:04:17 UTC 2009'),
+        Faux::Post.new(3, "zomg",                                  @twit_users.last, 'Sun Jan 04 23:04:18 UTC 2009')]
+
+      cleanup IsLOSTOnYet::Post, IsLOSTOnYet::User
+
+      @user1 = IsLOSTOnYet::User.new(:external_id => @twit_users[0].id, :login => 'abc', :avatar_url => 'http://')
+      @user1.save
+
+      stub.instance_of(Twitter::Search).fetch { @twit_posts.dup }
+
+      IsLOSTOnYet.twitter_user = @user1
+      IsLOSTOnYet::Post.process_search
+
+      @user1.reload
+      @user2 = IsLOSTOnYet::User.find(:external_id => @twit_users[1].id)
+      @post1 = IsLOSTOnYet::Post.find(:external_id => @twit_posts[0].id)
+      @post2 = IsLOSTOnYet::Post.find(:external_id => @twit_posts[1].id)
+      @post3 = IsLOSTOnYet::Post.find(:external_id => @twit_posts[2].id)
+    end
+
+    it "uses existing user" do
+      IsLOSTOnYet::User.count.should == 2
+      @user1.login.should            == @twit_users[0].screen_name
+      @user1.avatar_url.should       == @twit_users[0].profile_image_url
+    end
+
+    it "creates hidden post from twitter_login" do
+      @post1.body.should       == @twit_posts[0].text
+      @post1.created_at.should == Time.utc(2009, 1, 4, 23, 4, 16)
+      assert !@post1.visible?
+    end
+
+    it "creates hidden post replying to twitter_login" do
+      @post2.body.should       == @twit_posts[1].text
+      @post2.created_at.should == Time.utc(2009, 1, 4, 23, 4, 17)
+      assert !@post2.visible?
+    end
+
+    it "creates visible post without reply to twitter_login" do
+      @post3.body.should       == @twit_posts[2].text
+      @post3.created_at.should == Time.utc(2009, 1, 4, 23, 4, 18)
+      assert @post3.visible?
+    end
+
+    it "creates user" do
+      @user2.login.should      == @twit_users[1].screen_name
+      @user2.avatar_url.should == @twit_users[1].profile_image_url
+    end
+
+    it "creates posts" do
+      IsLOSTOnYet::Post.count.should == 3
+    end
+
+    it "links post to user" do
+      @post1.user_id.should == @user1.id
+      @post2.user_id.should == @user2.id
+      @post3.user_id.should == @user2.id
+    end
+  end
+
   describe "Post#process_replies" do
     before :all do
       @twitter    = Object.new
@@ -210,7 +293,7 @@ class PostTest < Test::Unit::TestCase
       @post4 = IsLOSTOnYet::Post.find(:external_id => @twit_posts[3].id)
     end
 
-    it "users existing user" do
+    it "uses existing user" do
       IsLOSTOnYet::User.count.should == 2
       @user1.login.should            == @twit_users[0].screen_name
       @user1.avatar_url.should       == @twit_users[0].profile_image_url
@@ -246,6 +329,8 @@ class PostTest < Test::Unit::TestCase
     it "links post to user" do
       @post1.user_id.should == @user1.id
       @post2.user_id.should == @user2.id
+      @post3.user_id.should == @user2.id
+      @post4.user_id.should == @user2.id
     end
   end
 end
