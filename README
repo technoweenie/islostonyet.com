@@ -3,4 +3,4 @@ Is LOST on yet?
 
 Step 1: Setup config/lost.rb.  Use lost.default.rb as a guide.  Be sure to setup your database and twitter account.
 Step 2: Create your database with `rake lost:schema`
-Step 3: Setup cron jobs for `rake lost:process_replies` and `rake lost:process_updates`.
+Step 3: Setup cron jobs for `rake lost:process_updates lost:process_search lost:process_replies`.
