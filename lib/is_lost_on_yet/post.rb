@@ -131,22 +131,12 @@ module IsLOSTOnYet
 
     def valid_search_result?
       if IsLOSTOnYet.twitter_search_options[:main_keywords].nil? then return true ; end
-      score = 0
-      score += score_from IsLOSTOnYet.twitter_search_options[:main_keywords]
+      score          = 0
+      downcased_body = body.downcase
+      score += score_from downcased_body, IsLOSTOnYet.twitter_search_options[:main_keywords]
       if score.zero? then return false ; end
-      score += score_from IsLOSTOnYet.twitter_search_options[:secondary_keywords]
+      score += score_from downcased_body, IsLOSTOnYet.twitter_search_options[:secondary_keywords]
       score > 1
-    end
-
-    def score_from(words)
-      return 0 if words.nil?
-      score = 0
-      words = words.dup
-      words.each do |key|
-        this_score = key =~ /^#/ ? 2 : 1 # hash keywords worth 2 points
-        score += this_score if body =~ %r{(^|\s|\W)#{key}($|\s|\W)}
-      end
-      score
     end
 
   protected
@@ -222,6 +212,17 @@ module IsLOSTOnYet
         post.save
         post.save_hash_tags
       end
+    end
+
+    def score_from(downcased_body, words)
+      return 0 if words.nil?
+      score = 0
+      words = words.dup
+      words.each do |key|
+        this_score = key =~ /^#/ ? 2 : 1 # hash keywords worth 2 points
+        score += this_score if downcased_body =~ %r{(^|\s|\W)#{key}($|\s|\W)}
+      end
+      score
     end
   end
 end
