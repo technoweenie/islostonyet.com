@@ -197,6 +197,37 @@ class PostTest < Test::Unit::TestCase
     end
   end
 
+  describe "Post#valid_search_result" do
+    it "accepts a post with two keywords" do
+      assert IsLOSTOnYet::Post.new(:body => 'blah kate jack').valid_search_result?
+    end
+
+    it "accepts a post with hash keywords" do
+      assert IsLOSTOnYet::Post.new(:body => 'blah #lost').valid_search_result?
+    end
+
+    it "accepts a post with one main keyword and one secondary" do
+      assert IsLOSTOnYet::Post.new(:body => 'blah !kate tv').valid_search_result?
+    end
+
+    it "rejects a post with one main keyword and no secondary" do
+      assert !IsLOSTOnYet::Post.new(:body => 'blah kate? jacked').valid_search_result?
+    end
+
+    it "rejects a post with no main keywords" do
+      assert !IsLOSTOnYet::Post.new(:body => 'blah tv season lojack kater').valid_search_result?
+    end
+
+    before :all do
+      @old_search = IsLOSTOnYet.twitter_search_options
+      IsLOSTOnYet.twitter_search_options = {:main_keywords => %w(kate jack #lost), :secondary_keywords => %w(season tv)}
+    end
+
+    after :all do
+      IsLOSTOnYet.twitter_search_options = @old_search
+    end
+  end
+
   describe "Post#process_search" do
     before :all do
       @twit_users = [Faux::User.new(1, IsLOSTOnYet::twitter_login, 'http://bob'), Faux::User.new(2, 'fred', 'http://fred')]

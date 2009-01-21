@@ -30,12 +30,16 @@ module IsLOSTOnYet
       if post = latest_search
         search.since(post.external_id)
       end
+      if keywords = IsLOSTOnYet.twitter_search_options[:main_keywords]
+        search.contains keywords.join(" OR ")
+      end
       IsLOSTOnYet.twitter_search_options.each do |key, args|
+        next if key == :main_keywords || key == :secondary_keywords
         args = [args]; args.flatten!
         search.send(key, *args)
       end
       process_search_results(search) do |user, post|
-        !post.reply_to_bot? && user.external_id != IsLOSTOnYet.twitter_user.external_id
+        !post.reply_to_bot? && user.external_id != IsLOSTOnYet.twitter_user.external_id && post.valid_search_result?
       end
     end
 
@@ -123,6 +127,26 @@ module IsLOSTOnYet
       end
       self.tag = existing.map { |tag| "[#{tag.name}]" }.sort! * " "
       save
+    end
+
+    def valid_search_result?
+      if IsLOSTOnYet.twitter_search_options[:main_keywords].nil? then return true ; end
+      score = 0
+      score += score_from IsLOSTOnYet.twitter_search_options[:main_keywords]
+      if score.zero? then return false ; end
+      score += score_from IsLOSTOnYet.twitter_search_options[:secondary_keywords]
+      score > 1
+    end
+
+    def score_from(words)
+      return 0 if words.nil?
+      score = 0
+      words = words.dup
+      words.each do |key|
+        this_score = key =~ /^#/ ? 2 : 1 # hash keywords worth 2 points
+        score += this_score if body =~ %r{(^|\s|\W)#{key}($|\s|\W)}
+      end
+      score
     end
 
   protected
