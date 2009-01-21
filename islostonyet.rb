@@ -42,6 +42,13 @@ get '/' do
   haml :index
 end
 
+get '/widget' do
+  haml :widget, :layout => :widget
+end
+get '/widget.js' do
+  haml :widget_js, :layout => false
+end
+
 get '/updates.atom' do
   @posts = IsLOSTOnYet::Post.find_replies
   @users = users_for @posts
@@ -71,6 +78,7 @@ get '/json' do
     json
   end
 end
+
 
 get '/s*e*' do
   @episode       = IsLOSTOnYet.episode(:"s#{params[:splat][0]}e#{params[:splat][1]}")
