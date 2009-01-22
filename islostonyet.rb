@@ -35,7 +35,7 @@ end
 
 get '/' do
   @tags    = IsLOSTOnYet::Tag.list
-  @posts   = IsLOSTOnYet::Post.list
+  @posts   = IsLOSTOnYet::Post.list(page_number)
   @users   = users_for @posts
   @body_class = "latest"
   haml :index
@@ -57,15 +57,13 @@ get '/widget/css' do
 end
 
 get '/updates.atom' do
-  @posts = IsLOSTOnYet::Post.list
+  @posts = IsLOSTOnYet::Post.list(page_number)
   @users = users_for @posts
   builder :updates
 end
 
 get '/tags' do
   @tags  = IsLOSTOnYet::Tag.list
-  @posts = IsLOSTOnYet::Post.list
-  @users = users_for @posts
   @body_class = "tags"
   haml :tags
 end
@@ -90,7 +88,7 @@ end
 get '/s*e*' do
   @episode       = IsLOSTOnYet.episode(:"s#{params[:splat][0]}e#{params[:splat][1]}")
   @tags          = IsLOSTOnYet::Tag.list
-  @posts         = IsLOSTOnYet::Post.find_by_tags([@episode.code])
+  @posts         = IsLOSTOnYet::Post.find_by_tags([@episode.code], page_number)
   @users         = users_for @posts
   @body_id       = "posts"
   haml :posts
@@ -99,7 +97,7 @@ end
 get '/*' do
   @tags          = IsLOSTOnYet::Tag.list
   @current_tags  = params[:splat].first.split("/")
-  @posts         = IsLOSTOnYet::Post.find_by_tags(@current_tags)
+  @posts         = IsLOSTOnYet::Post.find_by_tags(@current_tags, page_number)
   @users         = users_for @posts
   @body_class       = "posts"
   haml :posts
@@ -115,7 +113,14 @@ helpers do
   def partial(page, options={})
     haml page, options.merge!(:layout => false)
   end
-  
+
+  def page_number
+    @page_number ||= begin 
+      num = params[:page].to_i
+      num.zero? ? 1 : num
+    end
+  end
+
   def time_ago_or_time_stamp(from_time, to_time = Time.zone.now, include_seconds = true, detail = false)
     from_time = from_time.to_time if from_time.respond_to?(:to_time)
     to_time = to_time.to_time if to_time.respond_to?(:to_time)
