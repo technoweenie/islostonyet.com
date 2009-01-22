@@ -48,10 +48,11 @@ get '/widget' do
   @body_class = "widget"
   haml :widget
 end
-get '/widget/js' do
+get '/widget.js' do
+  content_type 'text/javascript', :charset => 'utf-8'
   haml :widget_js, :layout => false
 end
-get '/widget/css' do
+get '/widget.css' do
   content_type 'text/css', :charset => 'utf-8'
   sass :"stylesheets/#{IsLOSTOnYet.show_abbrev.downcase}_widget", :style => :compact, :load_paths => [File.join(Sinatra.application.options.views, 'stylesheets')]
 end
