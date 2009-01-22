@@ -1,0 +1,44 @@
+#isit_widget
+  :background-color = !main
+  +bgi
+  :background-position right top
+  :background-repeat no-repeat
+  :height 6.5em
+  :padding .5em
+  :font-family arial, sans-serif
+  :color #fff
+  :text-transform uppercase
+  a
+    :color #fff
+    :text-decoration none
+  *
+    :margin 0
+    :padding 0
+  h3,h4,h5,p
+    :font-size 11pt
+    :line-height 1em
+  h3
+    :font-size 100%
+    +pt
+    a
+      :color = !complement
+  h4
+    :font-size 75%
+    :font-weight normal
+    &:after
+      :content "."
+      :display block
+      :clear both
+      :visibility hidden
+      :line-height 0
+      :height 0
+  h5
+    :font-size 180%
+    :float left
+    :padding-right 5px
+  p
+    span
+      :font-size 70%
+      strong
+        :font-size 170%
+        :font-weight normal

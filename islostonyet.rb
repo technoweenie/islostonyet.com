@@ -41,6 +41,21 @@ get '/' do
   haml :index
 end
 
+get '/widget' do
+  @tags    = IsLOSTOnYet::Tag.list
+  @posts   = IsLOSTOnYet::Post.list
+  @users   = users_for @posts
+  @body_class = "widget"
+  haml :widget
+end
+get '/widget/js' do
+  haml :widget_js, :layout => false
+end
+get '/widget/css' do
+  content_type 'text/css', :charset => 'utf-8'
+  sass :"stylesheets/#{IsLOSTOnYet.show_abbrev.downcase}_widget", :style => :compact, :load_paths => [File.join(Sinatra.application.options.views, 'stylesheets')]
+end
+
 get '/updates.atom' do
   @posts = IsLOSTOnYet::Post.list(page_number)
   @users = users_for @posts
@@ -68,6 +83,7 @@ get '/json' do
     json
   end
 end
+
 
 get '/s*e*' do
   @episode       = IsLOSTOnYet.episode(:"s#{params[:splat][0]}e#{params[:splat][1]}")

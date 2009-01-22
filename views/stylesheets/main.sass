@@ -176,7 +176,35 @@ body
           :color = !main
           :font-size 135%
           :text-decoration underline
-          
+    .widget
+      :clear both
+      :padding 10px
+      :background-color #fff
+      :color = !main
+      +clearfix
+      .widget_intro
+        :width 240px
+        :float left
+        :padding-right 10px
+        
+        h2
+          :font-size 105%
+          :padding-bottom .5em
+        textarea
+          :width 100%
+          :font-size 65%
+          :border-style solid 
+          :border-color = !main_light + #555
+          :border-width 1px
+          :font-family Monaco, monospace
+          :height 8em
+          :text-align left
+          :overflow auto
+          :line-height 1.3em
+      .widget_container
+        :width 250px
+        :float left
+      
   #footer
     :padding-top 10px
     :clear both
