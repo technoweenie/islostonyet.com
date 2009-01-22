@@ -116,7 +116,7 @@ class PostTest < Test::Unit::TestCase
       @twitter    = Object.new
       @twit_user  = Faux::User.new(1, IsLOSTOnYet.twitter_login, 'http://avatar')
       @twit_posts = [
-        Faux::Post.new(1, 'hi',      @twit_user, 'Sun Jan 04 23:04:16 UTC 2009'), 
+        Faux::Post.new(1, "&quot;Previously, on expos\303\251&quot;\n\n#lost", @twit_user, 'Sun Jan 04 23:04:16 UTC 2009'), 
         Faux::Post.new(2, '@bob hi', @twit_user, 'Sun Jan 04 23:04:17 UTC 2009')]
       @twit_post  = @twit_posts.first
       stub(IsLOSTOnYet).twitter { @twitter }
@@ -146,7 +146,7 @@ class PostTest < Test::Unit::TestCase
       end
 
       it "creates visible post" do
-        @post1.body.should       == @twit_post.text
+        @post1.body.should       == "&quot;Previously, on expos&#233;&quot;\n\n#lost"
         @post1.created_at.should == Time.utc(2009, 1, 4, 23, 4, 16)
         assert @post1.visible?
       end
@@ -187,7 +187,7 @@ class PostTest < Test::Unit::TestCase
       end
 
       it "creates post" do
-        @post.body.should       == @twit_post.text
+        @post.body.should       == "&quot;Previously, on expos&#233;&quot;\n\n#lost"
         @post.created_at.should == Time.utc(2009, 1, 4, 23, 4, 16)
       end
 

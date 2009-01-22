@@ -208,6 +208,7 @@ module IsLOSTOnYet
         attributes.each do |key, value|
           post.send("#{key}=", value)
         end
+        post.body    = post.body.unpack("U*").map! { |s| s > 127 ? "&##{s};" : s.chr }.join
         post.visible = !! (!block || block.call(user, post))
         post.save
         post.save_hash_tags
