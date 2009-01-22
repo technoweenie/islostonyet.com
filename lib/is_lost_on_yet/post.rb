@@ -25,6 +25,24 @@ module IsLOSTOnYet
         paginate(page, 30).to_a
     end
 
+    def self.latest_update
+      filtered_for_bot_updates.select(:id, :external_id).first
+    end
+
+    def self.latest_reply
+      filtered_for_replies.select(:id, :external_id).first
+    end
+
+    def self.latest_search
+      filtered_for_search.select(:id, :external_id).first
+    end
+
+    def self.cleanup
+      if update = latest_update then filtered_for_bot_updates.where(:visible => false).where('id < ?', update.id).delete end
+      if reply  = latest_reply  then filtered_for_replies.where(:visible => false).where('id < ?', reply.id).delete end
+      if search = latest_search then filtered_for_search.where(:visible => false).where('id < ?', search.id).delete end
+    end
+
     def self.process_search
       search = Twitter::Search.new
       if post = latest_search
@@ -67,18 +85,6 @@ module IsLOSTOnYet
           post
         end
       end
-    end
-
-    def self.latest_update
-      filtered_for_updates.select(:external_id).first
-    end
-
-    def self.latest_reply
-      filtered_for_replies.where("body LIKE ?", "@#{IsLOSTOnYet.twitter_login}%").select(:external_id).first
-    end
-
-    def self.latest_search
-      filtered_for_replies.where("body NOT LIKE ?", "@#{IsLOSTOnYet.twitter_login}%").select(:external_id).first
     end
 
     def formatted_body
@@ -140,14 +146,22 @@ module IsLOSTOnYet
     end
 
   protected
-    def self.filtered_for_updates
+    def self.filtered_for_bot_updates
       user_id = IsLOSTOnYet.twitter_user ? IsLOSTOnYet.twitter_user.id : 0
       filter_and_order(:user_id => user_id)
     end
 
-    def self.filtered_for_replies
+    def self.filtered_for_other_updates
       user_id = IsLOSTOnYet.twitter_user ? IsLOSTOnYet.twitter_user.id : 0
-      filter_and_order(['user_id != ?', user_id])
+      filter_and_order('user_id != ?', user_id)
+    end
+
+    def self.filtered_for_replies
+      filtered_for_other_updates.where("body LIKE ?", "@#{IsLOSTOnYet.twitter_login}%")
+    end
+
+    def self.filtered_for_search
+      filtered_for_other_updates.where("body NOT LIKE ?", "@#{IsLOSTOnYet.twitter_login}%")
     end
 
     def self.filter_and_order(*args)

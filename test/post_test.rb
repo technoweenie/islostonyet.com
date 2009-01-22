@@ -366,4 +366,48 @@ class PostTest < Test::Unit::TestCase
       @post4.user_id.should == @user2.id
     end
   end
+
+  describe "Post#cleanup_posts" do
+    before :all do
+      @user1 = IsLOSTOnYet::User.new(:external_id => '1', :login => 'abc', :avatar_url => 'http://abc')
+      @user2 = IsLOSTOnYet::User.new(:external_id => '2', :login => 'def', :avatar_url => 'http://def')
+      [@user1, @user2].each { |u| u.save }
+      IsLOSTOnYet.twitter_user = @user1
+
+      # updates
+      @post1 = IsLOSTOnYet::Post.new(:user_id => @user1.id, :external_id => '1', :body => 'a', :created_at => Time.utc(2000, 1, 1), :visible => false)
+      @post2 = IsLOSTOnYet::Post.new(:user_id => @user1.id, :external_id => '2', :body => 'a', :created_at => Time.utc(2000, 1, 2), :visible => true)
+      @post3 = IsLOSTOnYet::Post.new(:user_id => @user1.id, :external_id => '3', :body => 'a', :created_at => Time.utc(2000, 1, 3), :visible => false)
+
+      # replies
+      @post4 = IsLOSTOnYet::Post.new(:user_id => @user2.id, :external_id => '4', :body => "@#{IsLOSTOnYet.twitter_login} blah", :created_at => Time.utc(2000, 1, 4), :visible => false)
+      @post5 = IsLOSTOnYet::Post.new(:user_id => @user2.id, :external_id => '5', :body => "@#{IsLOSTOnYet.twitter_login} blah", :created_at => Time.utc(2000, 1, 5), :visible => true)
+      @post6 = IsLOSTOnYet::Post.new(:user_id => @user2.id, :external_id => '6', :body => "@#{IsLOSTOnYet.twitter_login} blah", :created_at => Time.utc(2000, 1, 6), :visible => false)
+
+      # searches
+      @post7 = IsLOSTOnYet::Post.new(:user_id => @user2.id, :external_id => '7', :body => "b", :created_at => Time.utc(2000, 1, 7), :visible => false)
+      @post8 = IsLOSTOnYet::Post.new(:user_id => @user2.id, :external_id => '8', :body => "b", :created_at => Time.utc(2000, 1, 8), :visible => true)
+      @post9 = IsLOSTOnYet::Post.new(:user_id => @user2.id, :external_id => '9', :body => "b", :created_at => Time.utc(2000, 1, 9), :visible => false)
+      [@post1, @post2, @post3, @post4, @post5, @post6, @post7, @post8, @post9].each { |p| p.save }
+
+      IsLOSTOnYet::Post.count.should == 9
+      IsLOSTOnYet::Post.cleanup
+    end
+
+    it "removes old invisible posts" do
+      IsLOSTOnYet::Post.count.should == 6
+    end
+
+    it "removes old invisible update" do
+      IsLOSTOnYet::Post.where(:id => @post1.id).first.should == nil
+    end
+
+    it "removes old invisible reply" do
+      IsLOSTOnYet::Post.where(:id => @post4.id).first.should == nil
+    end
+
+    it "removes old invisible search" do
+      IsLOSTOnYet::Post.where(:id => @post7.id).first.should == nil
+    end
+  end
 end

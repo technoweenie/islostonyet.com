@@ -34,4 +34,8 @@ namespace :lost do
   task :process_replies => :init do
     IsLOSTOnYet::Post.process_replies
   end
+
+  task :cleanup => :init do
+    IsLOSTOnYet::Post.cleanup
+  end
 end
