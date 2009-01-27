@@ -59,6 +59,7 @@ class PostTest < Test::Unit::TestCase
 
     before do
       @twitter = Object.new
+      IsLOSTOnYet.load_episodes :sample
       stub(IsLOSTOnYet).twitter { @twitter }
     end
 
