@@ -697,7 +697,7 @@ s5e4:
   #writer:   
   #main_character: 
   #viewers: 
-  #air_date: 
+  air_date: 2009-02-04 21:00:00 Z
 s5e5:
   series_number: 88 
   title: The Place Is Death
@@ -705,20 +705,20 @@ s5e5:
   #writer:   
   #main_character: 
   #viewers: 
-  #air_date: 
+  air_date: 2009-02-11 21:00:00 Z
 s5e6:
-  series_number: 89 
+  series_number: 89
+  title: 316
+  #director:  
+  #writer:   
+  #main_character: 
+  #viewers: 
+  air_date: 2009-02-18 21:00:00 Z
+s5e7:
+  series_number: 90
   title: The Life and Death of Jeremy Bentham
   #director:  
   #writer:   
   #main_character: 
   #viewers: 
   #air_date: 
-s5e7:
-  series_number: 90 
-  title: 316
-  #director:  
-  #writer:   
-  #main_character: 
-  #viewers: 
-  #air_date:
