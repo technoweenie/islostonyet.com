@@ -11,6 +11,8 @@ gem 'rr', '~> 0.6'
 gem 'jeremymcanally-context' # sudo gem install jeremymcanally-context --source=http://gems.github.com
 gem 'jeremymcanally-matchy'  # sudo gem install jeremymcanally-matchy  --source=http://gems.github.com
 
+$:.unshift '/Users/technoweenie/p/plugins/matchy/lib'
+
 require 'rr'
 require 'context'
 require 'matchy'
