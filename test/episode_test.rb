@@ -6,7 +6,7 @@ class EpisodeTest < Test::Unit::TestCase
   end
 
   it "parses season from code" do
-    IsLOSTOnYet::Episode.new("s50e40").season.should == 501
+    IsLOSTOnYet::Episode.new("s50e40").season.should == 50
   end
 
   it "parses episode number from code" do
