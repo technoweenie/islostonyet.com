@@ -20,7 +20,7 @@ IsLOSTOnYet.init do
   # AT LEAST 1 main word, and a total of 1 main + 1 secondary (2 points).  A hashtag counts as 2 points though.
   IsLOSTOnYet.twitter_search_options = {
     :main_keywords => %w(lost #lost kate sayid), # these are joined with an OR to make the same :containing query below
-    :secondary_keywords => %w(tv season)
+    :secondary_keywords => %w(tv season),
     :from => 'technoweenie',
     :to   => 'technoweenie',
     :referencing => 'technoweenie',
