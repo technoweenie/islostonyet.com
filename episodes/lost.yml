@@ -717,8 +717,8 @@ s5e6:
 s5e7:
   series_number: 90
   title: The Life and Death of Jeremy Bentham
-  #director:  
-  #writer:   
-  #main_character: 
-  #viewers: 
-  #air_date: 
+  air_date: 2009-02-25 21:00:00 Z
+s5e8:
+  series_number: 91
+  title: LaFleur
+  air_date: 2009-03-04 21:00:00 Z
