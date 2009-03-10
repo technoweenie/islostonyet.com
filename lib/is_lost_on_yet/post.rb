@@ -18,13 +18,6 @@ module IsLOSTOnYet
       filter_and_order(:visible => true).paginate(page, 30).to_a
     end
 
-    def self.find_by_tags(tags, page = 1)
-      return [] if tags.empty?
-      filter_and_order(:visible => true).
-        where([Array.new(tags.size, "tag LIKE ?") * " AND ", *tags.map { |t| "%[#{t}]%" }]).
-        paginate(page, 30).to_a
-    end
-
     def self.latest_update
       filtered_for_bot_updates.select(:id, :external_id).first
     end
@@ -112,27 +105,6 @@ module IsLOSTOnYet
 
     def visible?
       visible == true || visible == 1
-    end
-
-    def hash_tags
-      @hash_tags ||= begin
-        tags = body.scan(/(^|[^&])#([\w\d]+)/i).map { |s| s.last }
-        tags.flatten!
-        tags.each { |tag| tag.downcase! }
-      end
-    end
-
-    def save_hash_tags
-      existing = Tag.where(:name => hash_tags).to_a
-      creating = hash_tags - existing.map { |t| t.name }
-      creating.each do |name|
-        existing << Tag.create(:name => name)
-      end
-      existing.each do |tag|
-        Tagging << {:tag_id => tag.id, :post_id => id}
-      end
-      self.tag = existing.map { |tag| "[#{tag.name}]" }.sort! * " "
-      save
     end
 
     def valid_search_result?
@@ -225,7 +197,6 @@ module IsLOSTOnYet
         post.body    = post.body.unpack("U*").map! { |s| s > 127 ? "&##{s};" : s.chr }.join
         post.visible = !! (!block || block.call(user, post))
         post.save
-        post.save_hash_tags
       end
     end
 

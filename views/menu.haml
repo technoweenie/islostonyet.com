@@ -3,8 +3,5 @@
     %a{:href=>"/"}Home
   %h3{:class => @body_class == "episodes" ? "active" : ''}
     %a{:href=>"/episodes"}Episodes
-  - if @tags.size > 0
-    %h3{:class => @body_class == "tags" ? "active" : ''}
-      %a{:href=>"/tags"}Tags
   %h3{:class => @body_class == "widget" ? "active" : ''}
     %a{:href=>"/widget"}Widget

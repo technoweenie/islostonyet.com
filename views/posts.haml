@@ -6,10 +6,6 @@
         %span.spoiler= @episode.title
       - else
         = @episode.title
-    - else
-      posts for
-      %strong
-        = @current_tags.map { |t| t.inspect } * ", "
   = partial :post
   %p.pagination
     - if page_number > 1

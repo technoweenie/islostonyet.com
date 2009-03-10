@@ -1,12 +1,12 @@
 .episodes
   - @episodes.each do |e|
     .episode
-      %h3== <a href='/#{e.code}'>##{e.code.upcase}</a>
+      %h3= e.code.upcase
       %p.body
         - if @is_lost_on.spoiler?(e)
-          %a.spoiler{:href=>"/#{e.code}"}= e.title
+          %span.spoiler= e.title
         - else
-          %a{:href=>"/#{e.code}"}= e.title
+          = e.title
       %p.meta
         == air#{e.current? ? :ed : :s} on
         %span.date

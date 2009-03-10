@@ -25,7 +25,6 @@ get '/stylesheets/:name.css' do
 end
 
 get '/' do
-  @tags    = IsLOSTOnYet::Tag.list
   @posts   = IsLOSTOnYet::Post.list(page_number)
   @users   = users_for @posts
   @body_class = "latest"
@@ -33,7 +32,6 @@ get '/' do
 end
 
 get '/widget' do
-  @tags    = IsLOSTOnYet::Tag.list
   @posts   = IsLOSTOnYet::Post.list
   @users   = users_for @posts
   @body_class = "widget"
@@ -56,14 +54,7 @@ get '/updates.atom' do
   builder :updates
 end
 
-get '/tags' do
-  @tags  = IsLOSTOnYet::Tag.list
-  @body_class = "tags"
-  haml :tags
-end
-
 get '/episodes' do
-  @tags       = IsLOSTOnYet::Tag.list
   @episodes   = IsLOSTOnYet.episodes
   @body_class = "episodes"
   haml :episodes
@@ -76,25 +67,6 @@ get '/json' do
   else
     json
   end
-end
-
-
-get '/s*e*' do
-  @episode       = IsLOSTOnYet.episode(:"s#{params[:splat][0]}e#{params[:splat][1]}")
-  @tags          = IsLOSTOnYet::Tag.list
-  @posts         = IsLOSTOnYet::Post.find_by_tags([@episode.code], page_number)
-  @users         = users_for @posts
-  @body_id       = "posts"
-  haml :posts
-end
-
-get '/*' do
-  @tags          = IsLOSTOnYet::Tag.list
-  @current_tags  = params[:splat].first.split("/")
-  @posts         = IsLOSTOnYet::Post.find_by_tags(@current_tags, page_number)
-  @users         = users_for @posts
-  @body_class       = "posts"
-  haml :posts
 end
 
 helpers do
@@ -131,21 +103,6 @@ helpers do
     end
     return time_stamp(from_time) if (detail && distance_in_minutes > 2880)
     return time
-  end
-  
-  def link_to_tag(name)
-    in_collection = @tags.include?(name)
-    collection    = in_collection ? [] : @tags
-    %(<li#{%( class="selected") if in_collection}><a href="#{url_for_tag(name, collection)}">#{name}</a></li>)
-  end
-
-  def url_for_tag(name, existing = @tags)
-    "/" + 
-      if existing.empty?
-        name
-      else
-        (existing.dup << name) * "/"
-      end
   end
 
   def users_for(posts)
