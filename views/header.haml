@@ -9,25 +9,26 @@
     %h3.reason
       = @is_lost_on.reason
     #countdown
-    %script{:type=>"text/javascript"}
-      :plain
-         var countdown_d = new Date();
-         var countdown_timenow = countdown_d.getTime();
-         var countdown_targetdate = Date.parse("#{@is_lost_on.next_episode.local_air_date.strftime('%Y/%m/%d %H:%M')}")
-         var countdown_timeleft = Math.floor((countdown_targetdate-countdown_timenow)/1000);
-         function countdown(remain) {
-           var
-             status = document.getElementById("answer"),
-             countdown = document.getElementById("countdown"),
-             timer = setInterval( function () {
-               var day = (Math.floor(remain/86400))%86400;
-               var hour = (Math.floor(remain/3600))%24;
-               var minute = (Math.floor(remain/60))%60;
-               var second = (Math.floor(remain/1))%60;
-               countdown.innerHTML = (day > 0 ? "<span class='countdown_day'><strong>"+day+"</strong>d</span> " : "") + (hour > 0 ? "<span class='countdown_hour'><strong>"+hour+"</strong>h</span> " : "") + (minute > 0 ? "<span class='countdown_minute'><strong>"+minute+"</strong>m</span> " : "") + (second > 0 ? "<span class='countdown_second'><strong>"+second+"</strong>s</span> " : "")
-               if (--remain < 0 ) { 
-                 clearInterval(timer);  
-               }
-             },1000);          
-         }
-         countdown(countdown_timeleft);  
+    - if @is_lost_on.next_episode
+      %script{:type=>"text/javascript"}
+        :plain
+           var countdown_d = new Date();
+           var countdown_timenow = countdown_d.getTime();
+           var countdown_targetdate = Date.parse("#{@is_lost_on.next_episode.local_air_date.strftime('%Y/%m/%d %H:%M')}")
+           var countdown_timeleft = Math.floor((countdown_targetdate-countdown_timenow)/1000);
+           function countdown(remain) {
+             var
+               status = document.getElementById("answer"),
+               countdown = document.getElementById("countdown"),
+               timer = setInterval( function () {
+                 var day = (Math.floor(remain/86400))%86400;
+                 var hour = (Math.floor(remain/3600))%24;
+                 var minute = (Math.floor(remain/60))%60;
+                 var second = (Math.floor(remain/1))%60;
+                 countdown.innerHTML = (day > 0 ? "<span class='countdown_day'><strong>"+day+"</strong>d</span> " : "") + (hour > 0 ? "<span class='countdown_hour'><strong>"+hour+"</strong>h</span> " : "") + (minute > 0 ? "<span class='countdown_minute'><strong>"+minute+"</strong>m</span> " : "") + (second > 0 ? "<span class='countdown_second'><strong>"+second+"</strong>s</span> " : "")
+                 if (--remain < 0 ) { 
+                   clearInterval(timer);  
+                 }
+               },1000);          
+           }
+           countdown(countdown_timeleft);  
