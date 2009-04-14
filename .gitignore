@@ -1,3 +1,4 @@
 config/lost.rb
+config/lost.dev.rb
 .DS_Store
 */.DS_Store
