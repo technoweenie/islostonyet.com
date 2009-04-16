@@ -39,3 +39,7 @@ namespace :lost do
     IsLOSTOnYet::Post.cleanup
   end
 end
+
+task :cron => ['lost:process_updates', 'lost:process_search', 'lost:process_replies', 'lost:cleanup'] do
+  
+end
