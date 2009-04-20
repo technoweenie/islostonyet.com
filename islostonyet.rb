@@ -2,6 +2,7 @@ $LOAD_PATH << File.join(File.dirname(__FILE__), 'vendor', 'atom_feed_helper', 'l
 require 'rubygems'
 gem 'builder', '~> 2.1'
 gem 'sinatra', '~> 0.3'
+require 'haml'
 require 'sinatra'
 require 'json'
 require 'atom_feed_helper'
