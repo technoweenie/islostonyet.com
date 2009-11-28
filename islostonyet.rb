@@ -26,15 +26,15 @@ get '/stylesheets/:name.css' do
 end
 
 get '/' do
-  @posts   = IsLOSTOnYet::Post.list(page_number)
-  @users   = users_for @posts
+  @posts   = []
+  @users   = []
   @body_class = "latest"
   haml :index
 end
 
 get '/widget' do
-  @posts   = IsLOSTOnYet::Post.list
-  @users   = users_for @posts
+  @posts   = []
+  @users   = []
   @body_class = "widget"
   haml :widget
 end
@@ -50,8 +50,8 @@ get '/widget.css' do
 end
 
 get '/updates.atom' do
-  @posts = IsLOSTOnYet::Post.list(page_number)
-  @users = users_for @posts
+  @posts = []
+  @users = []
   builder :updates
 end
 

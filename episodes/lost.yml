@@ -732,7 +732,7 @@ s5e10:
   air_date: 2009-03-25 21:00:00 Z
 s5e11:
   series_number: 94
-  title: Whatever Happened, Happened
+  title: "Whatever Happened, Happened"
   air_date: 2009-04-01 21:00:00 Z
 s5e12:
   series_number: 95
@@ -758,3 +758,7 @@ s5e17:
   series_number: 99
   title: The Incident
   air_date: 2009-05-13 21:00:00 Z
+s6e1:
+  series_number: 100
+  title: LA X
+  air_date: 2010-02-02 21:00:00 Z
